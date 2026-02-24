@@ -6,6 +6,12 @@
 (function () {
   'use strict';
 
+  // ---------- STARTUP SPLASH CLEANUP ----------
+  var splash = document.getElementById('splashOverlay');
+  if (splash) {
+    setTimeout(function () { splash.remove(); }, 2000);
+  }
+
   // ---------- DOM REFERENCES ----------
   const html = document.documentElement;
   const navbar = document.getElementById('navbar');
@@ -231,18 +237,6 @@
 
     var loader = new THREE.TextureLoader();
 
-    // --- STARS ---
-    var starGeometry = new THREE.BufferGeometry();
-    var starCount = 1200;
-    var starPositions = new Float32Array(starCount * 3);
-    for (var i = 0; i < starCount * 3; i++) {
-      starPositions[i] = (Math.random() - 0.5) * 80;
-    }
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    var starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.08, transparent: true, opacity: 0.7 });
-    var stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
     // --- EARTH ---
     var earthGeometry = new THREE.SphereGeometry(2.4, 64, 64);
     var earthMaterial = new THREE.MeshPhongMaterial({
@@ -299,96 +293,108 @@
     sunLight.position.set(5, 3, 5);
     scene.add(sunLight);
 
-    // --- COMET ---
-    var cometGroup = new THREE.Group();
-    cometGroup.visible = false;
-    scene.add(cometGroup);
+    // --- SHOOTING STARS (fairy-tale orbiting) ---
+    var shootingStarCount = 6;
+    var shootingStars = [];
 
-    var cometGeometry = new THREE.SphereGeometry(0.065, 16, 16);
-    var cometMaterialC = new THREE.MeshBasicMaterial({ color: 0xe8f4ff });
-    var cometHead = new THREE.Mesh(cometGeometry, cometMaterialC);
-    cometGroup.add(cometHead);
+    for (var s = 0; s < shootingStarCount; s++) {
+      var group = new THREE.Group();
+      scene.add(group);
 
-    // Comet tail — blue-white gradient
-    var tailLength = 28;
-    var tailGeometry = new THREE.BufferGeometry();
-    var tailPositions = new Float32Array(tailLength * 3);
-    var tailColors = new Float32Array(tailLength * 3);
-    for (var t = 0; t < tailLength; t++) {
-      tailPositions[t * 3] = t * 0.12;
-      tailPositions[t * 3 + 1] = t * 0.02;
-      tailPositions[t * 3 + 2] = 0;
-      var fade = 1 - t / tailLength;
-      tailColors[t * 3] = fade;
-      tailColors[t * 3 + 1] = fade;
-      tailColors[t * 3 + 2] = Math.min(1, fade * 1.3);
+      // Glowing head
+      var headGeo = new THREE.SphereGeometry(0.025 + Math.random() * 0.02, 12, 12);
+      var headMat = new THREE.MeshBasicMaterial({
+        color: new THREE.Color().setHSL(0.55 + Math.random() * 0.15, 0.3, 0.9),
+        transparent: true,
+        opacity: 0.9,
+      });
+      var head = new THREE.Mesh(headGeo, headMat);
+      group.add(head);
+
+      // Trail — series of points forming a wispy tail
+      var trailLen = 12;
+      var trailGeo = new THREE.BufferGeometry();
+      var trailPos = new Float32Array(trailLen * 3);
+      var trailCol = new Float32Array(trailLen * 3);
+      for (var tp = 0; tp < trailLen; tp++) {
+        var f = 1 - tp / trailLen;
+        trailCol[tp * 3] = f;
+        trailCol[tp * 3 + 1] = f * 0.95;
+        trailCol[tp * 3 + 2] = Math.min(1, f * 1.4);
+      }
+      trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+      trailGeo.setAttribute('color', new THREE.BufferAttribute(trailCol, 3));
+      var trailMat = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.5 + Math.random() * 0.3,
+      });
+      var trail = new THREE.Line(trailGeo, trailMat);
+      group.add(trail);
+
+      // Orbital parameters — each star has a unique elliptical path
+      shootingStars.push({
+        group: group,
+        head: head,
+        trail: trail,
+        trailLen: trailLen,
+        trailPositions: trailPos,
+        // Ellipse radii
+        rx: 3.5 + Math.random() * 4,
+        ry: 2.0 + Math.random() * 3,
+        rz: -1 + Math.random() * 2,
+        // Speed and phase
+        speed: 0.002 + Math.random() * 0.003,
+        phase: Math.random() * Math.PI * 2,
+        // Tilt the orbit plane
+        tiltX: (Math.random() - 0.5) * 0.8,
+        tiltZ: (Math.random() - 0.5) * 0.6,
+        // History for trail
+        history: [],
+      });
     }
-    tailGeometry.setAttribute('position', new THREE.BufferAttribute(tailPositions, 3));
-    tailGeometry.setAttribute('color', new THREE.BufferAttribute(tailColors, 3));
-    var tailMaterial = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.85, linewidth: 2 });
-    var tail = new THREE.Line(tailGeometry, tailMaterial);
-    cometGroup.add(tail);
-
-    // Comet animation state
-    var cometT = 0;
-    var cometDuration = 220;
-    var cometPause = 300;
-    var cometTimer = 0;
-    var cometActive = false;
-
-    var cometStartX = -6, cometStartY = 4.5;
-    var cometEndX = 5, cometEndY = 0.8;
-
-    function resetComet() {
-      cometT = 0;
-      cometActive = true;
-      cometGroup.visible = true;
-    }
-
-    setTimeout(resetComet, 1500);
 
     // --- ANIMATE ---
     function animateEarth() {
       requestAnimationFrame(animateEarth);
 
       earth.rotation.y += 0.0015;
+      earth.rotation.x += 0.0003;
+      earth.rotation.z += 0.0001;
       clouds.rotation.y += 0.0008;
-      clouds.rotation.x += 0.0002;
-      // Star parallax handled below
+      clouds.rotation.x += 0.0004;
+      clouds.rotation.z -= 0.0001;
 
-      if (cometActive) {
-        cometT++;
-        var progress = cometT / cometDuration;
-        var easedProgress = progress < 0.5
-          ? 2 * progress * progress
-          : -1 + (4 - 2 * progress) * progress;
+      // Update shooting stars
+      for (var si = 0; si < shootingStars.length; si++) {
+        var ss = shootingStars[si];
+        ss.phase += ss.speed;
 
-        cometGroup.position.x = cometStartX + (cometEndX - cometStartX) * easedProgress;
-        cometGroup.position.y = cometStartY + (cometEndY - cometStartY) * easedProgress;
-        cometGroup.position.z = 0.5;
+        // Elliptical orbit position
+        var px = Math.cos(ss.phase) * ss.rx;
+        var py = Math.sin(ss.phase) * ss.ry + Math.sin(ss.phase * 0.7) * 0.5;
+        var pz = Math.sin(ss.phase * 0.5) * ss.rz;
 
-        cometGroup.rotation.z = Math.atan2(
-          -(cometEndY - cometStartY),
-          -(cometEndX - cometStartX)
-        );
+        // Apply tilt
+        var tilted_y = py * Math.cos(ss.tiltX) - pz * Math.sin(ss.tiltX);
+        var tilted_z = py * Math.sin(ss.tiltX) + pz * Math.cos(ss.tiltX);
 
-        if (cometT >= cometDuration) {
-          cometActive = false;
-          cometGroup.visible = false;
-          cometTimer = 0;
+        ss.head.position.set(px, tilted_y, tilted_z);
+
+        // Store history for trail
+        ss.history.unshift({ x: px, y: tilted_y, z: tilted_z });
+        if (ss.history.length > ss.trailLen) ss.history.pop();
+
+        // Update trail positions
+        for (var ti = 0; ti < ss.trailLen; ti++) {
+          if (ti < ss.history.length) {
+            ss.trailPositions[ti * 3] = ss.history[ti].x;
+            ss.trailPositions[ti * 3 + 1] = ss.history[ti].y;
+            ss.trailPositions[ti * 3 + 2] = ss.history[ti].z;
+          }
         }
-      } else {
-        cometTimer++;
-        if (cometTimer >= cometPause) {
-          resetComet();
-        }
+        ss.trail.geometry.attributes.position.needsUpdate = true;
       }
-
-      // Smooth mouse follow for stars parallax
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-      stars.rotation.x = mouseY * 0.3;
-      stars.rotation.y += 0.00008 + mouseX * 0.01;
 
       renderer.render(scene, camera);
     }
@@ -403,27 +409,6 @@
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     });
-
-    // Mouse parallax for stars
-    var mouseX = 0;
-    var mouseY = 0;
-    var targetMouseX = 0;
-    var targetMouseY = 0;
-
-    window.addEventListener('mousemove', function (e) {
-      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 0.3;
-      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 0.3;
-    });
-
-    // Respect dark/light mode — adjust star opacity
-    var themeObserver = new MutationObserver(function () {
-      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      starMaterial.opacity = isDark ? 0.85 : 0.35;
-    });
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    starMaterial.opacity = isDark ? 0.85 : 0.35;
   })();
 
 })();

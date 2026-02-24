@@ -59,6 +59,10 @@ html {
   --nav-width: min(92%, 1080px);
   --nav-radius: 980px;
   --nav-top: 14px;
+
+  /* Apple text gradient */
+  --text-gradient: linear-gradient(180deg, #1d1d1f 0%, #48484a 100%);
+  --text-gradient-heading: linear-gradient(180deg, #1d1d1f 0%, #3a3a3c 60%, #636366 100%);
 }
 
 [data-theme="dark"] {
@@ -84,6 +88,79 @@ html {
   --highlight-bg: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
   --toast-bg: #f5f5f7;
   --toast-text: #1d1d1f;
+
+  /* Apple text gradient — dark mode */
+  --text-gradient: linear-gradient(180deg, #f5f5f7 0%, #a1a1a6 100%);
+  --text-gradient-heading: linear-gradient(180deg, #ffffff 0%, #d1d1d6 50%, #a1a1a6 100%);
+}
+
+/* ---------- STARTUP SPLASH ---------- */
+.splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: splashFade 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  pointer-events: none;
+}
+
+.splash-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  color: #a1a1a6;
+  text-align: center;
+  padding: 0 24px;
+  opacity: 0;
+  animation: splashTextReveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes splashFade {
+  0% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes splashTextReveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(0.95);
+  }
+
+  20% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  65% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(1.02);
+  }
 }
 
 /* ---------- BODY ---------- */
@@ -340,9 +417,12 @@ body {
 .hero-title {
   font-size: clamp(20px, 3vw, 28px);
   font-weight: 600;
-  color: var(--text-secondary);
   margin-bottom: 20px;
   letter-spacing: -0.5px;
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-tagline {
@@ -455,34 +535,89 @@ body {
 /* ---------- HERO ANIMATIONS ---------- */
 .animate-in {
   opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 0.8s var(--ease) forwards;
+  transform: translateY(-120px) scale(0.95);
+  filter: blur(10px);
+  animation: heroDropIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 1.8s;
+}
+
+/* Hero name gets the heaviest drop */
+.hero-name.animate-in {
+  transform: translateY(-150px) scale(0.9);
+  filter: blur(16px);
+  animation: heroNameDrop 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 1.9s;
 }
 
 .delay-1 {
-  animation-delay: 0.15s;
+  animation-delay: 1.9s;
 }
 
 .delay-2 {
-  animation-delay: 0.3s;
+  animation-delay: 2.0s;
 }
 
 .delay-3 {
-  animation-delay: 0.45s;
+  animation-delay: 2.1s;
 }
 
 .delay-4 {
-  animation-delay: 0.6s;
+  animation-delay: 2.2s;
 }
 
 .delay-5 {
-  animation-delay: 0.9s;
+  animation-delay: 2.4s;
 }
 
-@keyframes fadeInUp {
-  to {
+@keyframes heroDropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.95);
+    filter: blur(10px);
+  }
+
+  60% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(8px) scale(1);
+    filter: blur(0);
+  }
+
+  80% {
+    transform: translateY(-3px) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroNameDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-150px) scale(0.9);
+    filter: blur(16px);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateY(12px) scale(1.01);
+    filter: blur(0);
+  }
+
+  75% {
+    transform: translateY(-5px) scale(1);
+  }
+
+  90% {
+    transform: translateY(2px) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -503,18 +638,21 @@ body {
   letter-spacing: -1px;
   text-align: center;
   margin-bottom: 56px;
-  color: var(--text-primary);
+  background: var(--text-gradient-heading);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ---------- SCROLL REVEAL — APPLE STYLE ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(30px) scale(0.97);
-  filter: blur(8px);
+  transform: translateY(50px) scale(0.92);
+  filter: blur(20px);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform, filter;
 }
 
@@ -552,32 +690,32 @@ body {
 /* Direction variants */
 .reveal-left {
   opacity: 0;
-  transform: translateX(-40px) scale(0.97);
-  filter: blur(6px);
+  transform: translateX(-60px) scale(0.92);
+  filter: blur(16px);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-right {
   opacity: 0;
-  transform: translateX(40px) scale(0.97);
-  filter: blur(6px);
+  transform: translateX(60px) scale(0.92);
+  filter: blur(16px);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.88);
-  filter: blur(10px);
+  transform: scale(0.82);
+  filter: blur(18px);
   transition:
-    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-left.visible,
@@ -591,6 +729,15 @@ body {
 /* Section transitions — smooth section boundary feel */
 .section {
   transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* LPU university branding */
+.edu-school-lpu {
+  background: linear-gradient(135deg, #f47920 0%, #ff9a44 40%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
 }
 
 /* ================================================================
