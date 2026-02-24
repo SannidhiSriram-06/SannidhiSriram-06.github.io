@@ -301,6 +301,7 @@
 
     // --- COMET ---
     var cometGroup = new THREE.Group();
+    cometGroup.visible = false;
     scene.add(cometGroup);
 
     var cometGeometry = new THREE.SphereGeometry(0.065, 16, 16);
@@ -335,8 +336,8 @@
     var cometTimer = 0;
     var cometActive = false;
 
-    var cometStartX = -5, cometStartY = 3.5;
-    var cometEndX = 4, cometEndY = 1.0;
+    var cometStartX = -6, cometStartY = 4.5;
+    var cometEndX = 5, cometEndY = 0.8;
 
     function resetComet() {
       cometT = 0;
