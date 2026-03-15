@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sannidhi Durga Pavan Sriram | Cloud & DevOps Engineer</title>
+    <meta name="description"
+        content="Portfolio of Sannidhi Durga Pavan Sriram, a Cloud & DevOps Engineer building scalable, high availability cloud infrastructure on AWS and Azure.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Devicon -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Startup Splash -->
+    <div class="startup-splash" aria-hidden="true">
+        <p class="splash-icon">💻</p>
+        <p class="splash-text">View in laptop on <strong>dark mode</strong> for best experience</p>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="glass-nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand">SR</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="ph ph-sun" id="sun-icon" style="display: none;"></i>
+                    <i class="ph ph-moon" id="moon-icon"></i>
+                </button>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-nav-links">
+            <a href="#about" class="mobile-link">About</a>
+            <a href="#skills" class="mobile-link">Skills</a>
+            <a href="#projects" class="mobile-link">Projects</a>
+            <a href="#experience" class="mobile-link">Experience</a>
+            <a href="#certifications" class="mobile-link">Certifications</a>
+            <a href="#achievements" class="mobile-link">Achievements</a>
+            <a href="#education" class="mobile-link">Education</a>
+            <a href="#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-content fade-up">
+                <div class="profile-photo-container">
+                    <img src="assets/media/Sriram.jpg" alt="Sannidhi Durga Pavan Sriram" class="profile-img"
+                        onerror="this.src='https://via.placeholder.com/150/0f1117/hsl(172,66%,50%)?text=SR'">
+                </div>
+                <div class="hero-text">
+                    <p class="hero-hello"><span class="terminal-prompt">$ Whoami?</span></p>
+                    <h1 class="hero-name">Sannidhi Durga Pavan Sriram</h1>
+                    <h2 class="hero-role">Cloud/DevOps Engineer<span class="cursor">▎</span></h2>
+                    <p class="hero-tagline">Building scalable, highly available and resilient cloud infrastructure and
+                        automated deployment pipelines on AWS & Azure.</p>
+
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                        <a href="assets/media/s.sriram_cv.pdf" download class="btn btn-outline">Download my CV</a>
+                    </div>
+
+                    <div class="hero-socials">
+                        <a href="https://github.com/SannidhiSriram-06" target="_blank" aria-label="GitHub"><i
+                                class="ph ph-github-logo"></i></a>
+                        <a href="https://linkedin.com/in/sannidhi-sriram" target="_blank" aria-label="LinkedIn"><i
+                                class="ph ph-linkedin-logo"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/about</span> <span
+                            class="terminal-dollar">$</span> cat overview.md</h2>
+                </div>
+                <div class="glass-card about-card">
+                    <p>Cloud and DevOps-focused Computer Science student with hands-on experience deploying, monitoring,
+                        and supporting applications on AWS and Azure. Proficient in CI/CD pipeline execution, cloud
+                        infrastructure provisioning, service health monitoring, and incident troubleshooting.
+                        Experienced with CloudWatch and Azure Monitor for observability, GitHub Actions for automated
+                        deployment workflows, and Terraform for infrastructure provisioning. Familiar with IAM access
+                        management, RBAC, and DevSecOps practices including security scanning and secret management.</p>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item fade-up" style="transition-delay: 0.1s">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Cloud Certifications</span>
+                    </div>
+                    <div class="stat-item fade-up" style="transition-delay: 0.2s">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Cloud Platforms</span>
+                    </div>
+                    <div class="stat-item fade-up" style="transition-delay: 0.3s">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Cloud Native Projects</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/skills</span> <span
+                            class="terminal-dollar">$</span> ls -la</h2>
+                </div>
+                <div class="skills-grid">
+
+                    <!-- Cloud Operations -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-server"></i> Cloud Operations</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <i class="ph ph-heartbeat"></i>
+                                <span>Service Health Monitoring</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-bell-ringing"></i>
+                                <span>Alert Monitoring</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-warning"></i>
+                                <span>Incident Management</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <span>Root Cause Analysis</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-shield-check"></i>
+                                <span>IAM / RBAC</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-cloud"></i>
+                                <span>Resource Provisioning</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-rocket-launch"></i>
+                                <span>Deployment Support</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-notebook"></i>
+                                <span>SOP Documentation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CI/CD & DevSecOps -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-git-merge"></i> CI/CD & DevSecOps</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <i class="devicon-githubactions-plain colored"></i>
+                                <span>GitHub Actions</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/snyk.svg" alt="Snyk" style="width: 1.75rem; height: 1.75rem;">
+                                <span>Snyk</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-git-plain colored"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-docker-plain colored"></i>
+                                <span>Docker Hub</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cloud AWS -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="devicon-amazonwebservices-plain-wordmark colored"></i> Cloud — AWS</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Compute/EC2.svg" alt="EC2">
+                                <span>EC2</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Networking-Content-Delivery/Elastic-Load-Balancing.svg"
+                                    alt="ALB">
+                                <span>ALB</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Compute/EC2-Auto-Scaling.svg"
+                                    alt="Auto Scaling">
+                                <span>Auto Scaling</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Security-Identity-Compliance/IAM-Identity-Center.svg"
+                                    alt="IAM">
+                                <span>IAM</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Management-Governance/CloudWatch.svg"
+                                    alt="CloudWatch">
+                                <span>CloudWatch</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Containers/Elastic-Container-Service.svg"
+                                    alt="ECS Fargate">
+                                <span>ECS Fargate</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Compute/Lambda.svg" alt="Lambda">
+                                <span>Lambda</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Storage/Simple-Storage-Service.svg" alt="S3">
+                                <span>S3</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/App-Integration/API-Gateway.svg"
+                                    alt="API Gateway">
+                                <span>API Gateway</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Database/RDS.svg" alt="RDS">
+                                <span>RDS</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="https://icon.icepanel.io/AWS/svg/Networking-Content-Delivery/CloudFront.svg"
+                                    alt="CloudFront">
+                                <span>CloudFront</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cloud Azure -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="devicon-azure-plain colored"></i> Cloud — Azure</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <i class="ph ph-app-window" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>App Service</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-brain" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Azure OpenAI</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-azure-plain colored"></i>
+                                <span>AI Foundry</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-hard-drives" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Blob Storage</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-table" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Table Storage</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-chart-line-up" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Monitor</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-magnifying-glass" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Log Analytics</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="ph ph-lightbulb" style="color: #0078D4; font-size: 1.75rem;"></i>
+                                <span>Application Insights</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Containers & IaC -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-cube"></i> Containers & IaC</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <i class="devicon-docker-plain colored"></i>
+                                <span>Docker</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-terraform-plain colored"></i>
+                                <span>Terraform</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Languages & Tools -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-code"></i> Languages & Tools</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <img src="assets/icons/python.svg" alt="Python"
+                                    style="width: 1.75rem; height: 1.75rem;">
+                                <span>Python</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/linux.svg" alt="Linux" style="width: 1.75rem; height: 1.75rem;">
+                                <span>Linux/Ubuntu</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-git-plain colored"></i>
+                                <span>Git</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Tools -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-robot"></i> AI Tools</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <img src="assets/icons/OpenCode.png" alt="OpenCode"
+                                    style="width: 1.75rem; height: 1.75rem; border-radius: 4px;">
+                                <span>OpenCode</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/antigravity.svg" alt="AntiGravity"
+                                    style="width: 1.75rem; height: 1.75rem; filter: invert(1) sepia(1) saturate(3) hue-rotate(180deg);">
+                                <span>AntiGravity</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/Gemini CLI.png" alt="Gemini CLI"
+                                    style="width: 1.75rem; height: 1.75rem; border-radius: 4px;">
+                                <span>Gemini CLI</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/claude-icon-filled-256.png" alt="Claude"
+                                    style="width: 1.75rem; height: 1.75rem; border-radius: 4px;">
+                                <span>Claude</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/github-copilot.svg" alt="GitHub Copilot"
+                                    style="width: 1.75rem; height: 1.75rem; filter: invert(1);">
+                                <span>GitHub Copilot</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/huggingface.svg" alt="Hugging Face"
+                                    style="width: 1.75rem; height: 1.75rem;">
+                                <span>Hugging Face</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Currently Learning -->
+                    <div class="glass-card skill-category-card">
+                        <h3><i class="ph ph-books"></i> Currently Learning</h3>
+                        <div class="icons-container">
+                            <div class="skill-item">
+                                <i class="devicon-kubernetes-plain colored"></i>
+                                <span>Kubernetes</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-prometheus-original colored"></i>
+                                <span>Prometheus</span>
+                            </div>
+                            <div class="skill-item">
+                                <img src="assets/icons/grafana.svg" alt="Grafana"
+                                    style="width: 1.75rem; height: 1.75rem;">
+                                <span>Grafana</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="devicon-argocd-plain colored"></i>
+                                <span>ArgoCD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/projects</span> <span
+                            class="terminal-dollar">$</span> ls -la</h2>
+                </div>
+                <div class="projects-grid">
+
+                    <!-- Project 1 -->
+                    <div class="glass-card project-card">
+                        <div class="project-img-placeholder">
+                            <img src="assets/media/Springboot.png" alt="Java Self-Healing Microservice Architecture"
+                                class="project-real-img">
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>Java Self-Healing Microservice</h3>
+                                <span class="project-date">Feb 2026</span>
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag">Spring Boot</span>
+                                <span class="tag tag-docker">Docker</span>
+                                <span class="tag tag-aws">AWS</span>
+                                <span class="tag tag-terraform">Terraform</span>
+                                <span class="tag tag-gha">GitHub Actions</span>
+                                <span class="tag">Snyk</span>
+                            </div>
+                            <ul class="project-desc">
+                                <li>Deployed containerized Spring Boot microservice on Terraform-provisioned AWS
+                                    infrastructure (EC2 ASG, ALB, IAM); monitored service health via CloudWatch and
+                                    configured automatic instance replacement on failure.</li>
+                                <li>Engineered GitHub Actions CI/CD pipeline automating builds, unit tests, Snyk
+                                    SAST/SCA scans, Docker image builds, and Docker Hub pushes; diagnosed and resolved 3
+                                    pipeline failures.</li>
+                                <li>Enforced DevSecOps quality gates via Snyk to block deployments on critical
+                                    vulnerability detection; managed CI/CD credentials using GitHub Secrets following
+                                    least-privilege principles.</li>
+                            </ul>
+
+                            <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice"
+                                target="_blank" class="btn btn-outline btn-sm project-btn">
+                                <i class="ph ph-github-logo"></i> View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="glass-card project-card">
+                        <div class="project-img-placeholder">
+                            <img src="assets/media/Azure Architecture Diagram.png" alt="AI Patient Triage System Azure Architecture"
+                                class="project-real-img">
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>AI Patient Triage System on Azure</h3>
+                                <span class="project-date">Jan 2026</span>
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag tag-python">Python</span>
+                                <span class="tag">Flask</span>
+                                <span class="tag tag-azure">Azure</span>
+                                <span class="tag tag-azure">Azure OpenAI</span>
+                                <span class="tag tag-azure">Azure Monitor</span>
+                                <span class="tag tag-azure">Application Insights</span>
+                            </div>
+                            <ul class="project-desc">
+                                <li>Deployed and monitored Python Flask app on Azure App Service (Linux, B1) integrated
+                                    with Azure OpenAI (GPT-4o); tracked availability and performance using Azure Monitor
+                                    and Application Insights dashboards.</li>
+                                <li>Stored triage interaction data in Azure Table Storage for audit traceability;
+                                    documented deployment steps, environment configuration, and architecture decisions
+                                    in GitHub.</li>
+                            </ul>
+
+                            <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-"
+                                target="_blank" class="btn btn-outline btn-sm project-btn">
+                                <i class="ph ph-github-logo"></i> View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="glass-card project-card">
+                        <div class="project-img-placeholder">
+                            <img src="assets/media/Terminal for bookstore.png" alt="Bookstore Microservice Architecture"
+                                class="project-real-img">
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>Bookstore Microservice Architecture</h3>
+                                <span class="project-date">Jan 2026</span>
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag tag-aws">AWS Lambda</span>
+                                <span class="tag tag-aws">API Gateway</span>
+                                <span class="tag tag-aws">S3</span>
+                                <span class="tag tag-aws">CloudWatch</span>
+                                <span class="tag">MongoDB Atlas</span>
+                                <span class="tag">Node.js</span>
+                            </div>
+                            <ul class="project-desc">
+                                <li>Translated a Node.js Express bookstore application into a cost-efficient AWS
+                                    serverless architecture using Lambda, API Gateway, S3, CloudWatch, and MongoDB
+                                    Atlas.</li>
+                                <li>Mapped Express compute to AWS Lambda for serverless auto-scaling execution; exposed
+                                    REST endpoints via API Gateway with HTTPS, routing, and monitoring.</li>
+                            </ul>
+
+                            <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS"
+                                target="_blank" class="btn btn-outline btn-sm project-btn">
+                                <i class="ph ph-github-logo"></i> View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/experience</span> <span
+                            class="terminal-dollar">$</span> cat roles.log</h2>
+                </div>
+                <div class="glass-card experience-card">
+                    <div class="exp-header">
+                        <div class="exp-title-group">
+                            <h3>AI Intern — Cloud Deployment Lead</h3>
+                            <h4>Infosys Springboard Virtual Internship</h4>
+                        </div>
+                        <div class="exp-meta">
+                            <span class="exp-date">Feb 2026 – Present</span>
+                            <span class="exp-location">Remote, India</span>
+                        </div>
+                    </div>
+                    <ul class="exp-desc">
+                        <li>Designing scalable cloud architecture supporting containerized ML inference workloads with
+                            high availability, secure authentication, and optimized data routing for a BFSI-sector AI
+                            deployment.</li>
+                        <li>Defining cloud infrastructure topology and deployment workflows to enable secure, scalable
+                            ML inference deployment aligned with IAM security best practices and high availability
+                            requirements.</li>
+                        <li>Managing Git repository for 25-member cohort; enforcing version control workflows and
+                            maintaining deployment runbooks to enable reproducible deployments and faster operational
+                            troubleshooting.</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span class="tag tag-aws">AWS</span>
+                        <span class="tag">Hugging Face</span>
+                        <span class="tag tag-aws">RDS</span>
+                        <span class="tag tag-aws">EC2</span>
+                        <span class="tag tag-aws">Cognito</span>
+                        <span class="tag tag-aws">S3</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/certs</span> <span
+                            class="terminal-dollar">$</span> ls -la</h2>
+                </div>
+                <div class="certs-grid">
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="assets/media/OCI25DOPOCP.jpg" alt="OCI DevOps Professional" class="cert-real-img"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-oracle-original colored"></i> Oracle
+                            </div>
+                            <h3>OCI DevOps Professional</h3>
+                            <span class="cert-date">Sep 2025</span>
+                            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="assets/media/OCI25GAIOCP.jpg" alt="OCI Generative AI Professional" class="cert-real-img"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-oracle-original colored"></i> Oracle
+                            </div>
+                            <h3>OCI Generative AI Professional</h3>
+                            <span class="cert-date">Aug 2025</span>
+                            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="assets/media/OCI25OMCP.jpg" alt="OCI Observability Professional" class="cert-real-img"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-oracle-original colored"></i> Oracle
+                            </div>
+                            <h3>OCI Observability Professional</h3>
+                            <span class="cert-date">Aug 2025</span>
+                            <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="assets/media/OCI2025MCAOCP.jpeg" alt="OCI Multicloud Architect" class="cert-real-img"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-oracle-original colored"></i> Oracle
+                            </div>
+                            <h3>OCI Multicloud Architect</h3>
+                            <span class="cert-date">Aug 2025</span>
+                            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="Screenshot 2026-03-10 at 5.50.23 PM.png" alt="Azure AI Fundamentals"
+                                class="cert-real-img" style="padding: 1.5rem; object-fit: contain;"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-microsoft-original colored"></i> Microsoft
+                            </div>
+                            <h3>Azure AI Fundamentals (AI-900)</h3>
+                            <span class="cert-date">Jun 2025</span>
+                            <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <div class="cert-img-placeholder">
+                            <img src="Screenshot 2026-03-10 at 5.50.23 PM.png" alt="Azure Fundamentals"
+                                class="cert-real-img" style="padding: 1.5rem; object-fit: contain;"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div class="cert-content">
+                            <div class="cert-vendor">
+                                <i class="devicon-microsoft-original colored"></i> Microsoft
+                            </div>
+                            <h3>Azure Fundamentals (AZ-900)</h3>
+                            <span class="cert-date">Jan 2025</span>
+                            <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8"
+                                target="_blank" class="btn btn-outline btn-sm cert-btn">View Certificate →</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/achievements</span> <span
+                            class="terminal-dollar">$</span> cat trophies.md</h2>
+                </div>
+                <div class="projects-grid">
+
+                    <div class="glass-card project-card">
+                        <div class="project-content">
+                            <h3>Race to Certification 2025</h3>
+                            <p class="achieve-desc">Ranked in the top 500 in Oracle's global cloud certification
+                                challenge, competing among thousands of participants worldwide.</p>
+                            <img src="assets/media/SQOPXYT5EP4C.png" alt="Race to Certification 2025"
+                                style="border-radius: 8px; margin-top: 1.5rem; width: 100%; max-width: 250px; display: block; box-shadow: var(--shadow);">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/education</span> <span
+                            class="terminal-dollar">$</span> cat degree.md</h2>
+                </div>
+                <div class="education-timeline">
+
+                    <div class="glass-card edu-card">
+                        <div class="edu-header">
+                            <div>
+                                <h3>Lovely Professional University</h3>
+                                <h4>B.Tech, Computer Science & Engineering</h4>
+                                <p class="edu-minor">Minor: Cloud Computing</p>
+                            </div>
+                            <div class="edu-meta">
+                                <span class="edu-date">Aug 2023 – May 2027</span>
+                                <span class="edu-location">Phagwara, Punjab</span>
+                                <span class="edu-gpa">CGPA: 7.14/10</span>
+                            </div>
+                        </div>
+                        <div class="edu-coursework">
+                            <strong>Relevant Coursework:</strong>
+                            <div class="project-tags">
+                                <span class="tag">Cloud Microservices (O Grade)</span>
+                                <span class="tag">Cloud Architecture & Implementation II (A+ Grade)</span>
+                                <span class="tag">Managing Cloud Solutions (A Grade)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card edu-card">
+                        <div class="edu-header">
+                            <div>
+                                <h3>Keshav Smarak Junior College</h3>
+                                <h4>Intermediate</h4>
+                            </div>
+                            <div class="edu-meta">
+                                <span class="edu-date">2021 – 2023</span>
+                                <span class="edu-location">Hyderabad, India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card edu-card">
+                        <div class="edu-header">
+                            <div>
+                                <h3>Oxford Grammar School</h3>
+                                <h4>10th grade</h4>
+
+                            </div>
+                            <div class="edu-meta">
+                                <span class="edu-date">2020 – 2021</span>
+                                <span class="edu-location">Hyderabad, India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container fade-up">
+                <div class="section-heading-container">
+                    <h2 class="section-heading"><span class="terminal-path">~/contact</span> <span
+                            class="terminal-dollar">$</span> open mail.app</h2>
+                </div>
+                <div class="contact-grid">
+
+                    <div class="contact-left">
+                        <p class="contact-text">I'm always open to discussing cloud architecture, DevOps best practices,
+                            or new opportunities.</p>
+
+                        <div class="contact-links">
+                            <a href="mailto:sannidhisriram8@gmail.com" class="contact-link">
+                                <i class="ph ph-envelope-simple"></i>
+                                sannidhisriram8@gmail.com
+                            </a>
+                            <a href="https://linkedin.com/in/sannidhi-sriram" target="_blank" class="contact-link">
+                                <i class="ph ph-linkedin-logo"></i>
+                                linkedin.com/in/sannidhi-sriram
+                            </a>
+                            <a href="https://github.com/SannidhiSriram-06" target="_blank" class="contact-link">
+                                <i class="ph ph-github-logo"></i>
+                                github.com/SannidhiSriram-06
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-right">
+                        <form action="https://formspree.io/f/maqpenyw" method="POST" class="glass-card contact-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Let's talk about..."
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container">
+            <p>&copy; 2026 Sannidhi Durga Pavan Sriram. Built with HTML, CSS & JS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

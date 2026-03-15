@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Gemini CLI icon: dark background with the Gemini star sparkle -->
+  <rect width="48" height="48" rx="10" fill="#1A1A2E"/>
+  <!-- Four-pointed star / sparkle — the Gemini logo mark -->
+  <path d="M24 7 C24 7 22 18 14 24 C22 30 24 41 24 41 C24 41 26 30 34 24 C26 18 24 7 24 7 Z"
+        fill="url(#gem_grad)" opacity="0.95"/>
+  <path d="M7 24 C7 24 18 22 24 14 C30 22 41 24 41 24 C41 24 30 26 24 34 C18 26 7 24 7 24 Z"
+        fill="url(#gem_grad2)" opacity="0.95"/>
+  <defs>
+    <linearGradient id="gem_grad" x1="24" y1="7" x2="24" y2="41" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#7C4DFF"/>
+    </linearGradient>
+    <linearGradient id="gem_grad2" x1="7" y1="24" x2="41" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#7C4DFF"/>
+    </linearGradient>
+  </defs>
+</svg>

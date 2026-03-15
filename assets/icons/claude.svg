@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Claude logo: coral/orange background with white C mark -->
+  <rect width="48" height="48" rx="10" fill="#D97757"/>
+  <!-- Claude stylized mark - the layered lines forming a C shape -->
+  <g fill="white" opacity="0.95">
+    <!-- Top horizontal stroke -->
+    <rect x="13" y="12" width="22" height="3.5" rx="1.75"/>
+    <!-- Second stroke (slightly shorter) -->
+    <rect x="13" y="17.5" width="18" height="3.5" rx="1.75"/>
+    <!-- Third stroke -->
+    <rect x="13" y="23" width="14" height="3.5" rx="1.75"/>
+    <!-- Fourth stroke (shorter) -->
+    <rect x="13" y="28.5" width="18" height="3.5" rx="1.75"/>
+    <!-- Bottom horizontal stroke -->
+    <rect x="13" y="34" width="22" height="3.5" rx="1.75"/>
+  </g>
+</svg>
