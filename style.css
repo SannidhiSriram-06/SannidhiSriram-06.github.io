@@ -831,9 +831,25 @@ img {
    Skills Section
    ========================================================================== */
 .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
+}
+
+.skills-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.skills-row-center {
+    display: flex;
+    justify-content: center;
+}
+
+.skills-row-center .skill-category-card {
+    max-width: 500px;
+    width: 100%;
 }
 
 .skill-category-card h3 {
@@ -1334,8 +1350,12 @@ img {
         align-items: flex-start;
     }
 
-    .skills-grid {
+    .skills-row {
         grid-template-columns: 1fr;
+    }
+
+    .skills-row-center {
+        justify-content: center;
     }
 
     .projects-grid,
