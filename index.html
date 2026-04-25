@@ -109,12 +109,7 @@
                             class="terminal-dollar">$</span> cat overview.md</h2>
                 </div>
                 <div class="glass-card about-card">
-                    <p>Cloud and DevOps-focused Computer Science student with hands-on experience deploying, monitoring,
-                        and supporting applications on AWS and Azure. Proficient in CI/CD pipeline execution, cloud
-                        infrastructure provisioning, service health monitoring, and incident troubleshooting.
-                        Experienced with CloudWatch and Azure Monitor for observability, GitHub Actions for automated
-                        deployment workflows, and Terraform for infrastructure provisioning. Familiar with IAM access
-                        management, RBAC, and DevSecOps practices including security scanning and secret management.</p>
+                    <p>Cloud and DevOps-focused Computer Science student with hands-on experience deploying and automating infrastructure on AWS and Azure. Proficient in CI/CD pipeline design, container orchestration, GitOps workflows, and cloud infrastructure provisioning with Terraform. Experienced with Jenkins, GitHub Actions, ArgoCD, and Helm for end-to-end deployment automation. Familiar with IAM access management, DevSecOps practices including Snyk vulnerability scanning, and AI/LLM integration via Groq API and Azure OpenAI.</p>
                 </div>
                 <div class="stats-row">
                     <div class="stat-item fade-up" style="transition-delay: 0.1s">
@@ -126,7 +121,7 @@
                         <span class="stat-label">Cloud Platforms</span>
                     </div>
                     <div class="stat-item fade-up" style="transition-delay: 0.3s">
-                        <span class="stat-number">3</span>
+                        <span class="stat-number">4</span>
                         <span class="stat-label">Cloud Native Projects</span>
                     </div>
                 </div>
@@ -264,6 +259,18 @@
                                     <i class="devicon-docker-plain colored"></i>
                                     <span>Docker Hub</span>
                                 </div>
+                                <div class="skill-item">
+                                    <i class="devicon-jenkins-plain colored"></i>
+                                    <span>Jenkins</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="devicon-argocd-plain colored"></i>
+                                    <span>ArgoCD</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="devicon-helm-original colored"></i>
+                                    <span>Helm</span>
+                                </div>
                             </div>
                         </div>
 
@@ -278,6 +285,10 @@
                                 <div class="skill-item">
                                     <i class="devicon-terraform-plain colored"></i>
                                     <span>Terraform</span>
+                                </div>
+                                <div class="skill-item">
+                                    <i class="devicon-kubernetes-plain colored"></i>
+                                    <span>Kubernetes (Minikube)</span>
                                 </div>
                             </div>
                         </div>
@@ -358,6 +369,10 @@
                                         style="width: 1.75rem; height: 1.75rem;">
                                     <span>Hugging Face</span>
                                 </div>
+                                <div class="skill-item">
+                                    <i class="ph ph-lightning" style="color: #F59E0B; font-size: 1.75rem;"></i>
+                                    <span>Groq API</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -415,6 +430,10 @@
                                     <span>Kubernetes</span>
                                 </div>
                                 <div class="skill-item">
+                                    <i class="devicon-helm-original colored"></i>
+                                    <span>Helm</span>
+                                </div>
+                                <div class="skill-item">
                                     <i class="devicon-prometheus-original colored"></i>
                                     <span>Prometheus</span>
                                 </div>
@@ -422,10 +441,6 @@
                                     <img src="assets/icons/grafana.svg" alt="Grafana"
                                         style="width: 1.75rem; height: 1.75rem;">
                                     <span>Grafana</span>
-                                </div>
-                                <div class="skill-item">
-                                    <i class="devicon-argocd-plain colored"></i>
-                                    <span>ArgoCD</span>
                                 </div>
                             </div>
                         </div>
@@ -444,7 +459,43 @@
                 </div>
                 <div class="projects-grid">
 
-                    <!-- Project 1 -->
+                    <!-- Project 1: AI Test Generator -->
+                    <div class="glass-card project-card">
+                        <div class="project-img-placeholder">
+                            <img src="https://via.placeholder.com/600x400/0f1117/hsl(172,66%,50%)?text=AI+Test+Generator" alt="AI Test Generator Pipeline Architecture" class="project-real-img" style="object-fit: cover;">
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>AI Test Generator – Automated QA Pipeline</h3>
+                                <span class="project-date">Apr 2026</span>
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag tag-python">Python</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Groq API</span>
+                                <span class="tag tag-docker">Docker</span>
+                                <span class="tag tag-aws">AWS ECR</span>
+                                <span class="tag">Jenkins</span>
+                                <span class="tag">Helm</span>
+                                <span class="tag">ArgoCD</span>
+                                <span class="tag">Minikube</span>
+                                <span class="tag tag-terraform">Terraform</span>
+                            </div>
+                            <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.95rem;">FastAPI service that generates executable pytest suites via Groq LLM, shipped through a full Jenkins → ECR → ArgoCD pipeline</p>
+                            <ul class="project-desc">
+                                <li>Integrated Groq LLM to generate executable pytest suites from raw Python functions via structured prompting; Jenkins runs the generated tests as a CI stage with a 70% coverage gate, blocking deployment on failure.</li>
+                                <li>Jenkins builds and pushes a tagged Docker image to AWS ECR on every commit, then updates the image tag in the GitOps repo — ArgoCD detects the change and redeploys the pod on Minikube automatically, completing the full commit-to-running-pod loop with zero manual steps.</li>
+                                <li>Provisioned AWS ECR with Terraform; Jenkinsfile, Helm charts, and Terraform config are all version-controlled, making the entire commit-to-pod flow reproducible from scratch.</li>
+                            </ul>
+
+                            <a href="https://github.com/SannidhiSriram-06/ai-test-generator"
+                                target="_blank" class="btn btn-outline btn-sm project-btn">
+                                <i class="ph ph-github-logo"></i> View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
                     <div class="glass-card project-card">
                         <div class="project-img-placeholder">
                             <img src="assets/media/Springboot.png" alt="Java Self-Healing Microservice Architecture"
@@ -452,27 +503,20 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header">
-                                <h3>Java Self-Healing Microservice</h3>
+                                <h3>Self-Healing Microservice – CI/CD & AWS Infrastructure</h3>
                                 <span class="project-date">Feb 2026</span>
                             </div>
                             <div class="project-tags">
-                                <span class="tag">Spring Boot</span>
+                                <span class="tag tag-python">Python</span>
                                 <span class="tag tag-docker">Docker</span>
-                                <span class="tag tag-aws">AWS</span>
                                 <span class="tag tag-terraform">Terraform</span>
+                                <span class="tag tag-aws">AWS</span>
                                 <span class="tag tag-gha">GitHub Actions</span>
                                 <span class="tag">Snyk</span>
                             </div>
                             <ul class="project-desc">
-                                <li>Deployed containerized Spring Boot microservice on Terraform-provisioned AWS
-                                    infrastructure (EC2 ASG, ALB, IAM); monitored service health via CloudWatch and
-                                    configured automatic instance replacement on failure.</li>
-                                <li>Engineered GitHub Actions CI/CD pipeline automating builds, unit tests, Snyk
-                                    SAST/SCA scans, Docker image builds, and Docker Hub pushes; diagnosed and resolved 3
-                                    pipeline failures.</li>
-                                <li>Enforced DevSecOps quality gates via Snyk to block deployments on critical
-                                    vulnerability detection; managed CI/CD credentials using GitHub Secrets following
-                                    least-privilege principles.</li>
+                                <li>Deployed a containerised microservice on a Terraform-provisioned multi-AZ AWS setup (VPC, ALB, EC2 ASG); CloudWatch monitors CPU utilisation and triggers automatic instance replacement and scale-out, maintaining 2–4 healthy instances at all times.</li>
+                                <li>Built a GitHub Actions pipeline that runs dependency and container image vulnerability scans (Snyk) on every push — high-severity findings block the Docker image from being pushed to the registry, keeping the deployed service in a known-good state.</li>
                             </ul>
 
                             <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice"
@@ -498,16 +542,13 @@
                                 <span class="tag">Flask</span>
                                 <span class="tag tag-azure">Azure</span>
                                 <span class="tag tag-azure">Azure OpenAI</span>
+                                <span class="tag tag-azure">Azure Table Storage</span>
                                 <span class="tag tag-azure">Azure Monitor</span>
                                 <span class="tag tag-azure">Application Insights</span>
                             </div>
                             <ul class="project-desc">
-                                <li>Deployed and monitored Python Flask app on Azure App Service (Linux, B1) integrated
-                                    with Azure OpenAI (GPT-4o); tracked availability and performance using Azure Monitor
-                                    and Application Insights dashboards.</li>
-                                <li>Stored triage interaction data in Azure Table Storage for audit traceability;
-                                    documented deployment steps, environment configuration, and architecture decisions
-                                    in GitHub.</li>
+                                <li>Deployed a Flask application on Azure App Service integrating Azure OpenAI for real-time symptom triage — returns priority level, reasoning, and recommended action as structured JSON; all secrets managed via App Service environment variables with no credentials in the codebase.</li>
+                                <li>Every triage request and LLM response is logged to Azure Table Storage for full auditability; runtime behaviour validated through Azure Monitor with deployment evidence preserved in the repository.</li>
                             </ul>
 
                             <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-"
@@ -566,31 +607,29 @@
                     <div class="exp-header">
                         <div class="exp-title-group">
                             <h3>AI Intern — Cloud Deployment Lead</h3>
-                            <h4>Infosys Springboard Virtual Internship</h4>
+                            <h4>Infosys Springboard</h4>
                         </div>
                         <div class="exp-meta">
-                            <span class="exp-date">Feb 2026 – Present</span>
+                            <span class="exp-date">Feb 2026 – Mar 2026</span>
                             <span class="exp-location">Remote, India</span>
                         </div>
                     </div>
                     <ul class="exp-desc">
-                        <li>Designing scalable cloud architecture supporting containerized ML inference workloads with
-                            high availability, secure authentication, and optimized data routing for a BFSI-sector AI
-                            deployment.</li>
-                        <li>Defining cloud infrastructure topology and deployment workflows to enable secure, scalable
-                            ML inference deployment aligned with IAM security best practices and high availability
-                            requirements.</li>
-                        <li>Managing Git repository for 25-member cohort; enforcing version control workflows and
-                            maintaining deployment runbooks to enable reproducible deployments and faster operational
-                            troubleshooting.</li>
+                        <li>Led cloud deployment of a team-built AI-powered KYC verification system onto AWS (S3 + EC2), migrating from localhost to a two-instance microservice architecture (Node.js + Flask/PM2); evaluated and rejected SageMaker, Azure ML, and Lambda-based approaches before finalising the setup.</li>
+                        <li>Integrated Groq API and EasyOCR into the ML service for document scoring and OCR; stored verification results in MongoDB Atlas, surfaced in a verification history tab on the React frontend deployed on S3.</li>
+                        <li>Resolved 14 tracked defects across deployment — Python/TensorFlow compatibility issues, Node.js multipart upload bugs, and cross-service schema mismatches; coordinated Git workflow across 25 contributors to maintain a stable main branch throughout.</li>
                     </ul>
                     <div class="project-tags">
-                        <span class="tag tag-aws">AWS</span>
-                        <span class="tag">Hugging Face</span>
-                        <span class="tag tag-aws">RDS</span>
-                        <span class="tag tag-aws">EC2</span>
-                        <span class="tag tag-aws">Cognito</span>
-                        <span class="tag tag-aws">S3</span>
+                        <span class="tag tag-aws">AWS (S3, EC2)</span>
+                        <span class="tag tag-docker">Docker</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag tag-python">Python</span>
+                        <span class="tag">Flask</span>
+                        <span class="tag">Groq API</span>
+                        <span class="tag">EasyOCR</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">PM2</span>
+                        <span class="tag">Git</span>
                     </div>
                 </div>
             </div>
