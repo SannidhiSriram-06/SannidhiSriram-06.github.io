@@ -1,182 +1,175 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Theme Toggle
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
+/* ── Progress bar ─────────────────────────────────────────── */
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  bar.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, { passive: true });
 
-    // Check for saved theme
-    const savedTheme = localStorage.getItem('theme');
+/* ── Nav scroll state ─────────────────────────────────────── */
+const nav = document.getElementById('nav');
+const heroName = document.querySelector('.hero-name');
+window.addEventListener('scroll', () => {
+  const threshold = heroName ? heroName.getBoundingClientRect().bottom < 80 : scrollY > 40;
+  nav.classList.toggle('scrolled', threshold);
+}, { passive: true });
 
-    // Function to set theme
-    const setTheme = (theme) => {
-        htmlElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+/* ── Active nav link ──────────────────────────────────────── */
+const sectionObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting)
+      document.querySelectorAll('.nav-links a').forEach(a =>
+        a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`)
+      );
+  });
+}, { rootMargin: '-35% 0px -60% 0px' });
+document.querySelectorAll('main section[id]').forEach(s => sectionObs.observe(s));
 
-        if (theme === 'dark') {
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-        } else {
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-        }
+/* ── Scroll reveal ────────────────────────────────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const siblings = [...entry.target.parentElement.querySelectorAll('.reveal:not(.in)')];
+    const idx = siblings.indexOf(entry.target);
+    setTimeout(() => entry.target.classList.add('in'), Math.min(idx * 80, 320));
+    revealObs.unobserve(entry.target);
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── Stat counters ────────────────────────────────────────── */
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(({ isIntersecting, target: el }) => {
+    if (!isIntersecting) return;
+    const target = +el.dataset.count, hasPlus = el.dataset.plus === 'true';
+    const t0 = performance.now();
+    const tick = t => {
+      const p = Math.min((t - t0) / 1200, 1);
+      el.textContent = Math.round((1 - (1 - p) ** 3) * target) + (hasPlus ? '+' : '');
+      if (p < 1) requestAnimationFrame(tick);
     };
+    requestAnimationFrame(tick);
+    countObs.unobserve(el);
+  });
+}, { threshold: 0.7 });
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-    // Initialize theme
-    if (savedTheme) {
-        setTheme(savedTheme);
-    } else {
-        // Default to dark mode as requested
-        setTheme('dark');
+/* ── Apple carousel ───────────────────────────────────────── */
+function initCarousel(trackId, prevId, nextId, dotsId) {
+  const track = document.getElementById(trackId);
+  const prev  = document.getElementById(prevId);
+  const next  = document.getElementById(nextId);
+  const dotsEl= document.getElementById(dotsId);
+  if (!track) return;
+
+  const cards = [...track.children];
+  const N = cards.length;
+  let cur = 0;
+
+  const dots = cards.map((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'c-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Item ${i + 1}`);
+    d.addEventListener('click', () => go(i));
+    dotsEl.appendChild(d);
+    return d;
+  });
+
+  const padL = () => parseInt(getComputedStyle(track).paddingLeft) || 0;
+
+  function go(idx) {
+    cur = Math.max(0, Math.min(idx, N - 1));
+    track.scrollTo({ left: cards[cur].offsetLeft - padL(), behavior: 'smooth' });
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    if (prev) prev.disabled = cur === 0;
+    if (next) next.disabled = cur === N - 1;
+  }
+
+  if (prev) prev.addEventListener('click', () => go(cur - 1));
+  if (next) next.addEventListener('click', () => go(cur + 1));
+
+  let st;
+  track.addEventListener('scroll', () => {
+    clearTimeout(st);
+    st = setTimeout(() => {
+      const offset = track.scrollLeft + padL();
+      let closest = 0, minDist = Infinity;
+      cards.forEach((c, i) => {
+        const dist = Math.abs(c.offsetLeft - offset);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      if (closest !== cur) {
+        cur = closest;
+        dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+        if (prev) prev.disabled = cur === 0;
+        if (next) next.disabled = cur === N - 1;
+      }
+    }, 60);
+  }, { passive: true });
+
+  // Drag-to-scroll on desktop
+  let dragStart = null, scrollStart = 0, isDragging = false;
+  track.addEventListener('mousedown', e => {
+    dragStart = e.clientX; scrollStart = track.scrollLeft; isDragging = false;
+    track.style.scrollBehavior = 'auto';
+  });
+  window.addEventListener('mousemove', e => {
+    if (dragStart === null) return;
+    const dx = dragStart - e.clientX;
+    if (Math.abs(dx) > 4) { isDragging = true; track.scrollLeft = scrollStart + dx; }
+  });
+  window.addEventListener('mouseup', e => {
+    if (isDragging) {
+      e.preventDefault();
+      const offset = track.scrollLeft + padL();
+      let closest = 0, minDist = Infinity;
+      cards.forEach((c, i) => {
+        const dist = Math.abs(c.offsetLeft - offset);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      track.style.scrollBehavior = 'smooth';
+      go(closest);
     }
+    dragStart = null; isDragging = false;
+  });
+  track.addEventListener('click', e => { if (isDragging) e.preventDefault(); }, true);
 
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-    });
+  if (prev) prev.disabled = true;
+}
 
-    // 2. Mobile Menu Toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    const menuIcon = mobileMenuBtn.querySelector('i');
+initCarousel('proj-track', 'proj-prev', 'proj-next', 'proj-dots');
+initCarousel('cert-track', 'cert-prev', 'cert-next', 'cert-dots');
 
-    const toggleMobileMenu = () => {
-        const isActive = mobileMenuOverlay.classList.toggle('active');
-        if (isActive) {
-            menuIcon.classList.remove('ph-list');
-            menuIcon.classList.add('ph-x');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        } else {
-            menuIcon.classList.remove('ph-x');
-            menuIcon.classList.add('ph-list');
-            document.body.style.overflow = 'auto';
-        }
-    };
-
-    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-    // Close mobile menu when a link is clicked
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', toggleMobileMenu);
-    });
-
-    // 3. Intersection Observer for Fade-Up Animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-
-    const fadeObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: Stop observing once visible if you only want it to fade in once
-                // observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    const fadeElements = document.querySelectorAll('.fade-up');
-    fadeElements.forEach(el => fadeObserver.observe(el));
-
-    // 4. Highlight Active Nav Link on Scroll
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    const scrollObserverOptions = {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
-    };
-
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Remove active from all
-                navLinks.forEach(link => link.classList.remove('active'));
-
-                // Add active to current
-                const currentId = entry.target.getAttribute('id');
-                const activeLink = document.querySelector(`.nav-links a[href="#${currentId}"]`);
-                if (activeLink) activeLink.classList.add('active');
-            }
-        });
-    }, scrollObserverOptions);
-
-    sections.forEach(section => scrollObserver.observe(section));
-
-    // 5. Navbar styling on scroll
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
-    // 6. Terminal Typing Effect for Hero Role
-    const roleElement = document.querySelector('.hero-role');
-    if (roleElement) {
-        // Only get text nodes (ignore the span.cursor)
-        let textContent = '';
-        roleElement.childNodes.forEach(node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                textContent += node.textContent;
-            }
-        });
-
-        const fullText = textContent.trim();
-        const cursorHTML = '<span class="cursor">▎</span>';
-
-        // Clear text immediately 
-        roleElement.innerHTML = cursorHTML;
-
-        let i = 0;
-        const typeWriter = () => {
-            if (i < fullText.length) {
-                // Insert character before cursor
-                roleElement.innerHTML = fullText.substring(0, i + 1) + cursorHTML;
-                i++;
-                // Randomize typing speed for realism (50ms to 100ms)
-                setTimeout(typeWriter, Math.random() * 50 + 50);
-            }
-        };
-
-        // Start typing after a short delay (e.g. 500ms)
-        setTimeout(typeWriter, 500);
-    }
-
-    // 7. Animated Stat Counters
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const counterObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const target = parseInt(el.textContent, 10);
-                if (isNaN(target)) return;
-                el.textContent = '0';
-                const duration = 1500;
-                const startTime = performance.now();
-
-                const animate = (currentTime) => {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    // Ease-out cubic
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.round(eased * target);
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    }
-                };
-                requestAnimationFrame(animate);
-                observer.unobserve(el);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(el => counterObserver.observe(el));
+/* ── Side scroll navigation ───────────────────────────────── */
+const sideItems = document.querySelectorAll('.sn-item[data-section]');
+const sideObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting)
+      sideItems.forEach(item =>
+        item.classList.toggle('sn-active', item.dataset.section === e.target.id)
+      );
+  });
+}, { rootMargin: '-28% 0px -68% 0px' });
+document.querySelectorAll('section[id]').forEach(s => {
+  if (s.id !== 'achievement') sideObs.observe(s);
 });
+
+/* ── Apple Intelligence gradient ring ─────────────────────── */
+const aiRing = document.getElementById('ai-ring');
+let aiTimer;
+function flashRing() {
+  if (!aiRing) return;
+  clearTimeout(aiTimer);
+  aiRing.classList.add('active');
+  aiTimer = setTimeout(() => aiRing.classList.remove('active'), 1400);
+}
+document.querySelectorAll('a[target="_blank"], .proj-link, .contact-links a').forEach(el => {
+  el.addEventListener('click', flashRing);
+});
+
+/* ── Mobile menu ──────────────────────────────────────────── */
+const menuBtn = document.getElementById('navMenu');
+const drawer  = document.getElementById('drawer');
+const openMenu  = () => { menuBtn.classList.add('open'); drawer.classList.add('open'); document.body.style.overflow = 'hidden'; };
+const closeMenu = () => { menuBtn.classList.remove('open'); drawer.classList.remove('open'); document.body.style.overflow = ''; };
+menuBtn.addEventListener('click', () => drawer.classList.contains('open') ? closeMenu() : openMenu());
+document.querySelectorAll('.drawer-links a').forEach(a => a.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
