@@ -15,10 +15,11 @@
   --text-2: #4a5e78;
   --text-3: #9aaec4;
 
-  /* Glass tokens — nav pill only */
-  --glass-bg:     rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.88);
+  /* Glass tokens — applied to all surfaces */
+  --glass-bg:     rgba(255, 255, 255, 0.68);
+  --glass-border: rgba(255, 255, 255, 0.85);
   --glass-blur:   blur(22px) saturate(1.8);
+  --glass-bg-nav: rgba(237, 240, 250, 0.78);
 
   /* Squircle drop-shadows — applied via filter chain */
   --sq-shadow:       drop-shadow(0 2px 10px rgba(26,71,204,0.07)) drop-shadow(0 1px 3px rgba(0,0,0,0.05));
@@ -201,8 +202,10 @@ img { display: block; }
 }
 .btn-ghost {
   display: inline-flex; align-items: center;
-  background: rgba(255,255,255,0.7);
-  border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   color: var(--text-2);
   font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 14px 32px; border-radius: 14px;
@@ -251,12 +254,14 @@ img { display: block; }
 .hero-desc { font-size: 15px; color: var(--text-2); line-height: 1.9; }
 .hero-ctas { display: flex; gap: 12px; flex-shrink: 0; }
 
-/* Stats bar — squircle white card */
+/* Stats bar — glass */
 .hero-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
   margin-top: 72px; width: 100%;
-  background: var(--card);
-  border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   filter: url(#squircle) var(--sq-shadow);
 }
@@ -292,8 +297,10 @@ section { position: relative; }
 .skill-chip {
   display: flex; align-items: center; gap: 7px;
   padding: 7px 14px;
-  background: var(--card);
-  border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   font-size: 12px; color: var(--text-2); letter-spacing: 0.02em;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
@@ -317,8 +324,10 @@ section { position: relative; }
 .c-btn {
   width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--card);
-  border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 50%;
   color: var(--text-2); font-size: 17px; cursor: pointer;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
@@ -338,10 +347,12 @@ section { position: relative; }
 #proj-track .proj-card { flex: 0 0 460px; scroll-snap-align: start; }
 #cert-track .cert-card { flex: 0 0 230px; scroll-snap-align: start; }
 
-/* Project cards — squircle white */
+/* Project cards — squircle glass */
 .proj-card {
-  background: var(--card);
-  border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   overflow: hidden;
   display: flex; flex-direction: column; position: relative;
@@ -376,8 +387,9 @@ section { position: relative; }
 .proj-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 2px; }
 .proj-tags span {
   font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--text-3); background: var(--surface);
-  border: 1px solid var(--border); padding: 3px 8px; border-radius: 8px;
+  color: var(--text-3); background: rgba(255,255,255,0.50);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.70); padding: 3px 8px; border-radius: 8px;
   filter: url(#squircle-sm);
   transition: border-color 0.2s, color 0.2s;
 }
@@ -385,8 +397,9 @@ section { position: relative; }
 .proj-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .proj-link {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-2); background: var(--surface);
-  border: 1px solid var(--border-2); padding: 6px 12px; border-radius: 10px;
+  color: var(--text-2); background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.80); padding: 6px 12px; border-radius: 10px;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
   transition: color 0.2s, border-color 0.2s, filter 0.2s;
 }
@@ -396,7 +409,10 @@ section { position: relative; }
 
 /* ── EXPERIENCE ───────────────────────────────────────────── */
 .exp-block {
-  background: var(--card); border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 24px; padding: 48px 52px;
   filter: url(#squircle) var(--sq-shadow);
 }
@@ -411,7 +427,10 @@ section { position: relative; }
 .exp-list strong { color: var(--text); font-weight: 500; }
 .exp-cert {
   flex-shrink: 0; width: 320px;
-  background: var(--card); border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 16px; overflow: hidden; position: relative;
   filter: url(#squircle) var(--sq-shadow);
   transition: filter 0.3s, border-color 0.3s;
@@ -423,7 +442,10 @@ section { position: relative; }
 .achievement-block {
   display: flex; align-items: center; gap: 40px;
   padding: 44px 52px;
-  background: var(--card); border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-left: 3px solid var(--accent);
   border-radius: 24px;
   filter: url(#squircle) var(--sq-shadow);
@@ -439,7 +461,10 @@ section { position: relative; }
 /* ── CERTIFICATIONS ───────────────────────────────────────── */
 .cert-card {
   display: flex; flex-direction: column;
-  background: var(--card); border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 20px; overflow: hidden;
   color: var(--text); position: relative;
   filter: url(#squircle) var(--sq-shadow);
@@ -476,7 +501,10 @@ section { position: relative; }
 
 #contact-form {
   display: flex; flex-direction: column; gap: 28px;
-  background: var(--card); border: 1px solid var(--border-2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: 24px; padding: 40px 36px;
   filter: url(#squircle) var(--sq-shadow);
 }
@@ -492,8 +520,10 @@ section { position: relative; }
 .btn-cv {
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-2); background: rgba(255,255,255,0.7);
-  border: 1px solid var(--border-2); padding: 10px 22px; border-radius: 14px;
+  color: var(--text-2); background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); padding: 10px 22px; border-radius: 14px;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
   transition: color 0.2s, border-color 0.2s, filter 0.2s;
 }
@@ -510,7 +540,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 .sn-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border-2); flex-shrink: 0; transition: background 0.3s var(--ease), transform 0.4s var(--ease); }
 .sn-label {
   font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-2); background: var(--card); border: 1px solid var(--border-2);
+  color: var(--text-2); background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   padding: 5px 12px; border-radius: 12px; white-space: nowrap;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
   opacity: 0; transform: translateX(8px);
