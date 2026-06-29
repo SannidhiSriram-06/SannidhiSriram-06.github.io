@@ -309,43 +309,51 @@ section { position: relative; }
 .skill-chip:hover { border-color: var(--accent-bdr); color: var(--text); filter: url(#squircle-sm) var(--sq-shadow-sm-hover); transform: translateY(-2px); }
 .skill-chip img { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
 
-/* ── PROJECTS — carousel ──────────────────────────────────── */
-.carousel-track {
-  display: flex; gap: 20px;
-  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-  padding: 24px 56px 12px; margin: 0 -56px;
-  -webkit-overflow-scrolling: touch; scrollbar-width: none; cursor: grab;
+/* ── PROJECTS / CERTS — Swiper 3D coverflow ───────────────── */
+.proj-swiper,
+.cert-swiper {
+  width: 100%;
+  padding: 24px 0 64px !important;
+  overflow: visible;
 }
-.carousel-track:active { cursor: grabbing; }
-.carousel-track::-webkit-scrollbar { display: none; }
 
-.carousel-controls { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 16px; padding-top: 24px; }
+.proj-swiper .swiper-slide { width: 460px; height: auto; }
+.cert-swiper .swiper-slide { width: 260px; height: auto; }
 
-.c-btn {
+/* Swiper pagination bullets */
+.swiper-pagination-bullet {
+  background: var(--border-2); opacity: 1;
+  width: 7px; height: 7px;
+  transition: background 0.3s, width 0.35s var(--ease);
+}
+.swiper-pagination-bullet-active {
+  background: var(--accent) !important;
+  width: 22px; border-radius: 10px;
+}
+
+/* Swiper nav arrows */
+.swiper-button-next,
+.swiper-button-prev {
   width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   border-radius: 50%;
-  color: var(--text-2); font-size: 17px; cursor: pointer;
   filter: url(#squircle-sm) var(--sq-shadow-sm);
-  transition: filter 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  color: var(--text-2) !important;
+  --swiper-navigation-size: 16px;
+  transition: color 0.2s, border-color 0.2s, filter 0.25s;
+  top: 40%;
 }
-.c-btn:hover:not(:disabled) { color: var(--accent); border-color: var(--accent-bdr); filter: url(#squircle-sm) var(--sq-shadow-sm-hover); transform: scale(1.08); }
-.c-btn:disabled { opacity: 0.3; cursor: default; }
-
-.c-dots { display: flex; gap: 6px; align-items: center; justify-content: center; }
-.c-dot {
-  width: 7px; height: 7px; border-radius: 10px;
-  background: var(--border-2); border: none; padding: 0; cursor: pointer;
-  transition: background 0.3s, width 0.35s var(--ease);
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: var(--accent) !important;
+  border-color: var(--accent-bdr);
+  filter: url(#squircle-sm) var(--sq-shadow-sm-hover);
 }
-.c-dot.active { background: var(--accent); width: 22px; }
-
-#proj-track .proj-card { flex: 0 0 460px; scroll-snap-align: start; }
-#cert-track .cert-card { flex: 0 0 230px; scroll-snap-align: start; }
+.swiper-button-next::after,
+.swiper-button-prev::after { font-size: 14px; font-weight: 600; }
 
 /* Project cards — squircle glass */
 .proj-card {
@@ -479,6 +487,18 @@ section { position: relative; }
 .cert-name { font-size: 12px; color: var(--text); line-height: 1.4; transition: color 0.2s; }
 .cert-card:hover .cert-name { color: var(--accent); }
 .cert-name em { font-style: normal; font-family: var(--mono); font-size: 9px; color: var(--text-3); margin-left: 4px; }
+.cert-desc { font-size: 11px; color: var(--text-2); line-height: 1.65; margin-top: 6px; }
+.cert-verify-btn {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); background: rgba(26,71,204,0.06);
+  border: 1px solid var(--accent-bdr);
+  padding: 5px 12px; border-radius: 8px;
+  margin-top: 10px; width: fit-content;
+  transition: background 0.2s, border-color 0.2s;
+}
+.cert-verify-btn:hover { background: rgba(26,71,204,0.12); }
 
 /* ── EDUCATION ────────────────────────────────────────────── */
 .edu-list { display: flex; flex-direction: column; }
@@ -555,8 +575,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  #proj-track .proj-card { flex: 0 0 380px; }
-  #cert-track .cert-card { flex: 0 0 200px; }
+  .proj-swiper .swiper-slide { width: 380px; }
+  .cert-swiper .swiper-slide { width: 220px; }
   #side-nav { display: none; }
 }
 @media (max-width: 1024px) {
@@ -578,9 +598,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   .container { padding: 0 24px; }
   #about, #projects, #experience, #certifications, #education, #contact { padding: 100px 0; }
   #achievement { padding: 60px 0; }
-  .carousel-track { margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
-  #proj-track .proj-card { flex: 0 0 82vw; }
-  #cert-track .cert-card { flex: 0 0 200px; }
+  .proj-swiper .swiper-slide { width: 82vw; }
+  .cert-swiper .swiper-slide { width: 220px; }
   .contact-grid { grid-template-columns: 1fr; gap: 56px; }
   .form-row { grid-template-columns: 1fr; }
   .achievement-block { padding: 28px 24px; gap: 20px; flex-wrap: wrap; }
@@ -592,6 +611,6 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   #contact-form { padding: 28px 20px; }
 }
 @media (max-width: 480px) {
-  #cert-track .cert-card { flex: 0 0 72vw; }
-  #proj-track .proj-card { flex: 0 0 88vw; }
+  .cert-swiper .swiper-slide { width: 72vw; }
+  .proj-swiper .swiper-slide { width: 88vw; }
 }

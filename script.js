@@ -52,99 +52,35 @@ const countObs = new IntersectionObserver(entries => {
 }, { threshold: 0.7 });
 document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-/* ── Carousel — reliable dot sync via getBoundingClientRect ── */
-function initCarousel(trackId, prevId, nextId, dotsId) {
-  const track  = document.getElementById(trackId);
-  const prev   = document.getElementById(prevId);
-  const next   = document.getElementById(nextId);
-  const dotsEl = document.getElementById(dotsId);
-  if (!track) return;
+/* ── Swiper 3D Coverflow carousels ────────────────────────── */
+const swiperConfig = {
+  effect: 'coverflow',
+  grabCursor: true,
+  centeredSlides: true,
+  slidesPerView: 'auto',
+  loop: false,
+  coverflowEffect: {
+    rotate: 0,
+    stretch: 0,
+    depth: 100,
+    modifier: 2.5,
+    slideShadows: false,
+  },
+  pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: false },
+  navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+};
 
-  const cards = [...track.children];
-  const N = cards.length;
-  let cur = 0;
+new Swiper('.proj-swiper', {
+  ...swiperConfig,
+  pagination: { el: '.proj-swiper .swiper-pagination', clickable: true },
+  navigation: { nextEl: '.proj-swiper .swiper-button-next', prevEl: '.proj-swiper .swiper-button-prev' },
+});
 
-  /* Build dots */
-  const dots = cards.map((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'c-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', `Item ${i + 1}`);
-    d.addEventListener('click', () => go(i));
-    dotsEl.appendChild(d);
-    return d;
-  });
-
-  function syncUI(idx) {
-    cur = idx;
-    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
-    if (prev) prev.disabled = cur === 0;
-    if (next) next.disabled = cur === N - 1;
-  }
-
-  /* Scroll to card idx — uses viewport coords so it's always accurate */
-  function go(idx) {
-    const target = Math.max(0, Math.min(idx, N - 1));
-    const padL = parseFloat(getComputedStyle(track).paddingLeft) || 0;
-    const trackRect = track.getBoundingClientRect();
-    const cardRect  = cards[target].getBoundingClientRect();
-    const delta = cardRect.left - trackRect.left - padL;
-    track.scrollBy({ left: delta, behavior: 'smooth' });
-    syncUI(target);
-  }
-
-  /* Dot sync on scroll — find the card whose center is closest to track center */
-  track.addEventListener('scroll', () => {
-    const trackRect = track.getBoundingClientRect();
-    const trackCx   = trackRect.left + track.clientWidth / 2;
-    let best = 0, minDist = Infinity;
-    cards.forEach((c, i) => {
-      const r = c.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const dist = Math.abs(cx - trackCx);
-      if (dist < minDist) { minDist = dist; best = i; }
-    });
-    if (best !== cur) syncUI(best);
-  }, { passive: true });
-
-  if (prev) prev.addEventListener('click', () => go(cur - 1));
-  if (next) next.addEventListener('click', () => go(cur + 1));
-
-  /* Drag-to-scroll on desktop */
-  let dragStart = null, scrollStart = 0, isDragging = false;
-  track.addEventListener('mousedown', e => {
-    dragStart = e.clientX; scrollStart = track.scrollLeft; isDragging = false;
-    track.style.scrollBehavior = 'auto';
-  });
-  window.addEventListener('mousemove', e => {
-    if (dragStart === null) return;
-    const dx = dragStart - e.clientX;
-    if (Math.abs(dx) > 4) { isDragging = true; track.scrollLeft = scrollStart + dx; }
-  });
-  window.addEventListener('mouseup', e => {
-    if (isDragging) {
-      e.preventDefault();
-      /* After drag-release, snap to nearest card */
-      const trackRect = track.getBoundingClientRect();
-      const trackCx   = trackRect.left + track.clientWidth / 2;
-      let best = 0, minDist = Infinity;
-      cards.forEach((c, i) => {
-        const r = c.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const dist = Math.abs(cx - trackCx);
-        if (dist < minDist) { minDist = dist; best = i; }
-      });
-      track.style.scrollBehavior = 'smooth';
-      go(best);
-    }
-    dragStart = null; isDragging = false;
-  });
-  track.addEventListener('click', e => { if (isDragging) e.preventDefault(); }, true);
-
-  syncUI(0);
-}
-
-initCarousel('proj-track', 'proj-prev', 'proj-next', 'proj-dots');
-initCarousel('cert-track', 'cert-prev', 'cert-next', 'cert-dots');
+new Swiper('.cert-swiper', {
+  ...swiperConfig,
+  pagination: { el: '.cert-swiper .swiper-pagination', clickable: true },
+  navigation: { nextEl: '.cert-swiper .swiper-button-next', prevEl: '.cert-swiper .swiper-button-prev' },
+});
 
 /* ── Side scroll navigation ───────────────────────────────── */
 const sideItems = document.querySelectorAll('.sn-item[data-section]');

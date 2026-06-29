@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -36,16 +37,14 @@
   <a href="#contact"        class="sn-item" data-section="contact">        <span class="sn-label">06 · Contact</span>   <span class="sn-dot"></span></a>
 </nav>
 
-<!-- Apple squircle SVG filter — nav pill only -->
+<!-- Squircle SVG filters -->
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
-    <!-- Large squircle — cards, blocks, forms (stdDeviation 10) -->
     <filter id="squircle" color-interpolation-filters="sRGB" x="-12%" y="-12%" width="124%" height="124%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
       <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq"/>
       <feComposite in="SourceGraphic" in2="sq" operator="in"/>
     </filter>
-    <!-- Small squircle — chips, badges, buttons (stdDeviation 6) -->
     <filter id="squircle-sm" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
       <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq"/>
@@ -67,7 +66,6 @@
 
   <!-- ── HERO ── -->
   <section id="hero">
-    <!-- Compass rose — single architectural mark for the whole site -->
     <svg class="sec-bg-art" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="100" cy="100" r="88" stroke="currentColor" stroke-width="0.75"/>
       <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="0.4" stroke-dasharray="3 5"/>
@@ -190,111 +188,125 @@
     <div class="container">
       <div class="sec-label reveal">02 — Selected Work</div>
       <h2 class="sec-heading reveal">Projects</h2>
-      <div class="carousel-track" id="proj-track">
+    </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/icons/UPI_Anomaly.jpeg" alt="UPI Anomaly Explainer" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">01</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">UPI Transaction Anomaly Explainer</h3>
-            <p class="proj-desc">Three-agent CrewAI sequential workflow — Analyst, Explainer, Red Team — with task.context chaining to eliminate redundant LLM calls. Rule-based heuristics pre-filter velocity spikes, amount anomalies, and odd-hour transactions before LLM invocation, cutting Groq API calls to stay within free-tier. LiteLLM left unpinned for pip to auto-resolve compatibility with crewai==1.14.3. Dockerised and deployed live on Hugging Face Spaces.</p>
-            <div class="proj-tags"><span>Python</span><span>CrewAI</span><span>Groq API</span><span>LiteLLM</span><span>Flask</span><span>pandas</span><span>Docker</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/upi-anomaly-explainer" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
-              <a href="https://huggingface.co/spaces/SannidhiSriram/upi-anomaly-explainer" target="_blank" rel="noopener" class="proj-link accent">Live Demo ↗</a>
+    <!-- Swiper 3D Coverflow -->
+    <div class="swiper proj-swiper reveal">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/icons/UPI_Anomaly.jpeg" alt="UPI Anomaly Explainer" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">01</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">UPI Transaction Anomaly Explainer</h3>
+              <p class="proj-desc">Three-agent CrewAI sequential workflow — Analyst, Explainer, Red Team — with task.context chaining to eliminate redundant LLM calls. Rule-based heuristics pre-filter velocity spikes, amount anomalies, and odd-hour transactions before LLM invocation, cutting Groq API calls to stay within free-tier. LiteLLM left unpinned for pip to auto-resolve compatibility with crewai==1.14.3. Dockerised and deployed live on Hugging Face Spaces.</p>
+              <div class="proj-tags"><span>Python</span><span>CrewAI</span><span>Groq API</span><span>LiteLLM</span><span>Flask</span><span>pandas</span><span>Docker</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/upi-anomaly-explainer" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+                <a href="https://huggingface.co/spaces/Sannidhi-Sriram/upi-anomaly-explainer" target="_blank" rel="noopener" class="proj-link accent">Live Demo ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/icons/Grafana.jpeg" alt="Cloud Security Observability" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">02</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">Observability Fargate</h3>
-            <p class="proj-desc">Containerised Prometheus + Grafana on ECS Fargate (zero EC2) provisioned entirely via Terraform — custom linux/amd64 Prometheus image pushed to ECR, scraping live metrics including prometheus_http_requests_total in real time. Grafana alert rule evaluates PromQL every 1 min, simulating SRE incident detection. Full VPC, 2-AZ subnets, security groups, and least-privilege IAM via Terraform — zero manual cloud console intervention.</p>
-            <div class="proj-tags"><span>Prometheus</span><span>Grafana</span><span>PromQL</span><span>ECS Fargate</span><span>Terraform</span><span>Docker</span><span>ECR</span><span>IAM</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/icons/Grafana.jpeg" alt="Observability Fargate" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">02</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">Observability Fargate</h3>
+              <p class="proj-desc">Containerised Prometheus + Grafana on ECS Fargate (zero EC2) provisioned entirely via Terraform — custom linux/amd64 Prometheus image pushed to ECR, scraping live metrics including prometheus_http_requests_total in real time. Grafana alert rule evaluates PromQL every 1 min, simulating SRE incident detection. Full VPC, 2-AZ subnets, security groups, and least-privilege IAM via Terraform — zero manual cloud console intervention.</p>
+              <div class="proj-tags"><span>Prometheus</span><span>Grafana</span><span>PromQL</span><span>ECS Fargate</span><span>Terraform</span><span>Docker</span><span>ECR</span><span>IAM</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/media/kyc-compliance.png" alt="AI KYC Compliance" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">03</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">AI-Powered KYC Compliance System</h3>
-            <p class="proj-desc">BFSI-sector AWS KYC system: evaluated SageMaker and Lambda before selecting EC2; deployed three document-specific TFLite CNN classifiers (Aadhaar, PAN, Passport) and a PyTorch GNN fraud scorer with anomaly threshold 2.0 separating Approved from Suspicious verdicts. Groq API and EasyOCR for field extraction; results persisted in MongoDB Atlas and surfaced via React/Vite frontend on S3. Built at Infosys Springboard.</p>
-            <div class="proj-tags"><span>Python Flask</span><span>Groq API</span><span>EasyOCR</span><span>PyTorch</span><span>TFLite</span><span>React/Vite</span><span>MongoDB Atlas</span><span>AWS EC2</span><span>Docker</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/Infosys_AI_KYC_Compliance" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/media/kyc-compliance.png" alt="AI KYC Compliance" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">03</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">AI-Powered KYC Compliance System</h3>
+              <p class="proj-desc">BFSI-sector AWS KYC system: evaluated SageMaker and Lambda before selecting EC2; deployed three document-specific TFLite CNN classifiers (Aadhaar, PAN, Passport) and a PyTorch GNN fraud scorer with anomaly threshold 2.0 separating Approved from Suspicious verdicts. Groq API and EasyOCR for field extraction; results persisted in MongoDB Atlas and surfaced via React/Vite frontend on S3. Built at Infosys Springboard.</p>
+              <div class="proj-tags"><span>Python Flask</span><span>Groq API</span><span>EasyOCR</span><span>PyTorch</span><span>TFLite</span><span>React/Vite</span><span>MongoDB Atlas</span><span>AWS EC2</span><span>Docker</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/Infosys_AI_KYC_Compliance" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/icons/Gitops Arch.jpeg" alt="AI Test Generator" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">04</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">AI Test Generator — Automated QA Pipeline</h3>
-            <p class="proj-desc">FastAPI microservice converting Python source to executable pytest suites via Groq LLaMA 3.1 — rate-limited (5 req/min), input-validated; achieves 87% self-coverage. Jenkins enforces a 70% coverage gate; passing builds produce immutably tagged images (BUILD_NUMBER-COMMIT_SHA), push to AWS ECR, and update the GitOps repo — ArgoCD auto-syncs the Helm release to Minikube. Commit-to-pod with zero manual steps.</p>
-            <div class="proj-tags"><span>FastAPI</span><span>Groq API</span><span>Jenkins</span><span>Docker</span><span>AWS ECR</span><span>Kubernetes</span><span>ArgoCD</span><span>Helm</span><span>Terraform</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/icons/Gitops Arch.jpeg" alt="AI Test Generator" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">04</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">AI Test Generator — Automated QA Pipeline</h3>
+              <p class="proj-desc">FastAPI microservice converting Python source to executable pytest suites via Groq LLaMA 3.1 — rate-limited (5 req/min), input-validated; achieves 87% self-coverage. Jenkins enforces a 70% coverage gate; passing builds produce immutably tagged images (BUILD_NUMBER-COMMIT_SHA), push to AWS ECR, and update the GitOps repo — ArgoCD auto-syncs the Helm release to Minikube. Commit-to-pod with zero manual steps.</p>
+              <div class="proj-tags"><span>FastAPI</span><span>Groq API</span><span>Jenkins</span><span>Docker</span><span>AWS ECR</span><span>Kubernetes</span><span>ArgoCD</span><span>Helm</span><span>Terraform</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/media/Springboot.png" alt="Self-Healing Microservice" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">05</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">Self-Healing Microservice on AWS</h3>
-            <p class="proj-desc">Four-layer fault recovery: Spring Boot /actuator/health signals liveness; container health checks auto-restart on failure; ALB isolates unhealthy instances within 30s; ASG terminates and replaces failed EC2s — zero manual intervention. Full AWS stack (VPC, multi-AZ ALB, ASG, IAM) via Terraform; GitHub Actions runs Snyk SAST/SCA on every push — high-severity findings block Docker push to ECR. Automated self-healing across all four fault layers, simulating production-grade SRE incident response.</p>
-            <div class="proj-tags"><span>Java</span><span>Spring Boot</span><span>Docker</span><span>Terraform</span><span>AWS EC2 ASG</span><span>ALB</span><span>CloudWatch</span><span>GitHub Actions</span><span>Snyk</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/media/Springboot.png" alt="Self-Healing Microservice" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">05</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">Self-Healing Microservice on AWS</h3>
+              <p class="proj-desc">Four-layer fault recovery: Spring Boot /actuator/health signals liveness; container health checks auto-restart on failure; ALB isolates unhealthy instances within 30s; ASG terminates and replaces failed EC2s — zero manual intervention. Full AWS stack (VPC, multi-AZ ALB, ASG, IAM) via Terraform; GitHub Actions runs Snyk SAST/SCA on every push — high-severity findings block Docker push to ECR.</p>
+              <div class="proj-tags"><span>Java</span><span>Spring Boot</span><span>Docker</span><span>Terraform</span><span>AWS EC2 ASG</span><span>ALB</span><span>CloudWatch</span><span>GitHub Actions</span><span>Snyk</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="proj-card">
-          <div class="proj-img-frame">
-            <img src="assets/media/Azure Architecture Diagram.png" alt="AI Patient Triage" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-            <div class="proj-num-badge">06</div>
-          </div>
-          <div class="proj-body">
-            <h3 class="proj-title">AI Patient Triage — Azure</h3>
-            <p class="proj-desc">Flask app on Azure App Service integrating Azure OpenAI GPT-4o for real-time symptom triage — classifies as Urgent Care, Non-Urgent, or Self Care with structured JSON responses including priority, reasoning, and recommended action. Every request and LLM response logged to Azure Table Storage for full auditability; monitored via Azure Monitor. Production-style separation of compute, inference, and storage layers with no hardcoded secrets.</p>
-            <div class="proj-tags"><span>Python Flask</span><span>Azure OpenAI</span><span>Azure App Service</span><span>Azure Table Storage</span><span>Azure Monitor</span></div>
-            <div class="proj-links">
-              <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+        <div class="swiper-slide">
+          <div class="proj-card">
+            <div class="proj-img-frame">
+              <img src="assets/media/Azure Architecture Diagram.png" alt="AI Patient Triage" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+              <div class="proj-num-badge">06</div>
+            </div>
+            <div class="proj-body">
+              <h3 class="proj-title">AI Patient Triage — Azure</h3>
+              <p class="proj-desc">Flask app on Azure App Service integrating Azure OpenAI GPT-4o for real-time symptom triage — classifies as Urgent Care, Non-Urgent, or Self Care with structured JSON responses including priority, reasoning, and recommended action. Every request and LLM response logged to Azure Table Storage for full auditability; monitored via Azure Monitor. No hardcoded secrets, production-style separation of compute, inference, and storage layers.</p>
+              <div class="proj-tags"><span>Python Flask</span><span>Azure OpenAI</span><span>Azure App Service</span><span>Azure Table Storage</span><span>Azure Monitor</span></div>
+              <div class="proj-links">
+                <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+              </div>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="carousel-controls">
-        <button class="c-btn" id="proj-prev" aria-label="Previous project" disabled>&#8592;</button>
-        <div class="c-dots" id="proj-dots"></div>
-        <button class="c-btn" id="proj-next" aria-label="Next project">&#8594;</button>
-      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
   </section>
 
@@ -336,14 +348,6 @@
         </div>
         <div class="ach-badge">500</div>
       </div>
-      <div class="achievement-block reveal" style="margin-top: 16px;">
-        <div class="ach-label">Achievement</div>
-        <div class="ach-body">
-          <h3 class="ach-title">Kaggle Model Creator</h3>
-          <p class="ach-sub">Published a machine learning model on <strong>Kaggle Models</strong></p>
-        </div>
-        <div class="ach-badge" style="font-size:40px;">ML</div>
-      </div>
     </div>
   </section>
 
@@ -352,62 +356,106 @@
     <div class="container">
       <div class="sec-label reveal">04 — Credentials</div>
       <h2 class="sec-heading reveal">Certifications</h2>
-      <div class="carousel-track" id="cert-track">
+    </div>
 
-        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/OCI25DOPOCP.jpg" alt="OCI DevOps Professional" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
-          </div>
-          <div class="cert-info"><span class="cert-issuer">Oracle · Sep 2025</span><span class="cert-name">OCI DevOps Professional 2025</span></div>
-        </a>
+    <!-- Swiper 3D Coverflow -->
+    <div class="swiper cert-swiper reveal">
+      <div class="swiper-wrapper">
 
-        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/OCI25OMCP.jpg" alt="OCI Observability" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/OCI25DOPOCP.jpg" alt="OCI DevOps Professional" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Oracle · Sep 2025</span>
+              <span class="cert-name">OCI DevOps Professional 2025</span>
+              <p class="cert-desc">Validates expertise in CI/CD pipelines, containerised microservices, and IaC on OCI. Covers OCI DevOps service, Container Instances, Kubernetes deployments, and DevSecOps practices.</p>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
           </div>
-          <div class="cert-info"><span class="cert-issuer">Oracle · Aug 2025</span><span class="cert-name">OCI Observability Professional 2025</span></div>
-        </a>
+        </div>
 
-        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/OCI2025MCAOCP.jpeg" alt="OCI Multicloud Architect" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/OCI25OMCP.jpg" alt="OCI Observability Professional" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Oracle · Aug 2025</span>
+              <span class="cert-name">OCI Observability Professional 2025</span>
+              <p class="cert-desc">Covers the full OCI observability stack — Monitoring, Logging, Logging Analytics, Stack Monitoring, and APM. Targeted at SREs and cloud architects who need end-to-end visibility into cloud workloads.</p>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
           </div>
-          <div class="cert-info"><span class="cert-issuer">Oracle · Aug 2025</span><span class="cert-name">OCI Multicloud Architect 2025</span></div>
-        </a>
+        </div>
 
-        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/OCI25GAIOCP.jpg" alt="OCI Gen AI Professional" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/OCI2025MCAOCP.jpeg" alt="OCI Multicloud Architect" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Oracle · Aug 2025</span>
+              <span class="cert-name">OCI Multicloud Architect 2025</span>
+              <p class="cert-desc">Validates skills in designing cross-cloud architectures spanning OCI, Azure, and GCP. Covers multicloud networking, Oracle Database@Azure and @Google Cloud, and cross-provider identity and connectivity.</p>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
           </div>
-          <div class="cert-info"><span class="cert-issuer">Oracle · Aug 2025</span><span class="cert-name">OCI Gen AI Professional 2025</span></div>
-        </a>
+        </div>
 
-        <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/azure-fundamentals.png" alt="Azure AI Fundamentals AI-900" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/OCI25GAIOCP.jpg" alt="OCI Gen AI Professional" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Oracle · Aug 2025</span>
+              <span class="cert-name">OCI Gen AI Professional 2025</span>
+              <p class="cert-desc">Deep-dives into LLMs, OCI Generative AI service, and RAG using Oracle Database 23ai and LangChain. Covers building production-grade RAG chatbots and agents with the OCI Gen AI RAG Agents service.</p>
+              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
           </div>
-          <div class="cert-info"><span class="cert-issuer">Microsoft · Jun 2025</span><span class="cert-name">Azure AI Fundamentals <em>AI-900</em></span></div>
-        </a>
+        </div>
 
-        <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8" target="_blank" rel="noopener" class="cert-card">
-          <div class="cert-img-frame">
-            <img src="assets/media/azure-fundamentals.png" alt="Azure Fundamentals AZ-900" loading="lazy" />
-            <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/azure-fundamentals.png" alt="Azure AI Fundamentals AI-900" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Microsoft · Jun 2025</span>
+              <span class="cert-name">Azure AI Fundamentals <em>AI-900</em></span>
+              <p class="cert-desc">Covers foundational AI and ML concepts on Azure — computer vision, NLP, and generative AI workloads. Entry-level certification for both technical and non-technical professionals entering the AI space.</p>
+              <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
           </div>
-          <div class="cert-info"><span class="cert-issuer">Microsoft · Jan 2025</span><span class="cert-name">Azure Fundamentals <em>AZ-900</em></span></div>
-        </a>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="cert-card">
+            <div class="cert-img-frame">
+              <img src="assets/media/azure-fundamentals.png" alt="Azure Fundamentals AZ-900" loading="lazy" />
+              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
+            </div>
+            <div class="cert-info">
+              <span class="cert-issuer">Microsoft · Jan 2025</span>
+              <span class="cert-name">Azure Fundamentals <em>AZ-900</em></span>
+              <p class="cert-desc">Validates foundational knowledge of cloud concepts and core Azure services — compute, networking, storage, security, and governance. The standard starting point for any Azure cloud career path.</p>
+              <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8" target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
+            </div>
+          </div>
+        </div>
 
       </div>
-      <div class="carousel-controls">
-        <button class="c-btn" id="cert-prev" aria-label="Previous credential" disabled>&#8592;</button>
-        <div class="c-dots" id="cert-dots"></div>
-        <button class="c-btn" id="cert-next" aria-label="Next credential">&#8594;</button>
-      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
   </section>
 
@@ -468,6 +516,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
