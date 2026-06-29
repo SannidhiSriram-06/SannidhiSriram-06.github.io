@@ -152,19 +152,6 @@ document.querySelectorAll('section[id]').forEach(s => {
   if (s.id !== 'achievement') sideObs.observe(s);
 });
 
-/* ── Apple Intelligence gradient ring ─────────────────────── */
-const aiRing = document.getElementById('ai-ring');
-let aiTimer;
-function flashRing() {
-  if (!aiRing) return;
-  clearTimeout(aiTimer);
-  aiRing.classList.add('active');
-  aiTimer = setTimeout(() => aiRing.classList.remove('active'), 1400);
-}
-document.querySelectorAll('a[target="_blank"], .proj-link, .contact-links a').forEach(el => {
-  el.addEventListener('click', flashRing);
-});
-
 /* ── Mobile menu ──────────────────────────────────────────── */
 const menuBtn = document.getElementById('navMenu');
 const drawer  = document.getElementById('drawer');
