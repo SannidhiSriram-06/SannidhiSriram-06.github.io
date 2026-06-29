@@ -39,11 +39,11 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 const countObs = new IntersectionObserver(entries => {
   entries.forEach(({ isIntersecting, target: el }) => {
     if (!isIntersecting) return;
-    const target = +el.dataset.count, hasPlus = el.dataset.plus === 'true';
+    const target = +el.dataset.count;
     const t0 = performance.now();
     const tick = t => {
       const p = Math.min((t - t0) / 1200, 1);
-      el.textContent = Math.round((1 - (1 - p) ** 3) * target) + (hasPlus ? '+' : '');
+      el.textContent = Math.round((1 - (1 - p) ** 3) * target);
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -52,18 +52,19 @@ const countObs = new IntersectionObserver(entries => {
 }, { threshold: 0.7 });
 document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-/* ── Apple carousel ───────────────────────────────────────── */
+/* ── Carousel — reliable dot sync via getBoundingClientRect ── */
 function initCarousel(trackId, prevId, nextId, dotsId) {
-  const track = document.getElementById(trackId);
-  const prev  = document.getElementById(prevId);
-  const next  = document.getElementById(nextId);
-  const dotsEl= document.getElementById(dotsId);
+  const track  = document.getElementById(trackId);
+  const prev   = document.getElementById(prevId);
+  const next   = document.getElementById(nextId);
+  const dotsEl = document.getElementById(dotsId);
   if (!track) return;
 
   const cards = [...track.children];
   const N = cards.length;
   let cur = 0;
 
+  /* Build dots */
   const dots = cards.map((_, i) => {
     const d = document.createElement('button');
     d.className = 'c-dot' + (i === 0 ? ' active' : '');
@@ -73,39 +74,42 @@ function initCarousel(trackId, prevId, nextId, dotsId) {
     return d;
   });
 
-  const padL = () => parseInt(getComputedStyle(track).paddingLeft) || 0;
-
-  function go(idx) {
-    cur = Math.max(0, Math.min(idx, N - 1));
-    track.scrollTo({ left: cards[cur].offsetLeft - padL(), behavior: 'smooth' });
+  function syncUI(idx) {
+    cur = idx;
     dots.forEach((d, i) => d.classList.toggle('active', i === cur));
     if (prev) prev.disabled = cur === 0;
     if (next) next.disabled = cur === N - 1;
   }
 
+  /* Scroll to card idx — uses viewport coords so it's always accurate */
+  function go(idx) {
+    const target = Math.max(0, Math.min(idx, N - 1));
+    const padL = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const trackRect = track.getBoundingClientRect();
+    const cardRect  = cards[target].getBoundingClientRect();
+    const delta = cardRect.left - trackRect.left - padL;
+    track.scrollBy({ left: delta, behavior: 'smooth' });
+    syncUI(target);
+  }
+
+  /* Dot sync on scroll — find the card whose center is closest to track center */
+  track.addEventListener('scroll', () => {
+    const trackRect = track.getBoundingClientRect();
+    const trackCx   = trackRect.left + track.clientWidth / 2;
+    let best = 0, minDist = Infinity;
+    cards.forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const dist = Math.abs(cx - trackCx);
+      if (dist < minDist) { minDist = dist; best = i; }
+    });
+    if (best !== cur) syncUI(best);
+  }, { passive: true });
+
   if (prev) prev.addEventListener('click', () => go(cur - 1));
   if (next) next.addEventListener('click', () => go(cur + 1));
 
-  let st;
-  track.addEventListener('scroll', () => {
-    clearTimeout(st);
-    st = setTimeout(() => {
-      const offset = track.scrollLeft + padL();
-      let closest = 0, minDist = Infinity;
-      cards.forEach((c, i) => {
-        const dist = Math.abs(c.offsetLeft - offset);
-        if (dist < minDist) { minDist = dist; closest = i; }
-      });
-      if (closest !== cur) {
-        cur = closest;
-        dots.forEach((d, i) => d.classList.toggle('active', i === cur));
-        if (prev) prev.disabled = cur === 0;
-        if (next) next.disabled = cur === N - 1;
-      }
-    }, 60);
-  }, { passive: true });
-
-  // Drag-to-scroll on desktop
+  /* Drag-to-scroll on desktop */
   let dragStart = null, scrollStart = 0, isDragging = false;
   track.addEventListener('mousedown', e => {
     dragStart = e.clientX; scrollStart = track.scrollLeft; isDragging = false;
@@ -119,20 +123,24 @@ function initCarousel(trackId, prevId, nextId, dotsId) {
   window.addEventListener('mouseup', e => {
     if (isDragging) {
       e.preventDefault();
-      const offset = track.scrollLeft + padL();
-      let closest = 0, minDist = Infinity;
+      /* After drag-release, snap to nearest card */
+      const trackRect = track.getBoundingClientRect();
+      const trackCx   = trackRect.left + track.clientWidth / 2;
+      let best = 0, minDist = Infinity;
       cards.forEach((c, i) => {
-        const dist = Math.abs(c.offsetLeft - offset);
-        if (dist < minDist) { minDist = dist; closest = i; }
+        const r = c.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const dist = Math.abs(cx - trackCx);
+        if (dist < minDist) { minDist = dist; best = i; }
       });
       track.style.scrollBehavior = 'smooth';
-      go(closest);
+      go(best);
     }
     dragStart = null; isDragging = false;
   });
   track.addEventListener('click', e => { if (isDragging) e.preventDefault(); }, true);
 
-  if (prev) prev.disabled = true;
+  syncUI(0);
 }
 
 initCarousel('proj-track', 'proj-prev', 'proj-next', 'proj-dots');

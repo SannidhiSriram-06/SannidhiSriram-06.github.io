@@ -39,8 +39,15 @@
 <!-- Apple squircle SVG filter — nav pill only -->
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
-    <filter id="squircle" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
+    <!-- Large squircle — cards, blocks, forms (stdDeviation 10) -->
+    <filter id="squircle" color-interpolation-filters="sRGB" x="-12%" y="-12%" width="124%" height="124%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq"/>
+      <feComposite in="SourceGraphic" in2="sq" operator="in"/>
+    </filter>
+    <!-- Small squircle — chips, badges, buttons (stdDeviation 6) -->
+    <filter id="squircle-sm" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
       <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq"/>
       <feComposite in="SourceGraphic" in2="sq" operator="in"/>
     </filter>
@@ -226,7 +233,7 @@
 
         <div class="proj-card">
           <div class="proj-img-frame">
-            <img src="assets/media/Screenshot 2026-06-23 at 1.54.55 PM.png" alt="AI KYC Compliance" loading="lazy" />
+            <img src="assets/media/kyc-compliance.png" alt="AI KYC Compliance" loading="lazy" />
             <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span class="fc bl"></span><span class="fc br"></span></div>
             <div class="proj-num-badge">03</div>
           </div>
