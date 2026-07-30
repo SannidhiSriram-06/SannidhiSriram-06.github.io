@@ -165,14 +165,14 @@ function showMacToast(title, message, icon = '') {
 // Toast listener for CV Download & Contact Form
 document.querySelectorAll('a[download]').forEach(btn => {
   btn.addEventListener('click', () => {
-    showMacToast('Resume Downloaded', 'S_Sriram_CV.pdf downloaded successfully.', '📄');
+    showMacToast('Resume Downloaded', 'Sannidhi_Sriram_CV.pdf downloaded successfully.', '📄');
   });
 });
 
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', () => {
-    showMacToast('Message Sent', 'Thank you! Sriram will get back to you shortly.', '✉️');
+    showMacToast('Message Sent', 'Thank you! Sannidhi will get back to you shortly.', '✉️');
   });
 }
 
@@ -204,10 +204,10 @@ const cliCommands = {
 • Oracle Race to Certification 2025 (Global Top 500)`,
   cv: () => {
     const link = document.createElement('a');
-    link.href = 'assets/media/S_Sriram_CV.pdf';
+    link.href = 'assets/media/Sannidhi_Sriram_CV.pdf';
     link.download = true;
     link.click();
-    return `Downloading S_Sriram_CV.pdf...`;
+    return `Downloading Sannidhi_Sriram_CV.pdf...`;
   },
   kubectl: () => `k8s-cluster status: ACTIVE | pods: 14/14 Running | ingress: nginx-alb | gitops: ArgoCD Synced`,
   clear: () => {
