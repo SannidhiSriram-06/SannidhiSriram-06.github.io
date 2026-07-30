@@ -1,35 +1,35 @@
 :root {
-  /* Apple HIG & GitHub Primer Light Mode Palette */
-  --bg:       #f6f8fa;
+  /* macOS San Francisco Light Mode Palette */
+  --bg:       #f5f5f7;
   --surface:  #ffffff;
   --card:     #ffffff;
-  --border:   rgba(31, 35, 40, 0.12);
-  --border-2: rgba(31, 35, 40, 0.20);
+  --border:   rgba(0, 0, 0, 0.08);
+  --border-2: rgba(0, 0, 0, 0.16);
 
-  /* Apple SF Blue (#007aff) & HIG System Accent Tints */
-  --accent:     #0969da;
-  --accent-d:   rgba(9, 105, 218, 0.08);
-  --accent-mid: rgba(9, 105, 218, 0.20);
-  --accent-bdr: rgba(9, 105, 218, 0.35);
+  /* macOS System Blue (#007aff) Accent */
+  --accent:     #0066cc;
+  --accent-d:   rgba(0, 102, 204, 0.08);
+  --accent-mid: rgba(0, 102, 204, 0.20);
+  --accent-bdr: rgba(0, 102, 204, 0.35);
 
-  --text:   #1f2328;
-  --text-2: #424a53;
-  --text-3: #6e7781;
+  --text:   #1d1d1f;
+  --text-2: #515154;
+  --text-3: #86868b;
 
-  --mac-menu-bg:  rgba(255, 255, 255, 0.80);
-  --mac-menu-border: rgba(31, 35, 40, 0.12);
-  --mac-dock-bg:  rgba(255, 255, 255, 0.78);
-  --mac-win-bg:   rgba(255, 255, 255, 0.92);
+  --mac-menu-bg:  rgba(255, 255, 255, 0.85);
+  --mac-menu-border: rgba(0, 0, 0, 0.10);
+  --mac-dock-bg:  rgba(255, 255, 255, 0.80);
+  --mac-win-bg:   rgba(255, 255, 255, 0.94);
 
-  --glass-bg:     rgba(255, 255, 255, 0.82);
+  --glass-bg:     rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.95);
-  --glass-blur:   blur(30px) saturate(2);
-  --glass-bg-nav: rgba(246, 248, 250, 0.90);
+  --glass-blur:   blur(32px) saturate(1.8);
+  --glass-bg-nav: rgba(245, 245, 247, 0.92);
 
-  --sq-shadow:       0 12px 36px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
-  --sq-shadow-hover: 0 20px 48px rgba(9, 105, 218, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+  --sq-shadow:       0 14px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --sq-shadow-hover: 0 24px 56px rgba(0, 102, 204, 0.20), 0 6px 16px rgba(0, 0, 0, 0.08);
   --sq-shadow-sm:    0 4px 16px rgba(0, 0, 0, 0.06);
-  --sq-shadow-sm-hover: 0 8px 24px rgba(9, 105, 218, 0.20);
+  --sq-shadow-sm-hover: 0 8px 24px rgba(0, 102, 204, 0.22);
 
   --heading-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Geist', system-ui, sans-serif;
   --serif: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Geist', system-ui, sans-serif;
@@ -72,51 +72,68 @@
 }
 
 [data-theme="dark"] .liquid-glass {
-  background: rgba(22, 27, 34, 0.78) !important;
-  backdrop-filter: blur(36px) saturate(210%) contrast(115%) !important;
-  -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(115%) !important;
-  border: 1px solid rgba(240, 246, 252, 0.18) !important;
+  background: rgba(30, 30, 30, 0.82) !important;
+  backdrop-filter: blur(40px) saturate(220%) contrast(115%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(220%) contrast(115%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow:
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.60),
-    0 20px 56px rgba(0, 0, 0, 0.65) !important;
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.70),
+    0 24px 64px rgba(0, 0, 0, 0.75) !important;
 }
 
 [data-theme="dark"] .liquid-glass::after {
-  box-shadow: inset 0 0 20px rgba(47, 129, 247, 0.10);
+  box-shadow: inset 0 0 20px rgba(10, 132, 255, 0.12);
 }
 
-/* ── macOS Dark Theme Overrides (GitHub Primer Dark / Apple Dark Tint) ── */
+/* ── macOS Dark Theme Overrides ── */
 [data-theme="dark"] {
-  --bg:       #0d1117;
-  --surface:  #161b22;
-  --card:     #21262d;
-  --border:   rgba(240, 246, 252, 0.14);
-  --border-2: rgba(240, 246, 252, 0.25);
+  --bg:       #1e1e1e;
+  --surface:  #252526;
+  --card:     #2d2d2d;
+  --border:   rgba(255, 255, 255, 0.12);
+  --border-2: rgba(255, 255, 255, 0.22);
 
-  --accent:     #2f81f7;
-  --accent-d:   rgba(47, 129, 247, 0.16);
-  --accent-mid: rgba(47, 129, 247, 0.32);
-  --accent-bdr: rgba(47, 129, 247, 0.55);
+  --accent:     #0a84ff;
+  --accent-d:   rgba(10, 132, 255, 0.18);
+  --accent-mid: rgba(10, 132, 255, 0.35);
+  --accent-bdr: rgba(10, 132, 255, 0.60);
 
-  --text:   #f0f6fc;
-  --text-2: #c9d1d9;
-  --text-3: #8b949e;
+  --text:   #f5f5f7;
+  --text-2: #d1d1d6;
+  --text-3: #8e8e93;
 
-  --mac-menu-bg:  rgba(22, 27, 34, 0.82);
-  --mac-menu-border: rgba(240, 246, 252, 0.12);
-  --mac-dock-bg:  rgba(33, 38, 45, 0.78);
-  --mac-win-bg:   rgba(22, 27, 34, 0.92);
+  --mac-menu-bg:  rgba(30, 30, 30, 0.85);
+  --mac-menu-border: rgba(255, 255, 255, 0.12);
+  --mac-dock-bg:  rgba(45, 45, 45, 0.82);
+  --mac-win-bg:   rgba(30, 30, 30, 0.95);
 
-  --glass-bg:     rgba(22, 27, 34, 0.85);
-  --glass-border: rgba(240, 246, 252, 0.15);
-  --glass-bg-nav: rgba(13, 17, 23, 0.92);
+  --glass-bg:     rgba(35, 35, 35, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-bg-nav: rgba(30, 30, 30, 0.94);
 
-  --sq-shadow:       0 16px 40px rgba(0, 0, 0, 0.65);
-  --sq-shadow-hover: 0 24px 56px rgba(47, 129, 247, 0.32);
-  --sq-shadow-sm:    0 6px 20px rgba(0, 0, 0, 0.45);
-  --sq-shadow-sm-hover: 0 10px 28px rgba(47, 129, 247, 0.38);
+  --sq-shadow:       0 18px 48px rgba(0, 0, 0, 0.70);
+  --sq-shadow-hover: 0 28px 64px rgba(10, 132, 255, 0.35);
+  --sq-shadow-sm:    0 8px 24px rgba(0, 0, 0, 0.55);
+  --sq-shadow-sm-hover: 0 12px 32px rgba(10, 132, 255, 0.40);
 }
+
+/* ── macOS Floating Window Frame ─────────────────────────── */
+.mac-window {
+  width: 100%;
+  background: var(--mac-win-bg);
+  backdrop-filter: blur(40px) saturate(2);
+  -webkit-backdrop-filter: blur(40px) saturate(2);
+  border: 1px solid var(--border-2);
+  border-radius: 18px;
+  box-shadow: var(--sq-shadow);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* ── PROJECTS / CERTS — Swiper 3D coverflow ───────────────── */
+.proj-swiper .swiper-slide { width: 520px; max-width: 90vw; height: auto; }
+.cert-swiper .swiper-slide { width: 310px; max-width: 82vw; height: auto; }
 
 /* ── Reset & General ────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -240,13 +257,9 @@ section {
 
 /* ── macOS Dock ───────────────────────────────────────────── */
 #mac-dock-container {
-  position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+  position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
   z-index: 9000;
-  transition: transform 0.35s var(--ease), opacity 0.35s var(--ease);
-}
-#mac-dock-container.dock-hidden {
-  transform: translate(-50%, 80px);
-  opacity: 0.3;
+  transition: transform 0.35s var(--ease);
 }
 #mac-dock-container.dock-hidden:hover {
   transform: translate(-50%, 0);
@@ -905,19 +918,19 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 
 /* ── Interactive Terminal CLI (Feature 1) ─────────────────── */
 .terminal-cli-container {
-  margin-top: 40px;
-  background: rgba(13, 17, 23, 0.92) !important;
+  margin-top: 48px;
+  background: rgba(18, 22, 28, 0.95) !important;
   border: 1px solid var(--border-2) !important;
-  border-radius: 14px;
-  padding: 16px 20px;
+  border-radius: 16px;
+  padding: 24px 28px;
   font-family: var(--mono);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 .cli-output-log {
-  max-height: 120px;
+  max-height: 200px;
   overflow-y: auto;
-  display: flex; flex-direction: column; gap: 6px;
-  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 16px; font-size: 14px; line-height: 1.6;
 }
 .cli-line.info { color: #8b949e; }
 .cli-line.help-tip { color: #c9d1d9; }
@@ -927,14 +940,14 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 .cli-cmd-highlight { color: #f2cc60; font-weight: 700; }
 
 .cli-input-row {
-  display: flex; align-items: center; gap: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 10px;
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 14px;
 }
-.cli-prompt { font-size: 12px; font-weight: 700; color: #388bfd; white-space: nowrap; }
+.cli-prompt { font-size: 14px; font-weight: 700; color: #388bfd; white-space: nowrap; }
 .cli-input {
   flex: 1; background: transparent; border: none; outline: none;
-  color: #f0f6fc; font-family: var(--mono); font-size: 13px;
+  color: #f0f6fc; font-family: var(--mono); font-size: 14px;
 }
 .spotlight-shortcut {
   font-family: var(--mono); font-size: 10px; font-weight: 700;

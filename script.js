@@ -45,16 +45,6 @@ window.addEventListener('scroll', () => {
   const currentScrollY = window.scrollY;
   const threshold = heroName ? heroName.getBoundingClientRect().bottom < 80 : currentScrollY > 40;
   if (nav) nav.classList.toggle('scrolled', threshold);
-
-  // Auto-hide Dock on downward scroll, reveal when scrolling up or near bottom
-  if (dockContainer) {
-    const isNearBottom = (window.innerHeight + currentScrollY) >= (document.body.offsetHeight - 120);
-    if (currentScrollY > lastScrollY && currentScrollY > 150 && !isNearBottom) {
-      dockContainer.classList.add('dock-hidden');
-    } else {
-      dockContainer.classList.remove('dock-hidden');
-    }
-  }
   lastScrollY = currentScrollY;
 }, { passive: true });
 
