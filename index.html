@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -105,28 +106,8 @@
         <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq" />
         <feComposite in="SourceGraphic" in2="sq" operator="in" />
       </filter>
-      <!-- Apple Liquid Glass Edge Refraction & Chromatic Displacement Filter -->
-      <filter id="liquid-glass-refract" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="3" result="noise" />
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"
-          result="displaced" />
-        <feGaussianBlur in="displaced" stdDeviation="0.4" result="blurredRefraction" />
-        <feMerge>
-          <feMergeNode in="blurredRefraction" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
     </defs>
   </svg>
-
-  <div id="drawer">
-    <ul class="drawer-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Work</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
 
   <main>
 
@@ -191,7 +172,7 @@
               <div class="hero-ctas">
                 <a href="#projects" class="btn-primary liquid-glass">View Work</a>
                 <a href="#contact" class="btn-ghost liquid-glass">Let's Talk</a>
-                <a href="assets/media/Sannidhi_Sriram_CV.pdf" download class="btn-cv liquid-glass">Download CV ↓</a>
+                <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="btn-cv liquid-glass">Download CV ↓</a>
               </div>
             </div>
           </div>
@@ -200,8 +181,9 @@
           <div class="terminal-cli-container liquid-glass reveal">
             <div class="cli-output-log" id="cli-output">
               <div class="cli-line info">Welcome to Sannidhi's Cloud/DevOps Shell v2.4 (x86_64-pc-linux-gnu)</div>
-              <div class="cli-line help-tip">Type <span class="cli-cmd-highlight cli-clickable" data-type="cmd" data-val="help">help</span> or <span
-                  class="cli-cmd-highlight cli-clickable" data-type="cmd" data-val="skills">skills</span> to explore available Cloud &amp; DevOps commands.</div>
+              <div class="cli-line help-tip">Type <span class="cli-cmd-highlight cli-clickable" data-type="cmd"
+                  data-val="help">help</span> or <span class="cli-cmd-highlight cli-clickable" data-type="cmd"
+                  data-val="skills">skills</span> to explore available commands.</div>
             </div>
             <form class="cli-input-row" id="cli-form">
               <span class="cli-prompt">sriram@macbook-pro ~ %</span>
@@ -897,31 +879,6 @@
       </div>
       <div class="spotlight-results" id="spotlight-results">
         <div class="spotlight-hint">Type to search projects, certifications, or experience...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- macOS Project Finder Modal (Feature 3) -->
-  <div id="project-modal" class="mac-modal-backdrop">
-    <div class="mac-modal-window liquid-glass">
-      <div class="mac-window-header">
-        <div class="mac-traffic-lights">
-          <span class="tl-red" id="modal-close-btn"></span>
-          <span class="tl-yellow"></span>
-          <span class="tl-green"></span>
-        </div>
-        <span class="mac-window-title" id="modal-window-title">Finder — Project Overview</span>
-        <div class="mac-window-actions">
-          <span class="mac-tag" id="modal-tag">Architecture</span>
-        </div>
-      </div>
-      <div class="mac-modal-tabs">
-        <button class="mac-modal-tab active" data-tab="overview">📄 Architecture Overview</button>
-        <button class="mac-modal-tab" data-tab="tech">🛠️ Tech Stack &amp; IaC</button>
-        <button class="mac-modal-tab" data-tab="links">🔗 Links &amp; Actions</button>
-      </div>
-      <div class="mac-modal-body" id="modal-body-content">
-        <!-- Content injected dynamically via script.js -->
       </div>
     </div>
   </div>

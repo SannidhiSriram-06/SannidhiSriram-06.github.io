@@ -35,30 +35,6 @@ window.addEventListener('scroll', () => {
   bar.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
 }, { passive: true });
 
-/* ── Nav & Dock scroll states ─────────────────────────────── */
-const nav = document.getElementById('nav');
-const dockContainer = document.getElementById('mac-dock-container');
-const heroName = document.querySelector('.hero-name');
-let lastScrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-  const threshold = heroName ? heroName.getBoundingClientRect().bottom < 80 : currentScrollY > 40;
-  if (nav) nav.classList.toggle('scrolled', threshold);
-  lastScrollY = currentScrollY;
-}, { passive: true });
-
-/* ── Active nav link ──────────────────────────────────────── */
-const sectionObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting)
-      document.querySelectorAll('.nav-links a').forEach(a =>
-        a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`)
-      );
-  });
-}, { rootMargin: '-35% 0px -60% 0px' });
-document.querySelectorAll('main section[id]').forEach(s => sectionObs.observe(s));
-
 /* ── Scroll reveal ────────────────────────────────────────── */
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -259,8 +235,9 @@ const cliCommands = {
   cv: () => {
     const link = document.createElement('a');
     link.href = 'assets/media/Sannidhi_Sriram_CV.pdf';
-    link.download = true;
+    link.download = 'Sannidhi_Sriram_CV.pdf';
     link.click();
+    showMacToast('Resume Downloaded', 'Sannidhi_Sriram_CV.pdf downloaded successfully.', '📄');
     return `Downloading Sannidhi_Sriram_CV.pdf...`;
   },
   kubectl: () => `k8s-cluster status: ACTIVE | pods: 14/14 Running | ingress: nginx-alb | gitops: ArgoCD Synced`,
@@ -424,39 +401,5 @@ if (spotlightInput && spotlightResults) {
         document.querySelector(targetSection)?.scrollIntoView({ behavior: 'smooth' });
       });
     });
-  });
-}
-
-/* ── Feature 3: macOS Finder Project Detail Modal ──────────── */
-const projectModal = document.getElementById('project-modal');
-const modalCloseBtn = document.getElementById('modal-close-btn');
-const modalBodyContent = document.getElementById('modal-body-content');
-const modalWindowTitle = document.getElementById('modal-window-title');
-
-const openProjectModal = (title, desc, tags, repoUrl) => {
-  if (!projectModal || !modalBodyContent) return;
-  modalWindowTitle.textContent = `Finder — ${title}`;
-  modalBodyContent.innerHTML = `
-    <h2 class="modal-section-title">${title}</h2>
-    <p class="modal-section-desc">${desc}</p>
-    <h3 style="font-size:14px; font-weight:700; text-transform:uppercase; margin-top:20px; color:var(--text);">Tech Stack &amp; Architecture Spec</h3>
-    <div class="modal-tech-list">
-      ${tags.map(t => `<span class="proj-tags"><span>${t}</span></span>`).join('')}
-    </div>
-    <div style="margin-top:32px; display:flex; gap:12px;">
-      <a href="${repoUrl}" target="_blank" rel="noopener" class="btn-primary liquid-glass">Open GitHub Repository ↗</a>
-    </div>
-  `;
-  projectModal.classList.add('open');
-};
-
-const closeProjectModal = () => {
-  if (projectModal) projectModal.classList.remove('open');
-};
-
-if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeProjectModal);
-if (projectModal) {
-  projectModal.addEventListener('click', e => {
-    if (e.target === projectModal) closeProjectModal();
   });
 }
