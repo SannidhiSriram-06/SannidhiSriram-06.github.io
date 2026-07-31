@@ -200,8 +200,8 @@
           <div class="terminal-cli-container liquid-glass reveal">
             <div class="cli-output-log" id="cli-output">
               <div class="cli-line info">Welcome to Sannidhi's Cloud/DevOps Shell v2.4 (x86_64-pc-linux-gnu)</div>
-              <div class="cli-line help-tip">Type <span class="cli-cmd-highlight">help</span> or <span
-                  class="cli-cmd-highlight">skills</span> to explore available Cloud &amp; DevOps commands.</div>
+              <div class="cli-line help-tip">Type <span class="cli-cmd-highlight cli-clickable" data-type="cmd" data-val="help">help</span> or <span
+                  class="cli-cmd-highlight cli-clickable" data-type="cmd" data-val="skills">skills</span> to explore available Cloud &amp; DevOps commands.</div>
             </div>
             <form class="cli-input-row" id="cli-form">
               <span class="cli-prompt">sriram@macbook-pro ~ %</span>
@@ -244,36 +244,61 @@
               <div class="skills-category reveal">
                 <h4 class="sk-cat-label">Languages</h4>
                 <div class="skills-row">
-                  <div class="skill-chip"><img src="assets/icons/python.svg" alt="Python" /><span>Python (Automation &amp; Scripting)</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="Bash" /><span>Bash</span></div>
+                  <div class="skill-chip"><img src="assets/icons/python.svg" alt="Python" /><span>Python (Boto3)</span>
+                  </div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+                      alt="Bash" /><span>Bash</span></div>
                 </div>
               </div>
 
               <div class="skills-category reveal">
                 <h4 class="sk-cat-label">Cloud</h4>
                 <div class="skills-row">
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" /><span>AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, CloudFront, SSM, Backup, Client VPN)</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="Azure" /><span>Azure (App Service, Azure OpenAI, Monitor, Entra ID, Storage Accounts, VMs)</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+                      alt="AWS" /><span>AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, CloudFront, SSM,
+                      Backup, Client VPN)</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg"
+                      alt="Azure" /><span>Azure (App Service, Azure OpenAI, Monitor, Entra ID, Storage Accounts,
+                      VMs)</span></div>
                 </div>
               </div>
 
               <div class="skills-category reveal">
                 <h4 class="sk-cat-label">Infra &amp; IaC</h4>
                 <div class="skills-row">
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg" alt="Terraform" /><span>Terraform</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" /><span>Docker</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" alt="Kubernetes" /><span>Kubernetes (Minikube)</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/helm/helm-original.svg" alt="Helm" /><span>Helm</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/argocd/argocd-original.svg" alt="ArgoCD" /><span>ArgoCD</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"
+                      alt="Terraform" /><span>Terraform</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+                      alt="Docker" /><span>Docker</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"
+                      alt="Kubernetes" /><span>Kubernetes (Minikube)</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/helm/helm-original.svg"
+                      alt="Helm" /><span>Helm</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/argocd/argocd-original.svg"
+                      alt="ArgoCD" /><span>ArgoCD</span></div>
                 </div>
               </div>
 
               <div class="skills-category reveal">
                 <h4 class="sk-cat-label">CI/CD</h4>
                 <div class="skills-row">
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub Actions" /><span>GitHub Actions</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" alt="Jenkins" /><span>Jenkins</span></div>
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" /><span>Git</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+                      alt="GitHub Actions" /><span>GitHub Actions</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg"
+                      alt="Jenkins" /><span>Jenkins</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+                      alt="Git" /><span>Git</span></div>
                   <div class="skill-chip"><img src="assets/icons/snyk.svg" alt="Snyk" /><span>Snyk</span></div>
                 </div>
               </div>
@@ -282,18 +307,25 @@
                 <h4 class="sk-cat-label">AI &amp; LLMs</h4>
                 <div class="skills-row">
                   <div class="skill-chip"><img src="assets/icons/groq.svg" alt="Groq API" /><span>Groq API</span></div>
-                  <div class="skill-chip"><img src="assets/icons/huggingface.svg" alt="HuggingFace" /><span>HuggingFace</span></div>
-                  <div class="skill-chip"><img src="assets/icons/azure-openai.svg" alt="Azure OpenAI" /><span>Azure OpenAI</span></div>
+                  <div class="skill-chip"><img src="assets/icons/huggingface.svg"
+                      alt="HuggingFace" /><span>HuggingFace</span></div>
+                  <div class="skill-chip"><img src="assets/icons/azure-openai.svg" alt="Azure OpenAI" /><span>Azure
+                      OpenAI</span></div>
                 </div>
               </div>
 
               <div class="skills-category reveal">
                 <h4 class="sk-cat-label">Dev Tools</h4>
                 <div class="skills-row">
-                  <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="Cursor" /><span>Cursor</span></div>
-                  <div class="skill-chip"><img src="assets/icons/antigravity.svg" alt="Antigravity" /><span>Antigravity</span></div>
-                  <div class="skill-chip"><img src="assets/icons/claude-icon-filled-256.png" alt="Claude Code" /><span>Claude Code</span></div>
-                  <div class="skill-chip"><img src="assets/icons/gemini-cli.svg" alt="Gemini CLI" /><span>Gemini CLI</span></div>
+                  <div class="skill-chip"><img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"
+                      alt="Cursor" /><span>Cursor</span></div>
+                  <div class="skill-chip"><img src="assets/icons/antigravity.svg"
+                      alt="Antigravity" /><span>Antigravity</span></div>
+                  <div class="skill-chip"><img src="assets/icons/claude-icon-filled-256.png"
+                      alt="Claude Code" /><span>Claude Code</span></div>
+                  <div class="skill-chip"><img src="assets/icons/gemini-cli.svg" alt="Gemini CLI" /><span>Gemini
+                      CLI</span></div>
                 </div>
               </div>
 
@@ -507,10 +539,8 @@
             <ul class="exp-list">
               <li>Owned AWS deployment architecture for a BFSI-sector AI KYC system (<a
                   href="https://github.com/SannidhiSriram-06/Infosys_AI_KYC_Compliance" target="_blank" rel="noopener"
-                  style="text-decoration: underline; color: var(--accent);">Infosys AI KYC Compliance ↗</a>) &amp;
-                internship codebase (<a href="https://github.com/SannidhiSriram-06/Sriram_Infosys_Internship"
-                  target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent);">Sriram
-                  Infosys Internship ↗</a>) — evaluated SageMaker and Lambda before selecting EC2; deployed React/Vite
+                  style="text-decoration: underline; color: var(--accent);">Infosys AI KYC Compliance ↗</a>) — evaluated
+                SageMaker and Lambda before selecting EC2; deployed React/Vite
                 frontend on S3 and Flask ML service on EC2 with PM2.</li>
               <li>Integrated Groq API, EasyOCR, TFLite CNN classifiers, and PyTorch GNN fraud scorer into the Flask
                 inference service; results persisted in MongoDB Atlas and surfaced via React dashboard with anomaly
@@ -542,7 +572,8 @@
               and Generative AI.</p>
           </div>
           <div class="ach-badge-box">
-            <img src="assets/media/SQOPXYT5EP4C.png" alt="Oracle Race to Certification 2025 Global Top 500" class="ach-img-badge" />
+            <img src="assets/media/SQOPXYT5EP4C.png" alt="Oracle Race to Certification 2025 Global Top 500"
+              class="ach-img-badge" />
             <span class="ach-badge-rank">TOP 500</span>
             <span class="ach-badge-label">Global Rank</span>
           </div>

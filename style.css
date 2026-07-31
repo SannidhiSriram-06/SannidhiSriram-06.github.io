@@ -935,9 +935,29 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 .cli-line.info { color: #8b949e; }
 .cli-line.help-tip { color: #c9d1d9; }
 .cli-line.user-cmd { color: #58a6ff; font-weight: 600; }
-.cli-line.response { color: #7ee787; white-space: pre-wrap; }
+.cli-line.response { color: #7ee787; }
 .cli-line.error { color: #ff7b72; }
-.cli-cmd-highlight { color: #f2cc60; font-weight: 700; }
+.cli-cmd-highlight { color: #f2cc60; font-weight: 700; cursor: pointer; }
+.cli-cmd-highlight:hover { text-decoration: underline; }
+
+.cli-clickable {
+  cursor: pointer;
+  color: #58a6ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+  display: inline-block;
+}
+.cli-clickable:hover {
+  color: #79c0ff;
+  text-shadow: 0 0 8px rgba(88, 166, 255, 0.5);
+}
+.cli-output-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
 
 .cli-input-row {
   display: flex; align-items: center; gap: 12px;

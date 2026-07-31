@@ -106,17 +106,46 @@ const swiperConfig = {
   navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
 };
 
-new Swiper('.proj-swiper', {
+const projSwiper = new Swiper('.proj-swiper', {
   ...swiperConfig,
   pagination: { el: '.proj-swiper .swiper-pagination', clickable: true },
   navigation: { nextEl: '.proj-swiper .swiper-button-next', prevEl: '.proj-swiper .swiper-button-prev' },
 });
 
-new Swiper('.cert-swiper', {
+const certSwiper = new Swiper('.cert-swiper', {
   ...swiperConfig,
   pagination: { el: '.cert-swiper .swiper-pagination', clickable: true },
   navigation: { nextEl: '.cert-swiper .swiper-button-next', prevEl: '.cert-swiper .swiper-button-prev' },
 });
+
+function navigateToTarget(type, value) {
+  if (type === 'cert') {
+    const certSection = document.getElementById('certifications');
+    if (certSection) {
+      certSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (typeof value === 'number' && certSwiper) {
+      setTimeout(() => {
+        certSwiper.slideTo(value, 600);
+      }, 300);
+    }
+  } else if (type === 'project') {
+    const projSection = document.getElementById('projects');
+    if (projSection) {
+      projSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (typeof value === 'number' && projSwiper) {
+      setTimeout(() => {
+        projSwiper.slideTo(value, 600);
+      }, 300);
+    }
+  } else if (type === 'section') {
+    const secEl = document.getElementById(value);
+    if (secEl) {
+      secEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
 
 /* ── Side scroll navigation ───────────────────────────────── */
 const sideItems = document.querySelectorAll('.sn-item[data-section]');
@@ -171,27 +200,62 @@ const cliForm = document.getElementById('cli-form');
 const cliInput = document.getElementById('cli-input');
 const cliOutput = document.getElementById('cli-output');
 
+function executeCliCommand(cmdName) {
+  if (!cliInput || !cliForm) return;
+  cliInput.value = cmdName;
+  const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
+  cliForm.dispatchEvent(submitEvent);
+}
+
 const cliCommands = {
-  help: () => `Available Commands:
-  • help           - Display CLI manual
-  • skills         - List cloud & DevOps technical stack
-  • projects       - View featured architecture projects
-  • certs          - Show Oracle & Cloud credentials
-  • cv             - Download curriculum vitae (PDF)
-  • clear          - Clear terminal logs`,
-  skills: () => `AWS · Azure · Docker · Kubernetes · Terraform · Jenkins · GitHub Actions · ArgoCD · Helm · Grafana · Prometheus · Python · Bash`,
-  projects: () => `1. Cloud Support Ticket Simulation (AWS Client VPN / SSM)
-2. Cloud Security Observability Stack (ECS Fargate / Grafana)
-3. AI Test Generator & GitOps Pipeline (FastAPI / Jenkins / ArgoCD)
-4. Self-Healing Microservice (AWS ASG / ALB / Terraform)
-5. AI Patient Triage System (Azure OpenAI / App Service)
-6. Bookstore Serverless Architecture (AWS Lambda / API Gateway)`,
-  certs: () => `• OCI DevOps Professional 2025
-• OCI Observability Professional 2025
-• OCI Multicloud Architect 2025
-• OCI Generative AI Professional 2025
-• OCI AI Foundations Associate 2025
-• Oracle Race to Certification 2025 (Global Top 500)`,
+  help: () => `Available Commands (click command or type below):
+  • <span class="cli-clickable" data-type="cmd" data-val="help">help</span>       - Display CLI manual
+  • <span class="cli-clickable" data-type="cmd" data-val="skills">skills</span>     - List cloud & DevOps technical stack
+  • <span class="cli-clickable" data-type="cmd" data-val="projects">projects</span>   - View featured architecture projects
+  • <span class="cli-clickable" data-type="cmd" data-val="certs">certs</span>      - Show Oracle & Cloud credentials
+  • <span class="cli-clickable" data-type="cmd" data-val="cv">cv</span>         - Download curriculum vitae (PDF)
+  • <span class="cli-clickable" data-type="cmd" data-val="clear">clear</span>      - Clear terminal logs`,
+
+  skills: () => `<div class="cli-output-list">
+  <div>Cloud & DevOps Technical Stack (Click any skill to scroll):</div>
+  <div>
+  <span class="cli-clickable" data-type="section" data-val="about">AWS</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Azure</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Docker</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Kubernetes</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Terraform</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Jenkins</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">GitHub Actions</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">ArgoCD</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Helm</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Grafana</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Prometheus</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Python</span> · 
+  <span class="cli-clickable" data-type="section" data-val="about">Bash</span>
+  </div>
+</div>`,
+
+  projects: () => `<div class="cli-output-list">
+  <div>Featured Projects (Click to scroll down):</div>
+  <div class="cli-clickable" data-type="project" data-val="0">1. Cloud Support & Customer Engineering Simulation</div>
+  <div class="cli-clickable" data-type="project" data-val="1">2. Cloud Security Observability Stack (ECS Fargate)</div>
+  <div class="cli-clickable" data-type="project" data-val="2">3. AI Test Generator & GitOps Pipeline</div>
+  <div class="cli-clickable" data-type="project" data-val="3">4. Self-Healing Microservice on AWS</div>
+  <div class="cli-clickable" data-type="project" data-val="4">5. AI Patient Triage System on Azure</div>
+  <div class="cli-clickable" data-type="project" data-val="5">6. Bookstore Serverless Architecture on AWS</div>
+</div>`,
+
+  certs: () => `<div class="cli-output-list">
+  <div>Cloud Credentials (Click to scroll down):</div>
+  <div class="cli-clickable" data-type="cert" data-val="0">• OCI DevOps Professional 2025</div>
+  <div class="cli-clickable" data-type="cert" data-val="1">• OCI Observability Professional 2025</div>
+  <div class="cli-clickable" data-type="cert" data-val="2">• OCI Multicloud Architect 2025</div>
+  <div class="cli-clickable" data-type="cert" data-val="3">• OCI Generative AI Professional 2025</div>
+  <div class="cli-clickable" data-type="cert" data-val="4">• Azure AI Fundamentals (AI-900)</div>
+  <div class="cli-clickable" data-type="cert" data-val="5">• Azure Fundamentals (AZ-900)</div>
+  <div class="cli-clickable" data-type="section" data-val="achievement">• Oracle Race to Certification 2025 (Global Top 500)</div>
+</div>`,
+
   cv: () => {
     const link = document.createElement('a');
     link.href = 'assets/media/Sannidhi_Sriram_CV.pdf';
@@ -206,7 +270,39 @@ const cliCommands = {
   }
 };
 
+const directSearchAliases = [
+  { keywords: ['az900', 'az 900', 'az-900', 'azure fundamentals'], type: 'cert', val: 5, name: 'Azure Fundamentals (AZ-900)' },
+  { keywords: ['ai900', 'ai 900', 'ai-900', 'azure ai'], type: 'cert', val: 4, name: 'Azure AI Fundamentals (AI-900)' },
+  { keywords: ['oci devops', 'devops cert'], type: 'cert', val: 0, name: 'OCI DevOps Professional 2025' },
+  { keywords: ['oci observability', 'observability cert'], type: 'cert', val: 1, name: 'OCI Observability Professional 2025' },
+  { keywords: ['oci multicloud', 'multicloud'], type: 'cert', val: 2, name: 'OCI Multicloud Architect 2025' },
+  { keywords: ['oci gen ai', 'gen ai', 'generative ai cert'], type: 'cert', val: 3, name: 'OCI Generative AI Professional 2025' },
+  { keywords: ['oracle race', 'top 500', 'top500', 'global top 500'], type: 'section', val: 'achievement', name: 'Oracle Race to Certification 2025 (Global Top 500)' },
+  { keywords: ['support ticket', 'client vpn'], type: 'project', val: 0, name: 'Cloud Support & Customer Engineering Simulation' },
+  { keywords: ['fargate', 'security observability'], type: 'project', val: 1, name: 'Cloud Security Observability Stack on ECS Fargate' },
+  { keywords: ['ai test', 'gitops', 'jenkins'], type: 'project', val: 2, name: 'AI Test Generator & GitOps Pipeline' },
+  { keywords: ['self-healing', 'self healing'], type: 'project', val: 3, name: 'Self-Healing Microservice on AWS' },
+  { keywords: ['triage', 'patient triage'], type: 'project', val: 4, name: 'AI Patient Triage System on Azure' },
+  { keywords: ['bookstore', 'serverless'], type: 'project', val: 5, name: 'Bookstore Microservice Architecture on AWS' }
+];
+
 if (cliForm && cliInput && cliOutput) {
+  // Delegate clicks in terminal output
+  cliOutput.addEventListener('click', e => {
+    const clickable = e.target.closest('.cli-clickable');
+    if (!clickable) return;
+    const type = clickable.dataset.type;
+    const val = clickable.dataset.val;
+
+    if (type === 'cmd') {
+      executeCliCommand(val);
+    } else if (type === 'cert' || type === 'project') {
+      navigateToTarget(type, parseInt(val, 10));
+    } else if (type === 'section') {
+      navigateToTarget(type, val);
+    }
+  });
+
   cliForm.addEventListener('submit', e => {
     e.preventDefault();
     const rawCmd = cliInput.value.trim().toLowerCase();
@@ -220,16 +316,30 @@ if (cliForm && cliInput && cliOutput) {
 
     // Process output
     let result = '';
+    let isMatch = false;
+
     if (cliCommands[rawCmd]) {
       result = cliCommands[rawCmd]();
+      isMatch = true;
     } else {
-      result = `zsh: command not found: ${rawCmd}. Type 'help' for available commands.`;
+      // Check direct search aliases
+      const match = directSearchAliases.find(item =>
+        item.keywords.some(k => rawCmd.includes(k))
+      );
+
+      if (match) {
+        result = `Navigating to <span class="cli-clickable" data-type="${match.type}" data-val="${match.val}">${match.name}</span>...`;
+        navigateToTarget(match.type, match.val);
+        isMatch = true;
+      } else {
+        result = `zsh: command not found: ${rawCmd}. Type <span class="cli-clickable" data-type="cmd" data-val="help">'help'</span> for available commands.`;
+      }
     }
 
     if (result) {
       const resLine = document.createElement('div');
-      resLine.className = `cli-line ${cliCommands[rawCmd] ? 'response' : 'error'}`;
-      resLine.textContent = result;
+      resLine.className = `cli-line ${isMatch ? 'response' : 'error'}`;
+      resLine.innerHTML = result;
       cliOutput.appendChild(resLine);
     }
 
