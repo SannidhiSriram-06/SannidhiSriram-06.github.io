@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-l", "3456", "."],
       "port": 3456
+    },
+    {
+      "name": "portfolio-py",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3456"],
+      "port": 3456
     }
   ]
 }

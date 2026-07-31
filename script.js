@@ -1,3 +1,44 @@
+/* ── Word-by-word headline reveal ─────────────────────────── */
+document.querySelectorAll('.hero-name .word-reveal-line').forEach(line => {
+  const words = line.textContent.trim().split(/\s+/);
+  line.textContent = '';
+  words.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.className = 'word-reveal';
+    span.style.animationDelay = `${i * 0.09}s`;
+    span.textContent = word;
+    line.appendChild(span);
+    if (i < words.length - 1) line.appendChild(document.createTextNode(' '));
+  });
+});
+
+/* ── Mouse-tracking spotlight glow (project & cert cards) ──── */
+document.querySelectorAll('.proj-card, .cert-card').forEach(card => {
+  card.classList.add('spotlight-glow');
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`);
+  });
+});
+
+/* ── Scroll-linked parallax (hero compass art) ────────────── */
+const heroArt = document.querySelector('#hero .sec-bg-art');
+if (heroArt) {
+  let parallaxTicking = false;
+  const updateParallax = () => {
+    const offset = window.scrollY * 0.15;
+    heroArt.style.transform = `translateY(${offset}px) rotate(${offset * 0.04}deg)`;
+    parallaxTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!parallaxTicking) {
+      requestAnimationFrame(updateParallax);
+      parallaxTicking = true;
+    }
+  }, { passive: true });
+}
+
 /* ── macOS Live Menu Bar Clock ───────────────────────────── */
 function updateMacClock() {
   const clockEl = document.getElementById('mac-clock');
@@ -332,7 +373,7 @@ const spotlightInput = document.getElementById('spotlight-input');
 const spotlightResults = document.getElementById('spotlight-results');
 
 const searchableItems = [
-  { title: 'Cloud Support Ticket Simulation', cat: 'Project', section: '#projects' },
+  { title: 'Cloud Support & Customer Engineering Simulation', cat: 'Project', section: '#projects' },
   { title: 'Cloud Security Observability Stack on ECS Fargate', cat: 'Project', section: '#projects' },
   { title: 'AI Test Generator & GitOps Pipeline', cat: 'Project', section: '#projects' },
   { title: 'Self-Healing Microservice on AWS', cat: 'Project', section: '#projects' },
@@ -342,7 +383,11 @@ const searchableItems = [
   { title: 'OCI DevOps Professional 2025', cat: 'Credential', section: '#certifications' },
   { title: 'OCI Observability Professional 2025', cat: 'Credential', section: '#certifications' },
   { title: 'OCI Multicloud Architect 2025', cat: 'Credential', section: '#certifications' },
-  { title: 'Infosys Springboard AI Lead Internship', cat: 'Experience', section: '#experience' }
+  { title: 'OCI Gen AI Professional 2025', cat: 'Credential', section: '#certifications' },
+  { title: 'Azure AI Fundamentals (AI-900)', cat: 'Credential', section: '#certifications' },
+  { title: 'Azure Fundamentals (AZ-900)', cat: 'Credential', section: '#certifications' },
+  { title: 'AI Intern — Cloud Deployment Lead, Infosys Springboard', cat: 'Experience', section: '#experience' },
+  { title: 'B.Tech Computer Science, Lovely Professional University', cat: 'Education', section: '#education' }
 ];
 
 const openSpotlight = () => {
