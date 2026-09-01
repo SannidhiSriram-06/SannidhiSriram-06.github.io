@@ -1,65 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE</title>
   <meta name="description"
-    content="Portfolio of Sannidhi Durga Pavan Sriram — aspiring Cloud, DevOps & SRE engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks. 6 Oracle Cloud certifications, Global Top 500." />
+    content="Portfolio of Sannidhi Durga Pavan Sriram — Aspiring Cloud, DevOps & SRE Engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks. 6x cloud certified, Oracle Race Global Top 500." />
   <meta name="author" content="Sannidhi Durga Pavan Sriram" />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#0d1117" />
+
+  <!-- Open Graph & Social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
   <meta property="og:description"
-    content="Aspiring Cloud, DevOps & SRE engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks." />
+    content="Aspiring Cloud, DevOps & SRE Engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks." />
   <meta property="og:image" content="assets/media/Sriram.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
   <meta name="twitter:description"
-    content="Aspiring Cloud, DevOps & SRE engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks." />
+    content="Aspiring Cloud, DevOps & SRE Engineer building resilient AWS/Azure infrastructure, CI/CD GitOps pipelines, and observability stacks." />
+
+  <!-- Set theme + arm entry animations before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) { /* keep default */ }
+      document.documentElement.classList.add('reveal-ready');
+    })();
+  </script>
+
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+
+  <!-- Systems & Cloud Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <div id="progress-bar"></div>
-
-  <!-- macOS Top Menu Bar -->
-  <nav id="mac-menu-bar" class="liquid-glass">
-    <div class="mac-menu-left">
-      <span class="brand-logo">S·S</span>
-      <span class="app-name">Sannidhi Durga Pavan Sriram</span>
-      <ul class="mac-menu-items">
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#achievement">Achievement</a></li>
-        <li><a href="#certifications">Credentials</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <!-- ── PRELOADER (self-dismissing, CSS fallback at 3.2s) ── -->
+  <div id="preloader" class="preloader" role="status" aria-label="Loading">
+    <div class="preloader-inner">
+      <span class="preloader-mark">S<i>·</i>S</span>
+      <div class="preloader-bar"><i id="preloader-fill"></i></div>
+      <span class="preloader-label">Provisioning environment <b id="preloader-pct">0</b>%</span>
     </div>
-    <div class="mac-menu-right">
-      <button id="spotlight-toggle" aria-label="Open Spotlight Search (Cmd + K)" class="mac-menu-btn"
-        title="Spotlight Search (Cmd + K)">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <span class="spotlight-shortcut">⌘K</span>
-      </button>
-      <button id="theme-toggle" aria-label="Toggle light and dark theme" class="mac-menu-btn theme-toggle-btn">
-        <svg class="sun-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  </div>
+
+  <!-- ── LIVE INFRASTRUCTURE WORLD (WebGL, behind everything) ── -->
+  <canvas id="hero-gl" aria-hidden="true"></canvas>
+
+  <!-- ── TOP NAVIGATION ── -->
+  <nav id="navbar" role="navigation" aria-label="Main Navigation">
+    <a href="#hero" class="nav-brand">Sannidhi&nbsp;Sriram</a>
+
+    <ul class="nav-menu">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#certifications" class="nav-link">Certifications</a></li>
+      <li><a href="#education" class="nav-link">Education</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle Color Theme" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
           <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -70,698 +87,798 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
-        <svg class="moon-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </button>
-      <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="mac-menu-btn mac-gh-btn">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-          <path
-            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+
+      <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="btn-resume">
+        <span>Resume</span>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
-        <span>GitHub</span>
       </a>
-      <span id="mac-clock" class="mac-clock">Wed 12:00 PM</span>
-      <button id="navMenu" aria-label="menu" class="mac-hamburger"><span></span><span></span></button>
+
+      <button id="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" class="mobile-nav-toggle">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <!-- Side scroll navigation -->
-  <nav id="side-nav" aria-label="Page sections">
-    <a href="#hero" class="sn-item" data-section="hero"> <span class="sn-label">Home</span> <span
-        class="sn-dot"></span></a>
-    <a href="#about" class="sn-item" data-section="about"> <span class="sn-label">01 · About</span> <span
-        class="sn-dot"></span></a>
-    <a href="#projects" class="sn-item" data-section="projects"> <span class="sn-label">02 · Work</span> <span
-        class="sn-dot"></span></a>
-    <a href="#experience" class="sn-item" data-section="experience"> <span class="sn-label">03 · Experience</span> <span
-        class="sn-dot"></span></a>
-    <a href="#achievement" class="sn-item" data-section="achievement"> <span class="sn-label">04 · Achievement</span>
-      <span class="sn-dot"></span></a>
-    <a href="#certifications" class="sn-item" data-section="certifications"> <span class="sn-label">05 · Creds</span>
-      <span class="sn-dot"></span></a>
-    <a href="#education" class="sn-item" data-section="education"> <span class="sn-label">06 · Education</span> <span
-        class="sn-dot"></span></a>
-    <a href="#contact" class="sn-item" data-section="contact"> <span class="sn-label">07 · Contact</span> <span
-        class="sn-dot"></span></a>
-  </nav>
-
-  <!-- Squircle & Liquid Glass Refraction SVG filters -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-    <defs>
-      <filter id="squircle" color-interpolation-filters="sRGB" x="-12%" y="-12%" width="124%" height="124%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-        <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq" />
-        <feComposite in="SourceGraphic" in2="sq" operator="in" />
-      </filter>
-      <filter id="squircle-sm" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-        <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="sq" />
-        <feComposite in="SourceGraphic" in2="sq" operator="in" />
-      </filter>
-    </defs>
-  </svg>
-
   <main>
 
-    <!-- ── HERO ── -->
+    <!-- ── HERO SECTION ── -->
     <section id="hero">
-      <div class="mac-window liquid-glass">
-        <div class="mac-window-header">
-          <div class="mac-traffic-lights">
-            <span class="tl-red"></span>
-            <span class="tl-yellow"></span>
-            <span class="tl-green"></span>
+      <div class="container">
+        <div class="hero-content">
+
+          <div class="hero-text-block">
+            <h1 class="hero-name">
+              <span class="mask-line" style="--line:0"><span>Sannidhi Durga</span></span>
+              <span class="mask-line" style="--line:1"><span>Pavan Sriram</span></span>
+            </h1>
+
+            <p class="hero-lead">
+              4th-year Computer Science student specializing in Cloud, DevOps, and Site Reliability
+              Engineering. I build automated CI/CD GitOps pipelines, containerized microservices, and
+              observability stacks on AWS and Azure.
+            </p>
+
+            <div class="hero-ctas">
+              <a href="#projects" class="btn-primary">
+                <span>View Selected Work</span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="#contact" class="btn-secondary">Contact Me</a>
+            </div>
+
+            <ul class="hero-facts">
+              <li><span class="hero-fact-key">Studying</span> B.Tech CSE, Cloud Computing — LPU</li>
+              <li><span class="hero-fact-key">Based in</span> Hyderabad / Punjab, India · Grad May 2027</li>
+            </ul>
+
+            <!-- Key Metrics Ribbon -->
+            <div class="hero-metrics-grid">
+              <div class="metric-item">
+                <span class="metric-val" data-count="6">0</span>
+                <span class="metric-label">Cloud Certifications</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-val" data-count="6">0</span>
+                <span class="metric-label">Shipped Projects</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-val">Top&nbsp;500</span>
+                <span class="metric-label">Oracle Race Global</span>
+              </div>
+            </div>
           </div>
-          <span class="mac-window-title">Sannidhi_Sriram_Portfolio.app — Terminal</span>
-          <div class="mac-window-actions">
-            <span class="mac-tag">bash</span>
+
+          <!-- Hero Visual: portrait -->
+          <div class="hero-visual">
+            <figure class="hero-portrait">
+              <img src="assets/media/Sriram.jpg" alt="Portrait of Sannidhi Durga Pavan Sriram"
+                width="420" height="500" loading="eager" />
+              <figcaption>
+                <span class="hero-portrait-name">Sannidhi Sriram</span>
+                <span class="hero-portrait-role">Cloud · DevOps · SRE — LPU '27</span>
+              </figcaption>
+            </figure>
           </div>
+
         </div>
-        <div class="mac-window-body">
-          <svg class="sec-bg-art" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="88" stroke="currentColor" stroke-width="0.75" />
-            <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="0.4" stroke-dasharray="3 5" />
-            <circle cx="100" cy="100" r="28" stroke="currentColor" stroke-width="0.75" />
-            <circle cx="100" cy="100" r="5" fill="currentColor" />
-            <line x1="100" y1="12" x2="100" y2="188" stroke="currentColor" stroke-width="0.5" />
-            <line x1="12" y1="100" x2="188" y2="100" stroke="currentColor" stroke-width="0.5" />
-            <line x1="38" y1="38" x2="162" y2="162" stroke="currentColor" stroke-width="0.3" opacity="0.6" />
-            <line x1="162" y1="38" x2="38" y2="162" stroke="currentColor" stroke-width="0.3" opacity="0.6" />
-            <polygon points="100,12 104,90 100,100 96,90" fill="currentColor" />
-            <polygon points="100,188 104,110 100,100 96,110" fill="currentColor" opacity="0.4" />
-            <polygon points="188,100 110,104 100,100 110,96" fill="currentColor" opacity="0.4" />
-            <polygon points="12,100 90,104 100,100 90,96" fill="currentColor" opacity="0.4" />
-            <polygon points="162,38 106,94 100,100 94,94" fill="currentColor" opacity="0.2" />
-            <polygon points="38,162 94,106 100,100 106,106" fill="currentColor" opacity="0.2" />
-            <polygon points="38,38 94,94 100,100 94,106" fill="currentColor" opacity="0.2" />
-            <polygon points="162,162 106,106 100,100 106,94" fill="currentColor" opacity="0.2" />
-            <text x="100" y="8" text-anchor="middle" font-size="8" fill="currentColor" font-family="monospace">N</text>
-            <text x="100" y="198" text-anchor="middle" font-size="8" fill="currentColor"
-              font-family="monospace">S</text>
-            <text x="4" y="103" text-anchor="middle" font-size="8" fill="currentColor" font-family="monospace">W</text>
-            <text x="198" y="103" text-anchor="middle" font-size="8" fill="currentColor"
-              font-family="monospace">E</text>
-            <line x1="100" y1="12" x2="100" y2="20" stroke="currentColor" stroke-width="1.5" />
-            <line x1="188" y1="100" x2="180" y2="100" stroke="currentColor" stroke-width="1.5" />
-            <line x1="100" y1="188" x2="100" y2="180" stroke="currentColor" stroke-width="1.5" />
-            <line x1="12" y1="100" x2="20" y2="100" stroke="currentColor" stroke-width="1.5" />
-          </svg>
-          <div class="hero-inner">
-            <div class="hero-header-row">
-              <h1 class="hero-name">
-                <span class="line-1 word-reveal-line">Sannidhi Durga</span>
-                <span class="line-2 word-reveal-line">Pavan Sriram</span>
-              </h1>
-              <div class="hero-avatar-frame liquid-glass reveal">
-                <img src="assets/media/Sriram.jpg" alt="Sannidhi Durga Pavan Sriram" class="hero-avatar-img" />
-              </div>
-            </div>
-            <div class="hero-rule reveal"></div>
-            <div class="hero-foot reveal">
-              <p class="hero-title-text">Aspiring Cloud / DevOps / SRE Engineer</p>
-              <p class="hero-desc">Building resilient cloud infrastructure,<br>automated CI/CD GitOps pipelines,<br>and
-                enterprise-grade observability stacks.</p>
-              <div class="hero-ctas">
-                <a href="#projects" class="btn-primary liquid-glass">View Work</a>
-                <a href="#contact" class="btn-ghost liquid-glass">Let's Talk</a>
-                <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="btn-cv liquid-glass">Download CV ↓</a>
-              </div>
-            </div>
-          </div>
 
-          <!-- Interactive Terminal Prompt (Feature 1) -->
-          <div class="terminal-cli-container liquid-glass reveal">
-            <div class="cli-output-log" id="cli-output">
-              <div class="cli-line info">Welcome to Sannidhi's Cloud/DevOps Shell v2.4 (x86_64-pc-linux-gnu)</div>
-              <div class="cli-line help-tip">Type <span class="cli-cmd-highlight cli-clickable" data-type="cmd"
-                  data-val="help">help</span> or <span class="cli-cmd-highlight cli-clickable" data-type="cmd"
-                  data-val="skills">skills</span> to explore available commands.</div>
-            </div>
-            <form class="cli-input-row" id="cli-form">
-              <span class="cli-prompt">sriram@macbook-pro ~ %</span>
-              <input type="text" id="cli-input" class="cli-input"
-                placeholder="type command (e.g. help, cv, kubectl, certs)..." autocomplete="off" spellcheck="false" />
-            </form>
+        <!-- Heads-up display over the live architecture world -->
+        <div class="scene-hud">
+          <div class="scene-hud-legend" aria-hidden="true">
+            <span><i class="legend-dot cat-edge"></i> Cloud Edge</span>
+            <span><i class="legend-dot cat-compute"></i> Compute &amp; IaC</span>
+            <span><i class="legend-dot cat-telemetry"></i> Telemetry &amp; GitOps</span>
           </div>
-
-          <div class="hero-stats reveal">
-            <div class="stat"><span class="stat-n" data-count="6">0</span><span class="stat-l">Cloud
-                Certifications</span></div>
-            <div class="stat"><span class="stat-n" data-count="6">0</span><span class="stat-l">Projects Shipped</span>
-            </div>
-            <div class="stat"><span class="stat-n" data-count="25">0</span><span class="stat-l">Contributors
-                Coordinated</span></div>
-            <div class="stat"><span class="stat-sup">Top</span><span class="stat-n"
-                style="display:inline;font-size:clamp(32px,4vw,52px)"> 500</span><span class="stat-l">Oracle Global
-                Rank</span></div>
-          </div>
+          <p class="scene-hud-readout">
+            <span class="scene-hud-label">Architecture map</span>
+            <span id="scene-hud-detail">6 live services — click a node to open its case study</span>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ── ABOUT ── -->
+    <!-- Floating label for a hovered architecture node -->
+    <div class="scene-tooltip" id="scene-tooltip" role="status" hidden>
+      <b id="scene-tooltip-name"></b>
+      <span id="scene-tooltip-spec"></span>
+    </div>
+
+    <!-- ── 01: ABOUT & TECHNICAL STACK ── -->
     <section id="about">
       <div class="container">
-        <div class="sec-label reveal">01 — About</div>
+        <div class="sec-header">
+          <div class="sec-tag">01 · Background &amp; Skills</div>
+          <h2 class="sec-title">About &amp; Technical Stack</h2>
+        </div>
+
         <div class="about-grid">
-          <div class="about-left">
-            <h2 class="pull-quote reveal">"I build things<br><em>that scale</em><br>and survive."</h2>
+
+          <div class="about-bio-pane">
+            <p>
+              I am a 4th-year Computer Science undergraduate at <strong>Lovely Professional
+              University</strong> (CGPA 7.33), specializing in Cloud Computing and graduating in
+              <strong>May 2027</strong>.
+            </p>
+            <p>
+              My hands-on experience centers on designing reliable AWS and Azure architectures,
+              configuring infrastructure as code with Terraform, building CI/CD delivery pipelines
+              with Jenkins and GitHub Actions, and managing observability with Prometheus and Grafana.
+            </p>
+            <p>
+              During my AI deployment internship at Infosys Springboard, I coordinated cloud
+              deployment across a 25-member cohort, provisioning EC2 and S3 resources and resolving
+              production CORS, loopback, and environment configuration defects.
+            </p>
           </div>
-          <div class="about-right">
-            <p class="reveal">B.Tech Computer Science student at Lovely Professional University (CGPA 7.37, Minor: Cloud
-              Computing), graduating May 2027. Hands-on experience in Cloud, DevOps, and Site Reliability Engineering
-              (SRE).</p>
-            <p class="reveal">I've shipped production-grade microservices, multi-agent AI systems, and observability
-              stacks on AWS and Azure — bridging the gap between infrastructure and intelligent software.</p>
 
-            <div class="skills-section skills-grid">
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">Languages</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img src="assets/icons/python.svg" alt="Python" /><span>Python (Boto3)</span>
-                  </div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
-                      alt="Bash" /><span>Bash</span></div>
-                </div>
-              </div>
+          <div class="skills-pane">
 
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">Cloud</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
-                      alt="AWS" /><span>AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, CloudFront, SSM,
-                      Backup, Client VPN)</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg"
-                      alt="Azure" /><span>Azure (App Service, Azure OpenAI, Monitor, Entra ID, Storage Accounts,
-                      VMs)</span></div>
-                </div>
-              </div>
-
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">Infra &amp; IaC</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"
-                      alt="Terraform" /><span>Terraform</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
-                      alt="Docker" /><span>Docker</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"
-                      alt="Kubernetes" /><span>Kubernetes (Minikube)</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/helm/helm-original.svg"
-                      alt="Helm" /><span>Helm</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/argocd/argocd-original.svg"
-                      alt="ArgoCD" /><span>ArgoCD</span></div>
-                </div>
-              </div>
-
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">CI/CD</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
-                      alt="GitHub Actions" /><span>GitHub Actions</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg"
-                      alt="Jenkins" /><span>Jenkins</span></div>
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
-                      alt="Git" /><span>Git</span></div>
-                  <div class="skill-chip"><img src="assets/icons/snyk.svg" alt="Snyk" /><span>Snyk</span></div>
-                </div>
-              </div>
-
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">AI &amp; LLMs</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img src="assets/icons/groq.svg" alt="Groq API" /><span>Groq API</span></div>
-                  <div class="skill-chip"><img src="assets/icons/huggingface.svg"
-                      alt="HuggingFace" /><span>HuggingFace</span></div>
-                  <div class="skill-chip"><img src="assets/icons/azure-openai.svg" alt="Azure OpenAI" /><span>Azure
-                      OpenAI</span></div>
-                </div>
-              </div>
-
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">Dev Tools</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"
-                      alt="Cursor" /><span>Cursor</span></div>
-                  <div class="skill-chip"><img src="assets/icons/antigravity.svg"
-                      alt="Antigravity" /><span>Antigravity</span></div>
-                  <div class="skill-chip"><img src="assets/icons/claude-icon-filled-256.png"
-                      alt="Claude Code" /><span>Claude Code</span></div>
-                  <div class="skill-chip"><img src="assets/icons/gemini-cli.svg" alt="Gemini CLI" /><span>Gemini
-                      CLI</span></div>
-                </div>
-              </div>
-
-              <div class="skills-category reveal">
-                <h4 class="sk-cat-label">Soft Skills</h4>
-                <div class="skills-row">
-                  <div class="skill-chip"><span>Cross-functional coordination</span></div>
-                  <div class="skill-chip"><span>Self-directed execution</span></div>
-                  <div class="skill-chip"><span>Clear technical communication</span></div>
-                </div>
+            <div class="skill-group">
+              <span class="skill-group-title">Cloud Infrastructure</span>
+              <div class="skill-chips">
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/aws.svg')"></i>AWS — ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, VPN</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/azure.svg')"></i>Azure — App Service, OpenAI, Monitor, Table Storage</div>
               </div>
             </div>
+
+            <div class="skill-group">
+              <span class="skill-group-title">IaC &amp; Containers</span>
+              <div class="skill-chips">
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/terraform.svg')"></i>Terraform</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/docker.svg')"></i>Docker</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/kubernetes.svg')"></i>Kubernetes</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/helm.svg')"></i>Helm</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/argocd.svg')"></i>ArgoCD</div>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <span class="skill-group-title">CI/CD &amp; DevSecOps</span>
+              <div class="skill-chips">
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/githubactions.svg')"></i>GitHub Actions</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/jenkins.svg')"></i>Jenkins</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/git.svg')"></i>Git</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/snyk.svg')"></i>Snyk SAST / SCA</div>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <span class="skill-group-title">Languages &amp; AI Tools</span>
+              <div class="skill-chips">
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/python.svg')"></i>Python (Boto3)</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/bash.svg')"></i>Bash / Shell</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/groq.svg')"></i>Groq API</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/openai.svg')"></i>Azure OpenAI</div>
+                <div class="skill-chip"><i class="skill-ico" style="--ico:url('assets/icons/logos/huggingface.svg')"></i>HuggingFace</div>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ── PROJECTS ── -->
+    <!-- ── 02: SELECTED WORK / PROJECTS ── -->
     <section id="projects">
       <div class="container">
-        <div class="sec-label reveal">02 — Selected Work</div>
-        <h2 class="sec-heading reveal">Projects</h2>
-      </div>
+        <div class="sec-header">
+          <div class="sec-tag">02 · Selected Projects</div>
+          <h2 class="sec-title">Infrastructure &amp; Architecture Case Studies</h2>
+          <p class="sec-desc">Production-style cloud architectures, observability pipelines, and
+            automated GitOps deployments.</p>
+        </div>
 
-      <!-- Swiper 3D Coverflow -->
-      <div class="proj-swiper-container">
-        <div class="swiper proj-swiper reveal">
-          <div class="swiper-wrapper">
+        <div class="projects-grid">
 
-            <!-- 12. Cloud Support Ticket Simulation -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/icons/Grafana.jpeg" alt="Cloud Support Ticket Simulation" loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">01</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">Cloud Support &amp; Customer Engineering Simulation</h3>
-                  <p class="proj-desc">AWS-based cloud support engineering sandbox validating remote issue resolution
-                    via
-                    AWS Client VPN (Mutual TLS) &amp; SSM Session Manager. Isolated network vs server faults using
-                    CloudWatch Logs Insights, executed point-in-time recoveries with AWS Backup, and produced technical
-                    KB
-                    articles &amp; customer status updates.</p>
-                  <div class="proj-tags"><span>AWS Client VPN</span><span>SSM Session Manager</span><span>CloudWatch
-                      Logs</span><span>AWS Backup</span><span>EC2</span><span>IAM Scoped</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank"
-                      rel="noopener" class="proj-link">GitHub ↗</a>
-                  </div>
-                </div>
+          <!-- 01: Cloud Support Ticket Simulation -->
+          <div class="project-card" id="proj-1">
+            <div class="project-cover cover-edge">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="30" y="72" width="74" height="48" rx="4"/>
+                  <path d="M22 128h90l-9-6H31z"/>
+                  <path d="M44 88h46M44 100h30"/>
+                  <path d="M112 100h56M232 100h56" stroke-dasharray="3 7"/>
+                  <rect x="182" y="90" width="36" height="28" rx="5"/>
+                  <path d="M189 90v-6a11 11 0 0 1 22 0v6"/>
+                  <circle cx="200" cy="103" r="3" fill="currentColor" stroke="none"/>
+                  <rect x="300" y="58" width="72" height="24" rx="4"/>
+                  <rect x="300" y="88" width="72" height="24" rx="4"/>
+                  <rect x="300" y="118" width="72" height="24" rx="4"/>
+                  <circle cx="313" cy="70" r="2.5" fill="currentColor" stroke="none"/>
+                  <circle cx="313" cy="100" r="2.5" fill="currentColor" stroke="none"/>
+                  <circle cx="313" cy="130" r="2.5" fill="currentColor" stroke="none"/>
+                  <path d="M336 30l13 22h-26z"/>
+                  <path d="M343 38v7M343 48.5v.5"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 01 · AWS</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Cloud Support &amp; Customer Engineering Simulation</h3>
+              <p class="project-desc">
+                AWS support engineering sandbox simulating remote incident response via AWS Client VPN
+                (Mutual TLS) &amp; SSM Session Manager. Isolated network vs server faults using
+                CloudWatch Logs Insights, executed point-in-time recoveries with AWS Backup, and
+                produced technical KB articles.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">Analyst → Client VPN (mTLS) + SSM Session Manager → private EC2 → CloudWatch Logs Insights → AWS Backup point-in-time restore</code>
+                <p>Every remote session is brokered through Client VPN and SSM — there is no public SSH. CloudWatch Logs Insights is used to prove whether an outage is a misconfigured security-group rule or an application failure, and AWS Backup rebuilds deleted records onto a replacement EC2 instance, which is then verified by hand rather than trusting the job's "success" status.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">AWS Client VPN</span>
+                <span class="project-tag">SSM Session Manager</span>
+                <span class="project-tag">CloudWatch Logs</span>
+                <span class="project-tag">AWS Backup</span>
+                <span class="project-tag">EC2</span>
+                <span class="project-tag">IAM</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank" rel="noopener" class="project-link">
+                  <span>GitHub Repository</span>
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
               </div>
             </div>
-
-            <!-- 11. Observability Fargate -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/icons/Grafana.jpeg" alt="Observability Fargate" loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">02</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">Cloud Security Observability Stack on ECS Fargate</h3>
-                  <p class="proj-desc">Production-style security observability pipeline provisioned entirely via
-                    Terraform. Custom linux/amd64 Prometheus image on ECS Fargate scrapes HTTP request rates &amp; TSDB
-                    series, feeding a 3-panel Grafana dashboard with active PromQL alert rules firing on high request
-                    rates to CloudWatch log groups.</p>
-                  <div class="proj-tags"><span>AWS ECS
-                      Fargate</span><span>Prometheus</span><span>Grafana</span><span>PromQL</span><span>Terraform</span><span>AWS
-                      ECR</span><span>CloudWatch</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener"
-                      class="proj-link">GitHub ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 7 & 8. AI Test Generator & GitOps Pipeline -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/icons/Gitops Arch.jpeg" alt="AI Test Generator & GitOps Pipeline" loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">03</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">AI Test Generator &amp; GitOps Pipeline</h3>
-                  <p class="proj-desc">FastAPI service leveraging Groq LLaMA 3.1 to convert Python source into
-                    executable
-                    pytest suites with rate limiting and input validation. Automated Jenkins CI pipeline enforces a
-                    strict
-                    70% coverage gate, pushes immutably tagged images (BUILD_NUMBER-COMMIT_SHA) to AWS ECR, and triggers
-                    ArgoCD GitOps sync to Minikube Helm releases.</p>
-                  <div class="proj-tags"><span>FastAPI</span><span>Groq LLaMA 3.1</span><span>Jenkins
-                      CI</span><span>Docker</span><span>AWS
-                      ECR</span><span>ArgoCD</span><span>Kubernetes</span><span>Helm</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener"
-                      class="proj-link">App Repo ↗</a>
-                    <a href="https://github.com/SannidhiSriram-06/ai-test-generator-gitops" target="_blank"
-                      rel="noopener" class="proj-link accent">GitOps Repo ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 6. Java Self-Healing Microservice -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/media/Springboot.png" alt="Self-Healing Microservice" loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">04</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">Self-Healing Microservice on AWS</h3>
-                  <p class="proj-desc">Fault-tolerant containerized microservice featuring 5-layer recovery: application
-                    health checks (/actuator/health), container auto-restarts, ALB traffic isolation, and Auto Scaling
-                    Group EC2 replacement. Provisioned via Terraform with GitHub Actions CI/CD enforcing Snyk SAST/SCA
-                    security gates.</p>
-                  <div class="proj-tags"><span>Spring Boot</span><span>AWS
-                      ASG</span><span>ALB</span><span>Terraform</span><span>Docker</span><span>Snyk</span><span>CloudWatch</span><span>GitHub
-                      Actions</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank"
-                      rel="noopener" class="proj-link">GitHub ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 10. AI Patient Triage System on Azure (CSA Case Study) -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/media/Azure Architecture Diagram.png" alt="AI Patient Triage System on Azure"
-                    loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">05</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">AI Patient Triage System on Azure</h3>
-                  <p class="proj-desc">Cloud-native Flask application hosted on Azure App Service (Linux, Gunicorn)
-                    integrating Azure OpenAI GPT-4o for real-time symptom triage (Urgent Care, Non-Urgent, Self Care).
-                    Records every interaction in Azure Table Storage for complete auditability with zero hardcoded
-                    credentials.</p>
-                  <div class="proj-tags"><span>Python Flask</span><span>Azure OpenAI</span><span>Azure App
-                      Service</span><span>Azure Table Storage</span><span>Azure Monitor</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-"
-                      target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 1. Bookstore Microservice Architecture on AWS -->
-            <div class="swiper-slide">
-              <div class="proj-card">
-                <div class="proj-img-frame">
-                  <img src="assets/media/Springboot.png" alt="Bookstore Microservice Architecture on AWS"
-                    loading="lazy" />
-                  <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                      class="fc bl"></span><span class="fc br"></span></div>
-                  <div class="proj-num-badge">06</div>
-                </div>
-                <div class="proj-body">
-                  <h3 class="proj-title">Bookstore Serverless Architecture on AWS</h3>
-                  <p class="proj-desc">Serverless microservices case study mapping Node.js REST APIs to AWS Lambda
-                    compute, API Gateway HTTP routing, and MongoDB Atlas cloud database. Includes AWS Free Tier cost
-                    optimization analysis ($0/mo for low traffic) and CloudWatch log integration.</p>
-                  <div class="proj-tags"><span>AWS Lambda</span><span>API Gateway</span><span>MongoDB
-                      Atlas</span><span>Node.js</span><span>CloudWatch</span><span>REST API</span></div>
-                  <div class="proj-links">
-                    <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS"
-                      target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+
+          <!-- 02: Observability ECS Fargate -->
+          <div class="project-card" id="proj-2">
+            <div class="project-cover cover-telemetry">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="22" y="26" width="214" height="92" rx="6"/>
+                  <path d="M34 60h190M34 84h190" stroke-width="1" opacity="0.4"/>
+                  <path d="M34 98l30-24 26 14 28-32 26 16 30-28 24 22 24-10"/>
+                  <circle cx="118" cy="56" r="3.5" fill="currentColor" stroke="none"/>
+                  <rect x="250" y="26" width="128" height="92" rx="6"/>
+                  <path d="M268 106v-22M290 106v-40M312 106v-16M334 106v-48M356 106v-28" stroke-width="7"/>
+                  <rect x="22" y="132" width="108" height="44" rx="6"/>
+                  <path d="M34 150h44M34 163h68"/>
+                  <path d="M300 172a40 40 0 0 1 78 0"/>
+                  <path d="M339 172l24-18"/>
+                  <path d="M146 148h108v30H146z" opacity="0.35"/>
+                  <path d="M158 163h30M200 163h44" stroke-width="1"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 02 · Observability</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Cloud Security Observability Stack on ECS Fargate</h3>
+              <p class="project-desc">
+                Production-style observability pipeline provisioned via Terraform. Custom linux/amd64
+                Prometheus image on ECS Fargate scrapes HTTP request rates &amp; TSDB series, feeding a
+                3-panel Grafana dashboard with active PromQL alert rules firing on high request rates
+                to CloudWatch log groups.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">Terraform → VPC · ECS Fargate → Prometheus :9090 ─scrape→ Grafana :3000 → alert rule (rate &gt; 0.5) → CloudWatch Logs</code>
+                <p>Terraform provisions the entire stack in <code>ap-south-1</code> — VPC, subnets, security groups, ECS cluster, IAM execution/task roles — with zero EC2. A custom <code>linux/amd64</code> Prometheus image built and pushed to ECR scrapes its own request and TSDB metrics into a 3-panel Grafana dashboard, and a warning-severity alert fires when the 5-minute request rate crosses 0.5.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">AWS ECS Fargate</span>
+                <span class="project-tag">Prometheus</span>
+                <span class="project-tag">Grafana</span>
+                <span class="project-tag">PromQL</span>
+                <span class="project-tag">Terraform</span>
+                <span class="project-tag">ECR</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="project-link">
+                  <span>GitHub Repository</span>
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 03: AI Test Generator & GitOps -->
+          <div class="project-card" id="proj-3">
+            <div class="project-cover cover-gitops">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M60 100h40M144 100h22M228 100h20M310 100h20"/>
+                  <circle cx="44" cy="100" r="14"/>
+                  <circle cx="44" cy="100" r="4" fill="currentColor" stroke="none"/>
+                  <circle cx="122" cy="100" r="21"/>
+                  <path d="M122 83v-8M122 117v8M105 100h-8M139 100h8M110 88l-6-6M134 112l6 6M134 88l6-6M110 112l-6 6"/>
+                  <circle cx="122" cy="100" r="7"/>
+                  <rect x="188" y="82" width="36" height="34" rx="3"/>
+                  <path d="M188 93h36M199 82v34M211 82v34"/>
+                  <path d="M282 76l17 10v20l-17 10-17-10V86z"/>
+                  <path d="M282 90l6 4v10l-6 4-6-4V94z"/>
+                  <circle cx="352" cy="100" r="21"/>
+                  <path d="M352 100V85M352 100l14 5M352 100l-14 5M352 100l9 12M352 100l-9 12"/>
+                  <circle cx="352" cy="100" r="4" fill="currentColor" stroke="none"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 03 · GitOps</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">AI Test Generator &amp; GitOps Pipeline</h3>
+              <p class="project-desc">
+                FastAPI service leveraging Groq LLaMA 3.1 to convert Python source into executable
+                pytest suites with rate limiting and input validation. Automated Jenkins CI pipeline
+                enforces a strict 70% coverage gate, pushes immutably tagged images to AWS ECR, and
+                triggers ArgoCD GitOps sync to Minikube Helm releases.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">git push → Jenkins (pytest, 70% coverage gate) → Docker multi-stage build → ECR (BUILD_NUMBER-COMMIT_SHA) → bump image.tag in GitOps repo → ArgoCD → Kubernetes (Minikube)</code>
+                <p>Application code and deployment state live in two separate repositories. Jenkins fails the build below 70% coverage, pushes an immutably tagged image to ECR (lifecycle policy: keep last 10, scan-on-push), then commits that tag into the Helm chart's <code>values.yaml</code>, where an externally configured ArgoCD application reconciles it onto the cluster.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">FastAPI</span>
+                <span class="project-tag">Groq LLaMA 3.1</span>
+                <span class="project-tag">Jenkins</span>
+                <span class="project-tag">Docker</span>
+                <span class="project-tag">AWS ECR</span>
+                <span class="project-tag">ArgoCD</span>
+                <span class="project-tag">Kubernetes</span>
+                <span class="project-tag">Helm</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener" class="project-link">App Repo ↗</a>
+                <a href="https://github.com/SannidhiSriram-06/ai-test-generator-gitops" target="_blank" rel="noopener" class="project-link">GitOps Repo ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04: Java Self-Healing Microservice -->
+          <div class="project-card" id="proj-4">
+            <div class="project-cover cover-sre">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="158" y="22" width="84" height="34" rx="6"/>
+                  <path d="M174 39h52"/>
+                  <path d="M186 56l-70 46M200 56v46M214 56l70 46"/>
+                  <rect x="74" y="108" width="74" height="54" rx="6"/>
+                  <rect x="163" y="108" width="74" height="54" rx="6"/>
+                  <rect x="252" y="108" width="74" height="54" rx="6"/>
+                  <path d="M96 134l8 9 15-18"/>
+                  <path d="M185 134l8 9 15-18"/>
+                  <path d="M278 126l22 22M300 126l-22 22"/>
+                  <path d="M262 96a28 28 0 1 1-3 22"/>
+                  <path d="M262 96l-9 3 2-10"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 04 · SRE</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Self-Healing Microservice on AWS</h3>
+              <p class="project-desc">
+                Fault-tolerant containerized microservice featuring 5-layer recovery: application
+                health checks (/actuator/health), container auto-restarts, ALB traffic isolation, and
+                Auto Scaling Group EC2 replacement. Provisioned via Terraform with GitHub Actions
+                CI/CD enforcing Snyk SAST/SCA security gates.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">Client → ALB (health check /actuator/health every 30s) → Target Group → ASG (2–4× t3.micro, multi-AZ) → Dockerised Spring Boot on EC2</code>
+                <p>Five recovery layers stack: Actuator health endpoint, container restart-on-crash, ALB target isolation after 3 failed checks, ASG instance replacement on failed ELB health checks, and CPU target-tracking auto-scaling at 80%. GitHub Actions builds, tests and Snyk-scans the image (dependency + image); promotion to EC2 is a manual pull-and-run.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Spring Boot</span>
+                <span class="project-tag">AWS ASG</span>
+                <span class="project-tag">ALB</span>
+                <span class="project-tag">Terraform</span>
+                <span class="project-tag">Docker</span>
+                <span class="project-tag">Snyk</span>
+                <span class="project-tag">GitHub Actions</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="project-link">GitHub Repository ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 05: Azure AI Patient Triage System -->
+          <div class="project-card" id="proj-5">
+            <div class="project-cover cover-azure">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M24 48h74a10 10 0 0 1 10 10v30a10 10 0 0 1-10 10H52l-16 13V98H24a10 10 0 0 1-10-10V58a10 10 0 0 1 10-10z"/>
+                  <path d="M34 68h50M34 80h32"/>
+                  <rect x="150" y="66" width="58" height="58" rx="12"/>
+                  <circle cx="179" cy="95" r="12"/>
+                  <path d="M179 58v8M179 124v8M150 95h-8M216 95h8M159 75l-6-6M199 115l6 6M199 75l6-6M159 115l-6 6"/>
+                  <path d="M208 76l38-16M208 95h40M208 114l38 16"/>
+                  <rect x="252" y="42" width="98" height="26" rx="13"/>
+                  <rect x="252" y="82" width="78" height="26" rx="13"/>
+                  <rect x="252" y="122" width="98" height="26" rx="13"/>
+                  <ellipse cx="120" cy="150" rx="20" ry="7"/>
+                  <path d="M100 150v18c0 4 9 7 20 7s20-3 20-7v-18"/>
+                  <path d="M150 128v14" stroke-dasharray="3 5"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 05 · Azure AI</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">AI Patient Triage System on Azure</h3>
+              <p class="project-desc">
+                Cloud-native Flask application hosted on Azure App Service (Linux, Gunicorn)
+                integrating Azure OpenAI GPT-4o for real-time symptom triage (Urgent Care, Non-Urgent,
+                Self Care). Records every interaction in Azure Table Storage for complete auditability
+                with zero hardcoded credentials.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">User → Flask on Azure App Service (Linux B1, Gunicorn) → Azure OpenAI (GPT-4o, triage-model) → Azure Table Storage (triagelogs) → response</code>
+                <p>Compute, inference and storage are three independent managed services with no self-hosted infrastructure. The web tier stays stateless, every symptom/response pair is written to Table Storage for a queryable audit trail, and all four connection secrets are injected as App Service configuration rather than committed.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Python Flask</span>
+                <span class="project-tag">Azure OpenAI</span>
+                <span class="project-tag">Azure App Service</span>
+                <span class="project-tag">Azure Table Storage</span>
+                <span class="project-tag">Gunicorn</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="project-link">GitHub Repository ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06: Bookstore Serverless Architecture -->
+          <div class="project-card" id="proj-6">
+            <div class="project-cover cover-serverless">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="40" cy="100" r="12"/>
+                  <path d="M52 100h30"/>
+                  <path d="M96 66v68M96 66h16M96 134h16M120 60v80"/>
+                  <path d="M134 84h30M134 100h44M134 116h30"/>
+                  <path d="M178 100h24"/>
+                  <rect x="202" y="72" width="58" height="56" rx="12"/>
+                  <path d="M218 90l15 22-11 12M232 90h10"/>
+                  <path d="M260 100h26"/>
+                  <ellipse cx="316" cy="80" rx="26" ry="9"/>
+                  <path d="M290 80v40c0 5 12 9 26 9s26-4 26-9V80"/>
+                  <path d="M290 100c0 5 12 9 26 9s26-4 26-9"/>
+                  <circle cx="356" cy="152" r="18"/>
+                  <path d="M356 142v20M361 147h-7a3.5 3.5 0 0 0 0 7h4a3.5 3.5 0 0 1 0 7h-8"/>
+                </g>
+              </svg>
+              <span class="project-id-tag">Case Study 06 · Serverless</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Bookstore Serverless Architecture on AWS</h3>
+              <p class="project-desc">
+                Serverless microservices case study mapping Node.js REST APIs to AWS Lambda compute,
+                API Gateway HTTP routing, and MongoDB Atlas cloud database. Includes AWS Free Tier
+                cost optimization analysis ($0/mo for low traffic) and CloudWatch log integration.
+              </p>
+              <div class="project-arch">
+                <span class="project-arch-label">Architecture</span>
+                <code class="project-arch-flow">Client (HTTPS) → API Gateway REST (GET/POST /books, Lambda proxy, CORS) → AWS Lambda (Node.js 20.x) → MongoDB Atlas (M0) → CloudWatch Logs</code>
+                <p>A service-mapping study: each part of a traditional Express app is swapped for a managed AWS equivalent — Lambda for compute, API Gateway for routing and HTTPS, Atlas for the database, CloudWatch for logs — and the whole thing sits at $0/month under the free tier for low-traffic use.</p>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">AWS Lambda</span>
+                <span class="project-tag">API Gateway</span>
+                <span class="project-tag">MongoDB Atlas</span>
+                <span class="project-tag">Node.js</span>
+                <span class="project-tag">CloudWatch</span>
+                <span class="project-tag">REST API</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="project-link">GitHub Repository ↗</a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ── EXPERIENCE ── -->
+    <!-- ── 03: EXPERIENCE ── -->
     <section id="experience">
       <div class="container">
-        <div class="sec-label reveal">03 — Experience</div>
-        <div class="exp-block reveal">
-          <div class="exp-head">
-            <div>
-              <h3 class="exp-role">AI Intern — Cloud Deployment Lead</h3>
-              <span class="exp-co">Infosys Springboard · BFSI · Remote</span>
+        <div class="sec-header">
+          <div class="sec-tag">03 · Experience</div>
+          <h2 class="sec-title">Internship Experience</h2>
+        </div>
+
+        <div class="experience-card">
+          <div>
+            <div class="exp-head">
+              <div>
+                <h3 class="exp-role-title">AI Intern — Cloud Deployment Lead</h3>
+                <span class="exp-company">Infosys Springboard · BFSI Sector · Remote</span>
+              </div>
+              <span class="exp-date">Feb 2026 – Mar 2026</span>
             </div>
-            <span class="exp-date">Feb – Mar 2026</span>
-          </div>
-          <div class="exp-content">
-            <ul class="exp-list">
-              <li>Led cloud deployment for a <strong>25-member cohort</strong> (AI/ML, full-stack &amp; cloud sub-teams)
-                building a BFSI-sector AI KYC verification system (<a
-                  href="https://github.com/SannidhiSriram-06/Infosys_AI_KYC_Compliance" target="_blank" rel="noopener"
-                  style="text-decoration: underline; color: var(--accent);">Infosys AI KYC Compliance ↗</a>), running
-                Agile sprints with daily standups and retrospectives.</li>
-              <li>Evaluated SageMaker and Lambda against EC2 for the ML service — selected EC2 for cost efficiency, no
-                cold-start overhead, and full deployment control; deployed the React/Vite frontend to S3 and the Flask
-                ML service to EC2.</li>
-              <li>Managed Git workflow and repo access across the cohort; personally tracked and closed <strong>5
-                  deployment-stage defects</strong> (frontend bypassing the backend and breaking CORS/auth, the API
-                server bound to localhost only, an S3↔EC2 CORS mismatch, PM2 launching the ML service with the wrong
-                Python interpreter, and ungraceful non-KYC upload handling) to keep the pipeline stable.</li>
+
+            <ul class="exp-bullets">
+              <li>
+                Led cloud deployment for a <strong>25-member cohort</strong> (AI/ML, full-stack, and
+                cloud sub-teams) building a BFSI-sector AI KYC verification system
+                (<a href="https://github.com/SannidhiSriram-06/Infosys_AI_KYC_Compliance" target="_blank" rel="noopener" class="inline-link">Infosys AI KYC Compliance ↗</a>),
+                conducting Agile sprints with daily standups.
+              </li>
+              <li>
+                Evaluated AWS SageMaker and Lambda against EC2 for ML inference — selected EC2 for cost
+                efficiency, no cold-start overhead, and full deployment control; deployed the
+                React/Vite frontend to S3 and the Flask ML service to EC2.
+              </li>
+              <li>
+                Managed Git workflow and access across the cohort; tracked and resolved
+                <strong>5 deployment defects</strong>: frontend bypassing the backend and breaking
+                auth/CORS, API server bound to localhost only, S3↔EC2 CORS header mismatch, PM2
+                launching with the wrong Python interpreter, and non-KYC upload handling.
+              </li>
             </ul>
-            <div class="exp-cert">
-              <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                  class="fc bl"></span><span class="fc br"></span></div>
-              <img src="assets/Infosys_Internship_Certification_page-0001.jpg" alt="Infosys Internship Certificate" />
-            </div>
+          </div>
+
+          <div class="exp-cert-frame">
+            <img src="assets/Infosys_Internship_Certification_page-0001.jpg" alt="Infosys Springboard Internship Certificate" loading="lazy" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── ACHIEVEMENT ── -->
-    <section id="achievement">
-      <div class="container">
-        <div class="sec-label reveal">04 — Achievement</div>
-        <div class="achievement-block reveal">
-          <div class="ach-content">
-            <h2 class="ach-title">Oracle Race to Certification 2025</h2>
-            <p class="ach-sub">Ranked <strong>Top 500 Globally</strong> · Oct 2025</p>
-            <p class="ach-desc">Earned 6 professional Oracle Cloud Infrastructure (OCI) certifications within a single
-              academic year, validating deep technical expertise in OCI DevOps, Observability, Multicloud Architecture,
-              and Generative AI.</p>
-          </div>
-          <div class="ach-badge-box">
-            <img src="assets/media/SQOPXYT5EP4C.png" alt="Oracle Race to Certification 2025 Global Top 500"
-              class="ach-img-badge" />
-            <span class="ach-badge-rank">TOP 500</span>
-            <span class="ach-badge-label">Global Rank</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CERTIFICATIONS ── -->
+    <!-- ── 04: CERTIFICATIONS & RECOGNITION ── -->
     <section id="certifications">
       <div class="container">
-        <div class="sec-label reveal">05 — Credentials</div>
-        <h2 class="sec-heading reveal">Certifications</h2>
-      </div>
-
-      <!-- Swiper 3D Coverflow -->
-      <div class="swiper cert-swiper reveal">
-        <div class="swiper-wrapper">
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/OCI25DOPOCP.jpg" alt="OCI DevOps Professional" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Oracle · Sep 2025</span>
-                <span class="cert-name">OCI DevOps Professional 2025</span>
-                <p class="cert-desc">Validates expertise in CI/CD pipelines, containerised microservices, and IaC on
-                  OCI. Covers OCI DevOps service, Container Instances, Kubernetes deployments, and DevSecOps practices.
-                </p>
-                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/OCI25OMCP.jpg" alt="OCI Observability Professional" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Oracle · Aug 2025</span>
-                <span class="cert-name">OCI Observability Professional 2025</span>
-                <p class="cert-desc">Covers the full OCI observability stack — Monitoring, Logging, Logging Analytics,
-                  Stack Monitoring, and APM. Targeted at SREs and cloud architects who need end-to-end visibility into
-                  cloud workloads.</p>
-                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/OCI2025MCAOCP.jpeg" alt="OCI Multicloud Architect" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Oracle · Aug 2025</span>
-                <span class="cert-name">OCI Multicloud Architect 2025</span>
-                <p class="cert-desc">Validates skills in designing cross-cloud architectures spanning OCI, Azure, and
-                  GCP. Covers multicloud networking, Oracle Database@Azure and @Google Cloud, and cross-provider
-                  identity and connectivity.</p>
-                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/OCI25GAIOCP.jpg" alt="OCI Gen AI Professional" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Oracle · Aug 2025</span>
-                <span class="cert-name">OCI Gen AI Professional 2025</span>
-                <p class="cert-desc">Deep-dives into LLMs, OCI Generative AI service, and RAG using Oracle Database 23ai
-                  and LangChain. Covers building production-grade RAG chatbots and agents with the OCI Gen AI RAG Agents
-                  service.</p>
-                <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/azure-fundamentals.png" alt="Azure AI Fundamentals AI-900" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Microsoft · Jun 2025</span>
-                <span class="cert-name">Azure AI Fundamentals <em>AI-900</em></span>
-                <p class="cert-desc">Covers foundational AI and ML concepts on Azure — computer vision, NLP, and
-                  generative AI workloads. Entry-level certification for both technical and non-technical professionals
-                  entering the AI space.</p>
-                <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="cert-card">
-              <div class="cert-img-frame">
-                <img src="assets/media/azure-fundamentals.png" alt="Azure Fundamentals AZ-900" loading="lazy" />
-                <div class="frame-corners"><span class="fc tl"></span><span class="fc tr"></span><span
-                    class="fc bl"></span><span class="fc br"></span></div>
-              </div>
-              <div class="cert-info">
-                <span class="cert-issuer">Microsoft · Jan 2025</span>
-                <span class="cert-name">Azure Fundamentals <em>AZ-900</em></span>
-                <p class="cert-desc">Validates foundational knowledge of cloud concepts and core Azure services —
-                  compute, networking, storage, security, and governance. The standard starting point for any Azure
-                  cloud career path.</p>
-                <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8"
-                  target="_blank" rel="noopener" class="cert-verify-btn">Verify ↗</a>
-              </div>
-            </div>
-          </div>
-
+        <div class="sec-header">
+          <div class="sec-tag">04 · Verified Credentials</div>
+          <h2 class="sec-title">Certifications &amp; Recognition</h2>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+
+        <!-- Oracle Top 500 Recognition Box -->
+        <div class="recognition-box">
+          <div class="recognition-text">
+            <h3>Oracle Race to Certification 2025</h3>
+            <p>
+              Ranked in the <strong>Top 500 Globally</strong> by earning 6 professional Oracle Cloud
+              Infrastructure (OCI) certifications within a single academic year, validating technical
+              expertise across OCI DevOps, Observability, Multicloud Networking, and Enterprise
+              Generative AI.
+            </p>
+          </div>
+          <div class="recognition-badge-wrap">
+            <img src="assets/media/SQOPXYT5EP4C.png" alt="Oracle Race to Certification 2025 Top 500 Badge" class="recognition-img" loading="lazy" />
+            <span class="recognition-rank">Top 500 Globally</span>
+          </div>
+        </div>
+
+        <!-- Tactile 3D certification card-stack (drag / arrow keys / tap) -->
+        <div class="cert-stack-scene" data-interacted="false">
+          <div class="cert-stack" role="group"
+            aria-label="Six certifications. Drag left or press the Right Arrow for the next card; drag right or press the Left Arrow for the previous.">
+
+            <div class="cert-shell cat-oci" data-card-id="0" role="button" tabindex="0"
+              aria-label="Oracle · OCI DevOps Professional 2025. Card 1 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Oracle</span><span class="cert-card-date">Sep 2025</span></div>
+                    <h3 class="cert-card-title">OCI DevOps Professional 2025</h3>
+                    <p class="cert-card-desc">CI/CD pipelines, containerized microservices, IaC on OCI, and OKE Kubernetes deployments.</p>
+                    <a class="cert-card-verify" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="cert-shell cat-oci" data-card-id="1" role="button" tabindex="-1"
+              aria-label="Oracle · OCI Observability Professional 2025. Card 2 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Oracle</span><span class="cert-card-date">Aug 2025</span></div>
+                    <h3 class="cert-card-title">OCI Observability Professional 2025</h3>
+                    <p class="cert-card-desc">Full observability suite: Monitoring, Logging Analytics, APM, and Stack Monitoring.</p>
+                    <a class="cert-card-verify" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="cert-shell cat-oci" data-card-id="2" role="button" tabindex="-1"
+              aria-label="Oracle · OCI Multicloud Architect 2025. Card 3 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Oracle</span><span class="cert-card-date">Aug 2025</span></div>
+                    <h3 class="cert-card-title">OCI Multicloud Architect 2025</h3>
+                    <p class="cert-card-desc">Cross-cloud network design across OCI, Azure, and GCP, and unified identity interconnects.</p>
+                    <a class="cert-card-verify" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="cert-shell cat-oci" data-card-id="3" role="button" tabindex="-1"
+              aria-label="Oracle · OCI Gen AI Professional 2025. Card 4 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Oracle</span><span class="cert-card-date">Aug 2025</span></div>
+                    <h3 class="cert-card-title">OCI Gen AI Professional 2025</h3>
+                    <p class="cert-card-desc">Enterprise LLMs, RAG with Oracle Database 23ai, and autonomous AI Agent workflows.</p>
+                    <a class="cert-card-verify" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="cert-shell cat-azure" data-card-id="4" role="button" tabindex="-1"
+              aria-label="Microsoft · Azure AI Fundamentals AI-900. Card 5 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Microsoft</span><span class="cert-card-date">Jun 2025</span></div>
+                    <h3 class="cert-card-title">Azure AI Fundamentals (AI-900)</h3>
+                    <p class="cert-card-desc">Machine learning workloads, computer vision, natural language processing, and Azure OpenAI.</p>
+                    <a class="cert-card-verify" href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="cert-shell cat-azure" data-card-id="5" role="button" tabindex="-1"
+              aria-label="Microsoft · Azure Fundamentals AZ-900. Card 6 of 6.">
+              <div class="cert-drag-plane">
+                <article class="cert-card">
+                  <canvas class="cert-mask" width="640" height="400" aria-hidden="true"></canvas>
+                  <div class="cert-card-body">
+                    <div class="cert-card-head"><span class="cert-card-issuer">Microsoft</span><span class="cert-card-date">Jan 2025</span></div>
+                    <h3 class="cert-card-title">Azure Fundamentals (AZ-900)</h3>
+                    <p class="cert-card-desc">Core Azure infrastructure: compute, networking, storage, IAM security, and governance.</p>
+                    <a class="cert-card-verify" href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8" target="_blank" rel="noopener">Verify credential ↗</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+          </div>
+          <p class="cert-stack-hint" aria-hidden="true"><span>← drag · tap · arrow keys ·</span> <span class="cert-stack-count">1 / 6</span></p>
+          <p class="cert-stack-status" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </div>
     </section>
 
-    <!-- ── EDUCATION ── -->
+    <!-- ── 05: EDUCATION ── -->
     <section id="education">
       <div class="container">
-        <div class="sec-label reveal">06 — Education</div>
-        <div class="edu-list">
-          <div class="edu-row reveal">
-            <div>
-              <h3>B.Tech Computer Science</h3><span>Lovely Professional University · Minor: Cloud Computing</span>
+        <div class="sec-header">
+          <div class="sec-tag">05 · Education</div>
+          <h2 class="sec-title">Academic Record</h2>
+        </div>
+
+        <div class="education-list">
+
+          <div class="education-row">
+            <div class="edu-main">
+              <h3>B.Tech in Computer Science and Engineering</h3>
+              <p>Lovely Professional University · Cloud Computing</p>
             </div>
-            <div class="edu-r"><span class="edu-grade">7.37 CGPA</span><span class="edu-yr">Aug 2023 – May 2027</span>
+            <div class="edu-meta">
+              <span class="edu-score">7.33 CGPA</span>
+              <span class="edu-period">Aug 2023 – May 2027</span>
             </div>
           </div>
-          <div class="edu-row reveal">
-            <div>
-              <h3>Intermediate — Class XII</h3><span>Keshav Smarak Junior College</span>
+
+          <div class="education-row">
+            <div class="edu-main">
+              <h3>Intermediate — Class XII</h3>
+              <p>Keshav Smarak Junior College · MPC</p>
             </div>
-            <div class="edu-r"><span class="edu-grade">77.5%</span><span class="edu-yr">Apr 2021 – Mar 2023</span></div>
-          </div>
-          <div class="edu-row reveal">
-            <div>
-              <h3>Secondary — Class X</h3><span>Oxford Grammar School</span>
+            <div class="edu-meta">
+              <span class="edu-score">77.5%</span>
+              <span class="edu-period">Apr 2021 – Mar 2023</span>
             </div>
-            <div class="edu-r"><span class="edu-grade">84.6%</span><span class="edu-yr">Apr 2020 – Mar 2021</span></div>
           </div>
+
+          <div class="education-row">
+            <div class="edu-main">
+              <h3>Secondary Education — Class X</h3>
+              <p>Oxford Grammar School</p>
+            </div>
+            <div class="edu-meta">
+              <span class="edu-score">84.6%</span>
+              <span class="edu-period">Apr 2020 – Mar 2021</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ── CONTACT ── -->
+    <!-- ── 06: CONTACT ── -->
     <section id="contact">
       <div class="container">
-        <div class="sec-label reveal">07 — Get in Touch</div>
+        <div class="sec-header">
+          <div class="sec-tag">06 · Contact</div>
+          <h2 class="sec-title">Get in Touch</h2>
+        </div>
+
         <div class="contact-grid">
-          <div class="contact-left">
-            <h2 class="contact-h reveal">Let's build<br><em>something great.</em></h2>
-            <p class="contact-sub reveal">Open to full-time SRE, Cloud &amp; AI Engineering roles.</p>
-            <div class="contact-links reveal">
-              <a href="mailto:sannidhisriram8@gmail.com">sannidhisriram8@gmail.com</a>
-              <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener">GitHub ↗</a>
-              <a href="https://www.linkedin.com/in/sannidhi-sriram/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <div class="contact-info">
+            <p>
+              I am open to full-time roles, internships, and high-impact engineering projects across
+              Cloud, DevOps, and Site Reliability Engineering.
+            </p>
+
+            <div class="contact-channels">
+              <a href="mailto:sannidhisriram8@gmail.com" class="contact-channel-row">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>sannidhisriram8@gmail.com</span>
+              </a>
+
+              <a href="https://www.linkedin.com/in/sannidhi-sriram/" target="_blank" rel="noopener" class="contact-channel-row">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.762-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span>linkedin.com/in/sannidhi-sriram ↗</span>
+              </a>
+
+              <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="contact-channel-row">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>github.com/SannidhiSriram-06 ↗</span>
+              </a>
             </div>
           </div>
-          <form id="contact-form" action="https://formspree.io/f/maqpenyw" method="POST" class="reveal">
-            <div class="form-row">
-              <div class="form-f"><label>Name</label><input type="text" name="name" required placeholder="Your name" />
+
+          <form action="https://formspree.io/f/maqpenyw" method="POST" class="contact-form">
+            <div class="form-group-duo">
+              <div class="form-group">
+                <label for="cf-name">Name</label>
+                <input id="cf-name" type="text" name="name" required placeholder="Your name" class="form-control" />
               </div>
-              <div class="form-f"><label>Email</label><input type="email" name="email" required
-                  placeholder="your@email.com" /></div>
+              <div class="form-group">
+                <label for="cf-email">Email</label>
+                <input id="cf-email" type="email" name="email" required placeholder="Your email address" class="form-control" />
+              </div>
             </div>
-            <div class="form-f"><label>Message</label><textarea name="message" rows="5" required
-                placeholder="What's on your mind?"></textarea></div>
-            <button type="submit" class="btn-primary liquid-glass">Send Message</button>
+
+            <div class="form-group">
+              <label for="cf-subject">Subject</label>
+              <input id="cf-subject" type="text" name="subject" placeholder="Role or project topic" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" required rows="4" placeholder="Your message..." class="form-control"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary form-submit">Send Message</button>
           </form>
         </div>
       </div>
@@ -769,136 +886,35 @@
 
   </main>
 
-  <!-- macOS Dock -->
-  <div id="mac-dock-container">
-    <div id="mac-dock" class="liquid-glass">
-      <a href="#hero" class="dock-item" data-tooltip="Home">
-        <div class="dock-icon home-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#about" class="dock-item" data-tooltip="About">
-        <div class="dock-icon about-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#projects" class="dock-item" data-tooltip="Projects">
-        <div class="dock-icon work-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 18 22 12 16 6"></polyline>
-            <polyline points="8 6 2 12 8 18"></polyline>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#experience" class="dock-item" data-tooltip="Experience">
-        <div class="dock-icon exp-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#achievement" class="dock-item" data-tooltip="Achievement">
-        <div class="dock-icon ach-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-            <path d="M4 22h16"></path>
-            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#certifications" class="dock-item" data-tooltip="Credentials">
-        <div class="dock-icon cert-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="6"></circle>
-            <path d="M15.477 12.89L17 22l-5-3l-5 3l1.523-9.11"></path>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <a href="#contact" class="dock-item" data-tooltip="Contact">
-        <div class="dock-icon mail-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-        </div>
-        <span class="dock-dot"></span>
-      </a>
-      <div class="dock-divider"></div>
-      <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="dock-item"
-        data-tooltip="GitHub Profile">
-        <div class="dock-icon gh-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-          </svg>
-        </div>
-      </a>
-      <a href="https://www.linkedin.com/in/sannidhi-sriram/" target="_blank" rel="noopener" class="dock-item"
-        data-tooltip="LinkedIn">
-        <div class="dock-icon linkedin-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-            <path
-              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.762-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-          </svg>
-        </div>
-      </a>
-    </div>
-  </div>
-
+  <!-- ── FOOTER ── -->
   <footer>
     <div class="container">
-      <span class="footer-logo">S·S</span>
-      <span>© 2026 Sannidhi Durga Pavan Sriram</span>
-      <span>India · Hyderabad</span>
+      <div class="footer-row">
+        <div class="footer-brand">
+          <span class="footer-name">Sannidhi Durga Pavan Sriram</span>
+          <span class="footer-tag">Cloud · DevOps · SRE — Hyderabad, India</span>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:sannidhisriram8@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/sannidhi-sriram/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener">GitHub</a>
+          <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf">Résumé</a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© 2026 Sannidhi Durga Pavan Sriram</span>
+        <span>Built with vanilla HTML, CSS &amp; JavaScript</span>
+      </div>
     </div>
   </footer>
 
-  <!-- macOS Notification Center Toast Container (Feature 4) -->
-  <div id="mac-toast-container" class="mac-toast-container"></div>
-
-  <!-- macOS Spotlight Search Modal (Feature 2) -->
-  <div id="spotlight-modal" class="spotlight-backdrop">
-    <div class="spotlight-window liquid-glass">
-      <div class="spotlight-input-row">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="spotlight-icon">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="spotlight-input" placeholder="Spotlight Search (e.g. AWS, Terraform, Docker, Certs)..."
-          autocomplete="off" spellcheck="false" />
-        <span class="spotlight-esc">ESC to close</span>
-      </div>
-      <div class="spotlight-results" id="spotlight-results">
-        <div class="spotlight-hint">Type to search projects, certifications, or experience...</div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="assets/vendor/three.min.js"></script>
+  <script src="hero-world.js"></script>
+  <script src="card-stack.js"></script>
   <script src="script.js"></script>
 </body>
 

@@ -1,3 +1,9 @@
 .DS_Store
 .vscode/
 .claude/
+node_modules/
+
+# Local reference material — not part of the published site
+Skills/
+readme's.md/
+context.md

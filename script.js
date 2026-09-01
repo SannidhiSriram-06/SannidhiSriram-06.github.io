@@ -1,450 +1,261 @@
-/* ── Word-by-word headline reveal ─────────────────────────── */
-document.querySelectorAll('.hero-name .word-reveal-line').forEach(line => {
-  const words = line.textContent.trim().split(/\s+/);
-  line.textContent = '';
-  words.forEach((word, i) => {
-    const span = document.createElement('span');
-    span.className = 'word-reveal';
-    span.style.animationDelay = `${i * 0.09}s`;
-    span.textContent = word;
-    line.appendChild(span);
-    if (i < words.length - 1) line.appendChild(document.createTextNode(' '));
-  });
-});
+/* ==========================================================================
+   SYSTEMS & CLOUD PORTFOLIO CONTROLLER
+   - Lenis global smooth scroll + GSAP ScrollTrigger reveals
+   - Theme toggle (initial theme is set by an inline script in <head>)
+   - Project architecture map, stat counters, nav scroll-spy, mobile nav
+   ========================================================================== */
 
-/* ── Mouse-tracking spotlight glow (project & cert cards) ──── */
-document.querySelectorAll('.proj-card, .cert-card').forEach(card => {
-  card.classList.add('spotlight-glow');
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
-    card.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`);
-  });
-});
+document.addEventListener('DOMContentLoaded', () => {
 
-/* ── Scroll-linked parallax (hero compass art) ────────────── */
-const heroArt = document.querySelector('#hero .sec-bg-art');
-if (heroArt) {
-  let parallaxTicking = false;
-  const updateParallax = () => {
-    const offset = window.scrollY * 0.15;
-    heroArt.style.transform = `translateY(${offset}px) rotate(${offset * 0.04}deg)`;
-    parallaxTicking = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!parallaxTicking) {
-      requestAnimationFrame(updateParallax);
-      parallaxTicking = true;
-    }
-  }, { passive: true });
-}
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ── macOS Live Menu Bar Clock ───────────────────────────── */
-function updateMacClock() {
-  const clockEl = document.getElementById('mac-clock');
-  if (!clockEl) return;
-  const now = new Date();
-  const options = { weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
-  clockEl.textContent = now.toLocaleDateString('en-US', options).replace(',', '');
-}
-setInterval(updateMacClock, 1000);
-updateMacClock();
+  /* ── 0. Preloader — always dismisses (window.load or hard 2.4s cap) ── */
+  (() => {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    const fill = document.getElementById('preloader-fill');
+    const pct = document.getElementById('preloader-pct');
+    let value = 0;
+    let done = false;
 
-/* ── Theme Toggle (Light / Dark mode) ─────────────────────── */
-const themeToggleBtn = document.getElementById('theme-toggle');
-const storedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-if (storedTheme) {
-  document.documentElement.setAttribute('data-theme', storedTheme);
-} else if (systemPrefersDark) {
-  document.documentElement.setAttribute('data-theme', 'dark');
-}
-
-if (themeToggleBtn) {
-  themeToggleBtn.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-  });
-}
-
-/* ── Progress bar ─────────────────────────────────────────── */
-const bar = document.getElementById('progress-bar');
-window.addEventListener('scroll', () => {
-  bar.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
-}, { passive: true });
-
-/* ── Scroll reveal ────────────────────────────────────────── */
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const siblings = [...entry.target.parentElement.querySelectorAll('.reveal:not(.in)')];
-    const idx = siblings.indexOf(entry.target);
-    setTimeout(() => entry.target.classList.add('in'), Math.min(idx * 80, 320));
-    revealObs.unobserve(entry.target);
-  });
-}, { threshold: 0.06 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-/* ── Stat counters ────────────────────────────────────────── */
-const countObs = new IntersectionObserver(entries => {
-  entries.forEach(({ isIntersecting, target: el }) => {
-    if (!isIntersecting) return;
-    const target = +el.dataset.count;
-    const t0 = performance.now();
-    const tick = t => {
-      const p = Math.min((t - t0) / 1200, 1);
-      el.textContent = Math.round((1 - (1 - p) ** 3) * target);
-      if (p < 1) requestAnimationFrame(tick);
+    const paint = (v) => {
+      value = Math.max(value, Math.min(100, v));
+      if (fill) fill.style.width = value + '%';
+      if (pct) pct.textContent = Math.round(value);
     };
-    requestAnimationFrame(tick);
-    countObs.unobserve(el);
-  });
-}, { threshold: 0.7 });
-document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-/* ── Swiper 3D Coverflow carousels ────────────────────────── */
-const swiperConfig = {
-  effect: 'coverflow',
-  grabCursor: true,
-  centeredSlides: true,
-  slidesPerView: 'auto',
-  loop: false,
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 100,
-    modifier: 2.5,
-    slideShadows: false,
-  },
-  pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: false },
-  navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-};
+    const finish = () => {
+      if (done) return;
+      done = true;
+      paint(100);
+      clearInterval(tick);
+      setTimeout(() => pre.classList.add('done'), reduceMotion ? 60 : 220);
+      setTimeout(() => { pre.style.display = 'none'; }, 900);
+    };
 
-const projSwiper = new Swiper('.proj-swiper', {
-  ...swiperConfig,
-  pagination: { el: '.proj-swiper .swiper-pagination', clickable: true },
-  navigation: { nextEl: '.proj-swiper .swiper-button-next', prevEl: '.proj-swiper .swiper-button-prev' },
-});
+    const tick = setInterval(() => paint(value + Math.random() * 14), 130);
+    paint(8);
+    window.addEventListener('load', () => setTimeout(finish, 180), { once: true });
+    setTimeout(finish, 2400); // hard cap — never blocks
+  })();
 
-const certSwiper = new Swiper('.cert-swiper', {
-  ...swiperConfig,
-  pagination: { el: '.cert-swiper .swiper-pagination', clickable: true },
-  navigation: { nextEl: '.cert-swiper .swiper-button-next', prevEl: '.cert-swiper .swiper-button-prev' },
-});
-
-function navigateToTarget(type, value) {
-  if (type === 'cert') {
-    const certSection = document.getElementById('certifications');
-    if (certSection) {
-      certSection.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (typeof value === 'number' && certSwiper) {
-      setTimeout(() => {
-        certSwiper.slideTo(value, 600);
-      }, 300);
-    }
-  } else if (type === 'project') {
-    const projSection = document.getElementById('projects');
-    if (projSection) {
-      projSection.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (typeof value === 'number' && projSwiper) {
-      setTimeout(() => {
-        projSwiper.slideTo(value, 600);
-      }, 300);
-    }
-  } else if (type === 'section') {
-    const secEl = document.getElementById(value);
-    if (secEl) {
-      secEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-}
-
-/* ── Side scroll navigation ───────────────────────────────── */
-const sideItems = document.querySelectorAll('.sn-item[data-section]');
-const sideObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      sideItems.forEach(item =>
-        item.classList.toggle('sn-active', item.dataset.section === e.target.id)
-      );
-    }
-  });
-}, { rootMargin: '-30% 0px -50% 0px' });
-document.querySelectorAll('section[id]').forEach(s => sideObs.observe(s));
-
-/* ── Feature 4: macOS Notification Toast System ────────────── */
-function showMacToast(title, message, icon = '') {
-  const container = document.getElementById('mac-toast-container');
-  if (!container) return;
-  const toast = document.createElement('div');
-  toast.className = 'mac-toast liquid-glass';
-  toast.innerHTML = `
-    <div class="mac-toast-icon">${icon}</div>
-    <div>
-      <div class="mac-toast-title">${title}</div>
-      <div class="mac-toast-msg">${message}</div>
-    </div>
-  `;
-  container.appendChild(toast);
-  setTimeout(() => toast.classList.add('show'), 50);
+  /* ── 0b. Headline reveal safety net — never leave a masked line clipped ── */
   setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 400);
-  }, 4000);
-}
+    document.documentElement.classList.add('reveal-done');
+  }, 2600);
 
-// Toast listener for CV Download & Contact Form
-document.querySelectorAll('a[download]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    showMacToast('Resume Downloaded', 'Sannidhi_Sriram_CV.pdf downloaded successfully.', '📄');
-  });
-});
+  /* ── 1. Lenis smooth scrolling ───────────────────────────── */
+  let lenisInstance = null;
+  if (!reduceMotion && typeof Lenis !== 'undefined') {
+    lenisInstance = new Lenis({
+      lerp: 0.1,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.2,
+      smoothWheel: true,
+      smoothTouch: false,
+      anchors: true,
+    });
 
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-  contactForm.addEventListener('submit', () => {
-    showMacToast('Message Sent', 'Thank you! Sannidhi will get back to you shortly.', '✉️');
-  });
-}
-
-/* ── Feature 1: Interactive Terminal CLI ───────────────────── */
-const cliForm = document.getElementById('cli-form');
-const cliInput = document.getElementById('cli-input');
-const cliOutput = document.getElementById('cli-output');
-
-function executeCliCommand(cmdName) {
-  if (!cliInput || !cliForm) return;
-  cliInput.value = cmdName;
-  const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
-  cliForm.dispatchEvent(submitEvent);
-}
-
-const cliCommands = {
-  help: () => `Available Commands (click command or type below):
-  • <span class="cli-clickable" data-type="cmd" data-val="help">help</span>       - Display CLI manual
-  • <span class="cli-clickable" data-type="cmd" data-val="skills">skills</span>     - List cloud & DevOps technical stack
-  • <span class="cli-clickable" data-type="cmd" data-val="projects">projects</span>   - View featured architecture projects
-  • <span class="cli-clickable" data-type="cmd" data-val="certs">certs</span>      - Show Oracle & Cloud credentials
-  • <span class="cli-clickable" data-type="cmd" data-val="cv">cv</span>         - Download curriculum vitae (PDF)
-  • <span class="cli-clickable" data-type="cmd" data-val="clear">clear</span>      - Clear terminal logs`,
-
-  skills: () => `<div class="cli-output-list">
-  <div>Cloud & DevOps Technical Stack (Click any skill to scroll):</div>
-  <div>
-  <span class="cli-clickable" data-type="section" data-val="about">AWS</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Azure</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Docker</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Kubernetes</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Terraform</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Jenkins</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">GitHub Actions</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">ArgoCD</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Helm</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Grafana</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Prometheus</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Python</span> · 
-  <span class="cli-clickable" data-type="section" data-val="about">Bash</span>
-  </div>
-</div>`,
-
-  projects: () => `<div class="cli-output-list">
-  <div>Featured Projects (Click to scroll down):</div>
-  <div class="cli-clickable" data-type="project" data-val="0">1. Cloud Support & Customer Engineering Simulation</div>
-  <div class="cli-clickable" data-type="project" data-val="1">2. Cloud Security Observability Stack (ECS Fargate)</div>
-  <div class="cli-clickable" data-type="project" data-val="2">3. AI Test Generator & GitOps Pipeline</div>
-  <div class="cli-clickable" data-type="project" data-val="3">4. Self-Healing Microservice on AWS</div>
-  <div class="cli-clickable" data-type="project" data-val="4">5. AI Patient Triage System on Azure</div>
-  <div class="cli-clickable" data-type="project" data-val="5">6. Bookstore Serverless Architecture on AWS</div>
-</div>`,
-
-  certs: () => `<div class="cli-output-list">
-  <div>Cloud Credentials (Click to scroll down):</div>
-  <div class="cli-clickable" data-type="cert" data-val="0">• OCI DevOps Professional 2025</div>
-  <div class="cli-clickable" data-type="cert" data-val="1">• OCI Observability Professional 2025</div>
-  <div class="cli-clickable" data-type="cert" data-val="2">• OCI Multicloud Architect 2025</div>
-  <div class="cli-clickable" data-type="cert" data-val="3">• OCI Generative AI Professional 2025</div>
-  <div class="cli-clickable" data-type="cert" data-val="4">• Azure AI Fundamentals (AI-900)</div>
-  <div class="cli-clickable" data-type="cert" data-val="5">• Azure Fundamentals (AZ-900)</div>
-  <div class="cli-clickable" data-type="section" data-val="achievement">• Oracle Race to Certification 2025 (Global Top 500)</div>
-</div>`,
-
-  cv: () => {
-    const link = document.createElement('a');
-    link.href = 'assets/media/Sannidhi_Sriram_CV.pdf';
-    link.download = 'Sannidhi_Sriram_CV.pdf';
-    link.click();
-    showMacToast('Resume Downloaded', 'Sannidhi_Sriram_CV.pdf downloaded successfully.', '📄');
-    return `Downloading Sannidhi_Sriram_CV.pdf...`;
-  },
-  kubectl: () => `k8s-cluster status: ACTIVE | pods: 14/14 Running | ingress: nginx-alb | gitops: ArgoCD Synced`,
-  clear: () => {
-    cliOutput.innerHTML = '';
-    return null;
-  }
-};
-
-const directSearchAliases = [
-  { keywords: ['az900', 'az 900', 'az-900', 'azure fundamentals'], type: 'cert', val: 5, name: 'Azure Fundamentals (AZ-900)' },
-  { keywords: ['ai900', 'ai 900', 'ai-900', 'azure ai'], type: 'cert', val: 4, name: 'Azure AI Fundamentals (AI-900)' },
-  { keywords: ['oci devops', 'devops cert'], type: 'cert', val: 0, name: 'OCI DevOps Professional 2025' },
-  { keywords: ['oci observability', 'observability cert'], type: 'cert', val: 1, name: 'OCI Observability Professional 2025' },
-  { keywords: ['oci multicloud', 'multicloud'], type: 'cert', val: 2, name: 'OCI Multicloud Architect 2025' },
-  { keywords: ['oci gen ai', 'gen ai', 'generative ai cert'], type: 'cert', val: 3, name: 'OCI Generative AI Professional 2025' },
-  { keywords: ['oracle race', 'top 500', 'top500', 'global top 500'], type: 'section', val: 'achievement', name: 'Oracle Race to Certification 2025 (Global Top 500)' },
-  { keywords: ['support ticket', 'client vpn'], type: 'project', val: 0, name: 'Cloud Support & Customer Engineering Simulation' },
-  { keywords: ['fargate', 'security observability'], type: 'project', val: 1, name: 'Cloud Security Observability Stack on ECS Fargate' },
-  { keywords: ['ai test', 'gitops', 'jenkins'], type: 'project', val: 2, name: 'AI Test Generator & GitOps Pipeline' },
-  { keywords: ['self-healing', 'self healing'], type: 'project', val: 3, name: 'Self-Healing Microservice on AWS' },
-  { keywords: ['triage', 'patient triage'], type: 'project', val: 4, name: 'AI Patient Triage System on Azure' },
-  { keywords: ['bookstore', 'serverless'], type: 'project', val: 5, name: 'Bookstore Microservice Architecture on AWS' }
-];
-
-if (cliForm && cliInput && cliOutput) {
-  // Delegate clicks in terminal output
-  cliOutput.addEventListener('click', e => {
-    const clickable = e.target.closest('.cli-clickable');
-    if (!clickable) return;
-    const type = clickable.dataset.type;
-    const val = clickable.dataset.val;
-
-    if (type === 'cmd') {
-      executeCliCommand(val);
-    } else if (type === 'cert' || type === 'project') {
-      navigateToTarget(type, parseInt(val, 10));
-    } else if (type === 'section') {
-      navigateToTarget(type, val);
-    }
-  });
-
-  cliForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const rawCmd = cliInput.value.trim().toLowerCase();
-    if (!rawCmd) return;
-
-    // Log command
-    const cmdLine = document.createElement('div');
-    cmdLine.className = 'cli-line user-cmd';
-    cmdLine.textContent = `sriram@macbook-pro ~ % ${rawCmd}`;
-    cliOutput.appendChild(cmdLine);
-
-    // Process output
-    let result = '';
-    let isMatch = false;
-
-    if (cliCommands[rawCmd]) {
-      result = cliCommands[rawCmd]();
-      isMatch = true;
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      lenisInstance.on('scroll', ScrollTrigger.update);
+      // Also catch programmatic / keyboard scrolls that bypass Lenis
+      window.addEventListener('scroll', () => ScrollTrigger.update(), { passive: true });
+      gsap.ticker.add((time) => lenisInstance.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
     } else {
-      // Check direct search aliases
-      const match = directSearchAliases.find(item =>
-        item.keywords.some(k => rawCmd.includes(k))
-      );
+      const raf = (time) => { lenisInstance.raf(time); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+  }
 
-      if (match) {
-        result = `Navigating to <span class="cli-clickable" data-type="${match.type}" data-val="${match.val}">${match.name}</span>...`;
-        navigateToTarget(match.type, match.val);
-        isMatch = true;
-      } else {
-        result = `zsh: command not found: ${rawCmd}. Type <span class="cli-clickable" data-type="cmd" data-val="help">'help'</span> for available commands.`;
+  const scrollToEl = (el, offset = -30) => {
+    if (lenisInstance) lenisInstance.scrollTo(el, { offset });
+    else el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+
+  // Smooth anchor navigation
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        scrollToEl(targetEl);
       }
-    }
-
-    if (result) {
-      const resLine = document.createElement('div');
-      resLine.className = `cli-line ${isMatch ? 'response' : 'error'}`;
-      resLine.innerHTML = result;
-      cliOutput.appendChild(resLine);
-    }
-
-    cliInput.value = '';
-    cliOutput.scrollTop = cliOutput.scrollHeight;
-  });
-}
-
-/* ── Feature 2: macOS Spotlight Search (Cmd + K) ───────────── */
-const spotlightModal = document.getElementById('spotlight-modal');
-const spotlightToggle = document.getElementById('spotlight-toggle');
-const spotlightInput = document.getElementById('spotlight-input');
-const spotlightResults = document.getElementById('spotlight-results');
-
-const searchableItems = [
-  { title: 'Cloud Support & Customer Engineering Simulation', cat: 'Project', section: '#projects' },
-  { title: 'Cloud Security Observability Stack on ECS Fargate', cat: 'Project', section: '#projects' },
-  { title: 'AI Test Generator & GitOps Pipeline', cat: 'Project', section: '#projects' },
-  { title: 'Self-Healing Microservice on AWS', cat: 'Project', section: '#projects' },
-  { title: 'AI Patient Triage System on Azure', cat: 'Project', section: '#projects' },
-  { title: 'Bookstore Serverless Architecture on AWS', cat: 'Project', section: '#projects' },
-  { title: 'Oracle Race to Certification 2025 (Global Top 500)', cat: 'Achievement', section: '#achievement' },
-  { title: 'OCI DevOps Professional 2025', cat: 'Credential', section: '#certifications' },
-  { title: 'OCI Observability Professional 2025', cat: 'Credential', section: '#certifications' },
-  { title: 'OCI Multicloud Architect 2025', cat: 'Credential', section: '#certifications' },
-  { title: 'OCI Gen AI Professional 2025', cat: 'Credential', section: '#certifications' },
-  { title: 'Azure AI Fundamentals (AI-900)', cat: 'Credential', section: '#certifications' },
-  { title: 'Azure Fundamentals (AZ-900)', cat: 'Credential', section: '#certifications' },
-  { title: 'AI Intern — Cloud Deployment Lead, Infosys Springboard', cat: 'Experience', section: '#experience' },
-  { title: 'B.Tech Computer Science, Lovely Professional University', cat: 'Education', section: '#education' }
-];
-
-const openSpotlight = () => {
-  if (!spotlightModal) return;
-  spotlightModal.classList.add('open');
-  setTimeout(() => spotlightInput.focus(), 100);
-};
-
-const closeSpotlight = () => {
-  if (!spotlightModal) return;
-  spotlightModal.classList.remove('open');
-  spotlightInput.value = '';
-};
-
-if (spotlightToggle) spotlightToggle.addEventListener('click', openSpotlight);
-
-document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    spotlightModal && spotlightModal.classList.contains('open') ? closeSpotlight() : openSpotlight();
-  }
-  if (e.key === 'Escape' && spotlightModal && spotlightModal.classList.contains('open')) {
-    closeSpotlight();
-  }
-});
-
-if (spotlightModal) {
-  spotlightModal.addEventListener('click', e => {
-    if (e.target === spotlightModal) closeSpotlight();
-  });
-}
-
-if (spotlightInput && spotlightResults) {
-  spotlightInput.addEventListener('input', e => {
-    const query = e.target.value.toLowerCase().trim();
-    if (!query) {
-      spotlightResults.innerHTML = '<div class="spotlight-hint">Type to search projects, certifications, or experience...</div>';
-      return;
-    }
-    const matches = searchableItems.filter(item => item.title.toLowerCase().includes(query) || item.cat.toLowerCase().includes(query));
-    if (matches.length === 0) {
-      spotlightResults.innerHTML = '<div class="spotlight-hint">No matching items found</div>';
-      return;
-    }
-    spotlightResults.innerHTML = matches.map(item => `
-      <div class="spotlight-item" data-link="${item.section}">
-        <span class="spotlight-item-title">${item.title}</span>
-        <span class="spotlight-item-cat">${item.cat}</span>
-      </div>
-    `).join('');
-
-    spotlightResults.querySelectorAll('.spotlight-item').forEach(el => {
-      el.addEventListener('click', () => {
-        const targetSection = el.dataset.link;
-        closeSpotlight();
-        document.querySelector(targetSection)?.scrollIntoView({ behavior: 'smooth' });
-      });
     });
   });
-}
+
+  /* ── 1b. Navbar pill — shrinks once you scroll past the top ── */
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    const updateNav = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+    if (lenisInstance) lenisInstance.on('scroll', updateNav);
+  }
+
+  /* ── 2. Theme toggle ─────────────────────────────────────── */
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+      window.heroWorld?.setTheme();
+    });
+  }
+
+  /* ── 2b. Feed scroll progress to the hero WebGL world ────── */
+  if (window.heroWorld) {
+    const feedProgress = () => {
+      const p = window.scrollY / Math.max(1, window.innerHeight * 0.9);
+      window.heroWorld.setScrollProgress(p);
+    };
+    if (lenisInstance) lenisInstance.on('scroll', feedProgress);
+    window.addEventListener('scroll', feedProgress, { passive: true });
+    feedProgress();
+  }
+
+  /* ── 3. Architecture world — node hover + click → project ── */
+  const flashCard = (el) => {
+    el.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
+    el.style.borderColor = 'var(--accent)';
+    el.style.boxShadow = '0 0 0 2px var(--accent)';
+    setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1600);
+  };
+
+  if (window.heroWorld) {
+    const hudDetail = document.getElementById('scene-hud-detail');
+    const hudDefault = hudDetail ? hudDetail.textContent : '';
+    const tip = document.getElementById('scene-tooltip');
+    const tipName = document.getElementById('scene-tooltip-name');
+    const tipSpec = document.getElementById('scene-tooltip-spec');
+
+    window.heroWorld.onNodeHover((data) => {
+      if (data) {
+        if (tipName) tipName.textContent = data.name;
+        if (tipSpec) tipSpec.textContent = data.spec;
+        if (tip) tip.hidden = false;
+        if (hudDetail) hudDetail.textContent = data.name;
+      } else {
+        if (tip) tip.hidden = true;
+        if (hudDetail) hudDetail.textContent = hudDefault;
+      }
+    });
+
+    if (tip) {
+      window.addEventListener('pointermove', (e) => {
+        if (tip.hidden) return;
+        tip.style.left = e.clientX + 'px';
+        tip.style.top = e.clientY + 'px';
+      }, { passive: true });
+    }
+
+    window.heroWorld.onNodeSelect((data) => {
+      const el = document.getElementById(data.target);
+      if (el) { scrollToEl(el, -70); flashCard(el); }
+    });
+  }
+
+  /* ── 4. Metric counter animation ────────────────────────── */
+  const countElements = document.querySelectorAll('[data-count]');
+  if (countElements.length) {
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ isIntersecting, target }) => {
+        if (!isIntersecting) return;
+        const targetCount = parseInt(target.dataset.count, 10);
+        const startTime = performance.now();
+        const duration = 1000;
+        const animate = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          target.textContent = Math.round(eased * targetCount);
+          if (progress < 1) requestAnimationFrame(animate);
+          else target.textContent = targetCount;
+        };
+        requestAnimationFrame(animate);
+        countObserver.unobserve(target);
+      });
+    }, { threshold: 0.5 });
+    countElements.forEach((el) => countObserver.observe(el));
+  }
+
+  /* ── 5. GSAP subtle reveals ─────────────────────────────── */
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !reduceMotion) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const reveal = (selector, y, duration, staggerMod) => {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.fromTo(el, { y, opacity: 0 }, {
+          y: 0, opacity: 1, duration, ease: 'power2.out',
+          delay: staggerMod ? (i % staggerMod) * 0.07 : 0,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        });
+      });
+    };
+
+    reveal('.sec-header', 16, 0.45, 0);
+    reveal('.project-card', 20, 0.45, 2);
+    reveal('.recognition-box', 16, 0.45, 0);
+
+    ScrollTrigger.refresh();
+
+    // Safety net: never leave content stuck invisible if a trigger is missed
+    setTimeout(() => {
+      gsap.utils.toArray('.sec-header, .project-card, .recognition-box').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0 && getComputedStyle(el).opacity === '0') {
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.3 });
+        }
+      });
+    }, 1200);
+  }
+
+  /* ── 6. Nav scroll-spy ──────────────────────────────────── */
+  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+  const spySections = navLinks
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
+  if (spySections.length) {
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((l) => l.classList.remove('active'));
+        const active = navLinks.find((l) => l.getAttribute('href') === '#' + entry.target.id);
+        if (active) active.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    spySections.forEach((s) => spyObserver.observe(s));
+  }
+
+  /* ── 7. Mobile navigation ───────────────────────────────── */
+  const mobileToggle = document.getElementById('mobile-nav-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (mobileToggle && navMenu) {
+    const closeMenu = () => {
+      navMenu.classList.remove('open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    mobileToggle.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('open');
+      mobileToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    navMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 960) closeMenu();
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 960) closeMenu();
+    });
+  }
+
+});
