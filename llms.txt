@@ -1,0 +1,65 @@
+# Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE Portfolio
+
+> Cloud, DevOps & Site Reliability Engineer specializing in resilient AWS/Azure architectures, GitOps CI/CD pipelines, container orchestration (Kubernetes, Docker), and full-stack observability. 6x Cloud Certified (Oracle OCI 4x, Microsoft Azure 2x) and Oracle Race Global Top 500 Finalist.
+
+## Professional Summary
+- **Role:** Cloud Infrastructure, DevOps & Site Reliability Engineer
+- **Institution:** Lovely Professional University (B.Tech Computer Science and Engineering, 2023–2027, Minor in Cloud Computing)
+- **Location:** Hyderabad, Telangana, India
+- **Email:** sannidhisriram06@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a
+- **GitHub:** https://github.com/SannidhiSriram-06
+- **Portfolio:** https://sannidhisriram-06.github.io/
+
+## Technical Core Stack
+- **Cloud Platforms:** AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, Client VPN, Lambda, API Gateway), Microsoft Azure (App Service, Azure OpenAI, Azure Monitor, Azure Table Storage)
+- **IaC & Containers:** Terraform, Docker, Docker Compose, Kubernetes (K8s), Helm Charts, ArgoCD (GitOps)
+- **CI/CD & Security:** GitHub Actions, Jenkins Pipelines, Git VCS, Snyk SAST/SCA vulnerability scanning
+- **Languages & Frameworks:** Python (Boto3, FastAPI, Flask), Bash/Shell scripting, Java (Spring Boot), Node.js, REST APIs
+- **AI & LLM Integrations:** Groq LLaMA 3.1, Azure OpenAI (GPT-4o), Hugging Face APIs
+- **Operating Systems & Workstations:** Red Hat Enterprise Linux (RHEL 9 / CentOS), Ubuntu Server, macOS (Darwin / Unix), Windows Server & WSL2
+
+## 6 Shipped Production Projects
+1. **Cloud Support & Customer Engineering Simulation**
+   - *Focus:* Cloud Networking, Mutual TLS (mTLS), Secure Remote Access, Disaster Recovery.
+   - *Architecture:* AWS Client VPN (mTLS) + SSM Session Manager for private VPC subnet access without public bastions, CloudWatch Logs Insights, and point-in-time recovery with AWS Backup.
+   - *GitHub:* https://github.com/SannidhiSriram-06/AWS-Client-VPN-End-to-End-Setup-and-Troubleshooting
+
+2. **Cloud Security Observability Stack on ECS Fargate**
+   - *Focus:* Observability, Time-Series Telemetry, Serverless Containers.
+   - *Architecture:* Terraform-provisioned container monitoring pipeline on AWS ECS Fargate scraping secure Spring Boot actuator endpoints into Prometheus TSDB with Grafana dashboards and alert rules.
+   - *GitHub:* https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate
+
+3. **AI Test Generator & GitOps Delivery Pipeline**
+   - *Focus:* Declarative GitOps, Continuous Delivery, Kubernetes Orchestration.
+   - *Architecture:* FastAPI + Groq LLaMA 3.1 microservice. Automated Jenkins pipeline compiles, runs tests, builds Docker images, pushes to AWS ECR, and commits image tags to a GitOps repository reconciled by ArgoCD on Kubernetes.
+   - *App Repo:* https://github.com/SannidhiSriram-06/FastAPI-Groq-AI-Test-Generator-CI-CD
+   - *GitOps Manifests Repo:* https://github.com/SannidhiSriram-06/gitops-infra-manifests
+
+4. **Self-Healing Java Microservice on AWS**
+   - *Focus:* High Availability, 5-Layer Auto-Recovery, DevSecOps.
+   - *Architecture:* Spring Boot service behind AWS ALB with target health tracking, EC2 Auto Scaling Groups (2-4 instances), automated instance replacement, and Snyk SAST/SCA security gates in GitHub Actions.
+   - *GitHub:* https://github.com/SannidhiSriram-06/java-self-healing-microservice
+
+5. **AI Patient Triage System on Azure**
+   - *Focus:* Cloud-Native Healthcare Decision Support, Telemetry.
+   - *Architecture:* Python Flask microservice hosted on Azure App Service (Linux, Gunicorn) integrated with Azure OpenAI GPT-4o for real-time clinical triage classification with immutable audit logs stored in Azure Table Storage and monitored via Azure Monitor.
+   - *GitHub:* https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-
+
+6. **Bookstore Serverless Architecture on AWS**
+   - *Focus:* Serverless Microservices, Cloud Cost Optimization.
+   - *Architecture:* AWS Lambda compute (Node.js 20.x), Amazon API Gateway HTTP routing, and MongoDB Atlas database. Operates at $0/month idle operational cost with automated on-demand scaling.
+   - *GitHub:* https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS
+
+## Certifications (6x Certified)
+1. **Oracle Cloud Infrastructure 2025 Certified DevOps Professional** (Aug 2025)
+2. **Oracle Cloud Infrastructure 2025 Certified Observability Professional** (Aug 2025)
+3. **Oracle Cloud Infrastructure 2025 Certified Multicloud Architect** (Aug 2025)
+4. **Oracle Cloud Infrastructure 2025 Certified Generative AI Professional** (Aug 2025)
+5. **Microsoft Certified: Azure AI Fundamentals (AI-900)** (Jun 2025)
+6. **Microsoft Certified: Azure Fundamentals (AZ-900)** (Jan 2025)
+
+## Education
+- **B.Tech in Computer Science and Engineering** (Minor in Cloud Computing) — Lovely Professional University, Phagwara, Punjab (2023–2027) · 7.33 CGPA
+- **Intermediate Education (MPC: Math, Physics, Chemistry)** — Keshav Smarak Junior College, Hyderabad, Telangana (2021–2023) · 77.5%
+- **10th Grade / Secondary School Certificate (SSC)** — Oxford Grammar High School, Hyderabad, Telangana (2020–2021) · 84.6%

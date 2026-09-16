@@ -86,10 +86,10 @@
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border);
   --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--border);
 
-  /* Animation Curves (Apple Decelerate + Prism Sweep) */
+  /* Animation Curves (Apple Decelerate + Circle Reveal) */
   --ease-apple-decelerate: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --prism-sweep-duration: 800ms;
+  --circle-reveal-duration: 1150ms;
 }
 
 /* ── Light Mode (macOS Sonoma Light + RHEL Red Accents) ── */
@@ -221,7 +221,7 @@ body.mode-deck .deck-app {
   overflow: hidden;
 }
 
-/* ── 4. DECK VIEWPORT & FACETED WEBGL PRISM SWEEP TRANSITION ── */
+/* ── 4. DECK VIEWPORT & WEBGL CIRCLE REVEAL TRANSITION ── */
 body.mode-deck .deck-viewport {
   position: relative;
   flex: 1;
@@ -229,8 +229,8 @@ body.mode-deck .deck-viewport {
   overflow: hidden;
 }
 
-/* Persistent WebGL Prism Sweep Canvas Overlay */
-.prism-sweep-canvas {
+/* Persistent WebGL Circle Reveal Canvas Overlay (SmoothUI) */
+.circle-reveal-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -238,10 +238,10 @@ body.mode-deck .deck-viewport {
   pointer-events: none;
   z-index: 60;
   opacity: 0;
-  transition: opacity 0.16s ease;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.prism-sweep-canvas.is-active {
+.circle-reveal-canvas.is-active {
   opacity: 1;
 }
 
@@ -272,6 +272,27 @@ body.mode-deck .deck-slide.is-active {
 body.mode-scroll {
   height: auto;
   overflow-y: auto;
+}
+
+/* ── LENIS KINETIC SCROLL INTEGRATION ── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 body.mode-scroll .deck-viewport {
@@ -647,35 +668,200 @@ body.mode-scroll .icon-scroll { display: inline-flex; }
   font-weight: 500;
 }
 
-.terminal-spec-box {
-  background: var(--bg-surface);
+/* ── MagicUI MacOS Interactive Boot Terminal ── */
+.magic-terminal {
+  background: var(--bg-surface-inset);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--rhel-red);
-  border-radius: var(--radius-sm);
-  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-md);
   margin-bottom: 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--border-subtle);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.spec-line {
+.magic-terminal:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.magic-term-header {
   display: flex;
-  gap: 0.75rem;
-  line-height: 1.4;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.85rem;
+  background: var(--bg-surface-raised);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
 }
 
-.spec-key {
+.magic-term-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.magic-term-dots .term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.magic-term-dots:hover .term-dot {
+  filter: brightness(1.15);
+}
+
+.term-dot.dot-red {
+  background: #ff5f56;
+  border: 1px solid rgba(224, 68, 62, 0.6);
+}
+
+.term-dot.dot-yellow {
+  background: #ffbd2e;
+  border: 1px solid rgba(222, 161, 35, 0.6);
+}
+
+.term-dot.dot-green {
+  background: #27c93f;
+  border: 1px solid rgba(26, 171, 41, 0.6);
+}
+
+.magic-term-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.term-title-icon {
+  color: var(--macos-blue);
+  opacity: 0.85;
+}
+
+.magic-term-replay {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
   color: var(--text-muted);
-  min-width: 100px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: all 0.18s ease;
 }
 
-.spec-val {
+.magic-term-replay:hover {
+  background: var(--bg-surface);
   color: var(--text-primary);
+  border-color: var(--border);
+  transform: scale(1.03);
+}
+
+.magic-term-body {
+  padding: 0.65rem 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  min-height: 148px;
+  overflow-x: auto;
+}
+
+.magic-term-pre {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.magic-term-code {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* MagicUI Typed Command Line */
+.term-line-cmd {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.term-prompt-sym {
+  color: var(--terminal-mint);
+  font-weight: 700;
+  user-select: none;
+}
+
+.term-typed-text {
+  color: var(--text-bright);
+}
+
+/* MagicUI Blinking Cursor */
+.term-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  background: var(--terminal-mint);
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: termBlinkCursor 1s step-start infinite;
+}
+
+@keyframes termBlinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* MagicUI Animated Span line (fade-in & slide-up) */
+.term-line-span {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.term-line-span.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.term-check {
+  color: var(--terminal-mint);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.term-tag {
+  color: var(--macos-blue);
+  font-weight: 600;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+.term-desc {
+  color: var(--text-secondary);
+}
+
+.term-highlight {
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 /* Metrics Ribbon */

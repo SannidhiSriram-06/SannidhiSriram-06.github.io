@@ -9,17 +9,55 @@
     content="Cloud, DevOps & SRE Engineer portfolio of Sannidhi Durga Pavan Sriram. 6x certified, Oracle Race Global Top 500, building resilient AWS/Azure architectures, GitOps CI/CD pipelines, and observability stacks." />
   <meta name="author" content="Sannidhi Durga Pavan Sriram" />
   <meta name="theme-color" content="#0c1017" />
+  <link rel="canonical" href="https://sannidhisriram-06.github.io/" />
 
   <!-- Open Graph & Social -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sannidhisriram-06.github.io/" />
   <meta property="og:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
   <meta property="og:description"
     content="Interactive Cloud, DevOps & SRE Terminal Deck: AWS/Azure infrastructure, GitOps pipelines, container orchestration, and observability." />
-  <meta property="og:image" content="assets/media/Sriram.jpg" />
+  <meta property="og:image" content="https://sannidhisriram-06.github.io/assets/media/Sriram.jpg" />
+  <meta property="og:image:alt" content="Sannidhi Durga Pavan Sriram" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
   <meta name="twitter:description"
     content="Interactive Cloud, DevOps & SRE Terminal Deck: AWS/Azure infrastructure, GitOps pipelines, container orchestration, and observability." />
+  <meta name="twitter:image" content="https://sannidhisriram-06.github.io/assets/media/Sriram.jpg" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sannidhi Durga Pavan Sriram",
+    "url": "https://sannidhisriram-06.github.io/",
+    "image": "https://sannidhisriram-06.github.io/assets/media/Sriram.jpg",
+    "jobTitle": "Cloud Infrastructure, DevOps & Site Reliability Engineer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Lovely Professional University"
+    },
+    "sameAs": [
+      "https://github.com/SannidhiSriram-06",
+      "https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a"
+    ],
+    "knowsAbout": [
+      "Cloud Infrastructure",
+      "Site Reliability Engineering (SRE)",
+      "DevOps",
+      "Amazon Web Services (AWS)",
+      "Microsoft Azure",
+      "Oracle Cloud Infrastructure (OCI)",
+      "Kubernetes",
+      "Docker",
+      "Terraform",
+      "ArgoCD",
+      "CI/CD",
+      "Prometheus & Grafana"
+    ]
+  }
+  </script>
 
   <!-- Preconnect & Fonts: Sans + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -79,12 +117,6 @@
       </div>
 
       <div class="term-right">
-        <!-- Cluster Health -->
-        <div class="cluster-status" title="Cluster Nodes Running">
-          <span class="pulse-indicator"></span>
-          <span class="cluster-label">RHEL ONLINE</span>
-        </div>
-
         <!-- View Mode Switcher: Deck vs Scroll -->
         <div class="view-toggle-wrap">
           <button id="mode-toggle" class="btn-term-action" title="Toggle Deck View / Scroll View [Shortcut: M]">
@@ -129,9 +161,9 @@
       </div>
     </header>
 
-    <!-- ── SLIDE VIEWPORT / MAIN STAGE (Faceted WebGL Prism Sweep Perspective) ── -->
+    <!-- ── SLIDE VIEWPORT / MAIN STAGE (Noisy Circle Reveal with Radial Interpolation) ── -->
     <main class="deck-viewport" id="deck-viewport" tabindex="0" aria-label="Portfolio Slideshow">
-      <canvas id="prism-sweep-canvas" class="prism-sweep-canvas" aria-hidden="true"></canvas>
+      <canvas id="circle-reveal-canvas" class="circle-reveal-canvas" aria-hidden="true"></canvas>
 
       <!-- ====================================================================
            SLIDE 01: boot.sh — System Identity & Cloud SRE Profile
@@ -141,9 +173,6 @@
           <div class="slide-badge-row">
             <span class="cli-prompt-line">
               <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># ./boot.sh --role=cloud-sre
-            </span>
-            <span class="badge-status status-healthy">
-              <span class="dot-live"></span> READY FOR CLOUD / SRE / DEVOPS
             </span>
           </div>
 
@@ -156,11 +185,32 @@
                 <p class="hero-role-title">Cloud Infrastructure, DevOps &amp; Site Reliability Engineer</p>
               </div>
 
-              <div class="terminal-spec-box">
-                <div class="spec-line"><span class="spec-key">INSTITUTION</span> <span class="spec-val">Lovely Professional University (Phagwara, Punjab) · B.Tech CSE</span></div>
-                <div class="spec-line"><span class="spec-key">TIMELINE</span> <span class="spec-val">Class of 2027 · CGPA 7.33 · Hyderabad, Telangana / Phagwara, Punjab</span></div>
-                <div class="spec-line"><span class="spec-key">CORE STACK</span> <span class="spec-val">AWS · Azure · Terraform · Docker · Kubernetes · ArgoCD · Prometheus</span></div>
-                <div class="spec-line"><span class="spec-key">PRIMARY AIM</span> <span class="spec-val">Resilient multi-cloud architectures, self-healing systems &amp; GitOps pipelines</span></div>
+              <!-- MagicUI MacOS Interactive Boot Terminal -->
+              <div class="magic-terminal" id="hero-magic-terminal" role="region" aria-label="Interactive Boot Terminal">
+                <div class="magic-term-header">
+                  <div class="magic-term-dots" aria-hidden="true">
+                    <span class="term-dot dot-red" title="Close"></span>
+                    <span class="term-dot dot-yellow" title="Minimize"></span>
+                    <span class="term-dot dot-green" title="Zoom"></span>
+                  </div>
+                  <div class="magic-term-title">
+                    <svg class="term-title-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polyline points="4 17 10 11 4 5"></polyline>
+                      <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    <span>sriram@rhel-workstation: ~ (zsh)</span>
+                  </div>
+                  <button class="magic-term-replay" id="btn-replay-terminal" title="Replay boot sequence" aria-label="Replay boot sequence">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10"></polyline>
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                    <span>Replay</span>
+                  </button>
+                </div>
+                <div class="magic-term-body" tabindex="0">
+                  <pre class="magic-term-pre"><code class="magic-term-code" id="hero-terminal-code"></code></pre>
+                </div>
               </div>
 
               <!-- Quick Metrics Ribbon -->
@@ -172,7 +222,7 @@
                 </div>
                 <div class="metric-card">
                   <div class="metric-num" data-target="6">6</div>
-                  <div class="metric-lbl">Shipped Case Studies</div>
+                  <div class="metric-lbl">Shipped Projects</div>
                   <div class="metric-sub">ECS, GitOps, SRE, Serverless</div>
                 </div>
                 <div class="metric-card">
@@ -348,7 +398,7 @@
       <!-- ====================================================================
            SLIDE 03: docker-compose.projects.yml — Selected Architectures
            ==================================================================== -->
-      <section class="deck-slide" id="slide-3" data-slide-index="3" data-slide-title="CH.03 // projects.docker (Case Studies)">
+      <section class="deck-slide" id="slide-3" data-slide-index="3" data-slide-title="CH.03 // projects.docker (Shipped Projects)">
         <div class="slide-inner">
           <div class="slide-badge-row">
             <span class="cli-prompt-line">
@@ -358,7 +408,7 @@
           </div>
 
           <div class="slide-header-block">
-            <h2 class="slide-title">Production Infrastructure &amp; SRE Case Studies</h2>
+            <h2 class="slide-title">Production Infrastructure &amp; SRE Shipped Projects</h2>
             <p class="slide-subtitle">Click any container row below to inspect its architecture flow, resilience mechanics, and source repository.</p>
           </div>
 
@@ -432,7 +482,7 @@
               <article class="case-detail-panel is-active" id="case-1">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 01 · CLOUD NETWORKING &amp; EDGE</span>
+                    <span class="case-tag">PROJECT 01 · CLOUD NETWORKING &amp; EDGE</span>
                     <h3 class="case-title">Cloud Support &amp; Customer Engineering Simulation</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/AWS-Client-VPN-End-to-End-Setup-and-Troubleshooting" target="_blank" rel="noopener" class="btn-github">
@@ -440,7 +490,7 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Designed, configured, and troubleshot enterprise hybrid connectivity to private AWS VPC subnets using mutual TLS (mTLS) certificate authentication, granular security group rules, and scoped IAM policies.
+                  Designed, deployed, and validated an enterprise hybrid cloud connectivity environment. Implemented mutual TLS (mTLS) certificate authentication for AWS Client VPN, eliminated public bastion hosts with SSM Session Manager, and executed point-in-time disaster recovery drills using AWS Backup.
                 </p>
                 <div class="case-pipeline-box">
                   <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
@@ -461,7 +511,7 @@
               <article class="case-detail-panel" id="case-2">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 02 · OBSERVABILITY &amp; SRE</span>
+                    <span class="case-tag">PROJECT 02 · OBSERVABILITY &amp; SRE</span>
                     <h3 class="case-title">Cloud Security Observability Stack on ECS Fargate</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate" target="_blank" rel="noopener" class="btn-github">
@@ -469,7 +519,7 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  End-to-end containerized monitoring pipeline deployed on AWS ECS Fargate via Terraform. Scrapes live metrics from a secured microservice, collects time-series data into Prometheus, and visualizes system health through Grafana dashboards.
+                  End-to-end containerized monitoring pipeline deployed on AWS ECS Fargate via Terraform. Scrapes live metrics from a secured microservice, collects time-series data into Prometheus, and visualizes system health through Grafana dashboards with automated alert rules.
                 </p>
                 <div class="case-pipeline-box">
                   <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
@@ -490,7 +540,7 @@
               <article class="case-detail-panel" id="case-3">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 03 · GITOPS &amp; KUBERNETES</span>
+                    <span class="case-tag">PROJECT 03 · GITOPS &amp; KUBERNETES</span>
                     <h3 class="case-title">AI Test Generator &amp; GitOps Delivery Pipeline</h3>
                   </div>
                   <div class="btn-group">
@@ -522,7 +572,7 @@
               <article class="case-detail-panel" id="case-4">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 04 · HIGH AVAILABILITY &amp; SRE</span>
+                    <span class="case-tag">PROJECT 04 · HIGH AVAILABILITY &amp; SRE</span>
                     <h3 class="case-title">Self-Healing Java Microservice on AWS</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="btn-github">
@@ -530,7 +580,7 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Fault-tolerant containerized microservice featuring five stacked layers of automated fault recovery: Actuator health endpoints, container auto-restarts, ALB traffic isolation, and EC2 instance replacement via Auto Scaling Groups.
+                  Fault-tolerant containerized microservice featuring five stacked layers of automated fault recovery: Actuator health endpoints, container auto-restarts, ALB traffic isolation, and EC2 instance replacement via Auto Scaling Groups with Snyk DevSecOps scanning.
                 </p>
                 <div class="case-pipeline-box">
                   <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
@@ -552,7 +602,7 @@
               <article class="case-detail-panel" id="case-5">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 05 · CLOUD-NATIVE AZURE AI</span>
+                    <span class="case-tag">PROJECT 05 · CLOUD-NATIVE AZURE AI</span>
                     <h3 class="case-title">AI Patient Triage System on Azure</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="btn-github">
@@ -560,7 +610,7 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Cloud-native clinical decision support application hosted on Azure App Service (Linux, Gunicorn) integrating Azure OpenAI GPT-4o for real-time symptom triage classification with immutable audit logging.
+                  Cloud-native clinical decision support application hosted on Azure App Service (Linux, Gunicorn) integrating Azure OpenAI GPT-4o for real-time symptom triage classification with immutable audit logging in Azure Table Storage.
                 </p>
                 <div class="case-pipeline-box">
                   <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
@@ -581,7 +631,7 @@
               <article class="case-detail-panel" id="case-6">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">CASE STUDY 06 · SERVERLESS &amp; COST OPTIMIZATION</span>
+                    <span class="case-tag">PROJECT 06 · SERVERLESS &amp; COST OPTIMIZATION</span>
                     <h3 class="case-title">Bookstore Serverless Architecture on AWS</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="btn-github">
@@ -589,7 +639,7 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Microservices case study migrating a monolithic Node.js REST API into an on-demand serverless architecture using AWS Lambda compute, API Gateway HTTP routing, and MongoDB Atlas cloud database.
+                  Production-ready microservices architecture migrating a monolithic Node.js REST API into an on-demand serverless system using AWS Lambda compute, API Gateway HTTP routing, and MongoDB Atlas cloud database.
                 </p>
                 <div class="case-pipeline-box">
                   <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
@@ -857,6 +907,7 @@
             <div class="timeline-deck-row">
               <div class="timeline-marker">
                 <span class="marker-dot"></span>
+                <span class="marker-line"></span>
               </div>
               <div class="timeline-card">
                 <div class="timeline-head">
@@ -868,6 +919,26 @@
                   <div class="edu-score-box">
                     <span class="edu-score">77.5%</span>
                     <span class="edu-years">Apr 2021 – Mar 2023</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Degree 3: 10th Grade -->
+            <div class="timeline-deck-row">
+              <div class="timeline-marker">
+                <span class="marker-dot"></span>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-head">
+                  <div>
+                    <span class="edu-level">SECONDARY EDUCATION (CLASS X)</span>
+                    <h3 class="edu-degree">10th Grade / Secondary School Certificate (SSC)</h3>
+                    <span class="edu-school">Oxford Grammar High School · Hyderabad, Telangana</span>
+                  </div>
+                  <div class="edu-score-box">
+                    <span class="edu-score">84.6%</span>
+                    <span class="edu-years">2020 – 2021</span>
                   </div>
                 </div>
               </div>
@@ -1031,6 +1102,13 @@
     </footer>
 
   </div>
+
+  <!-- GSAP Core & ScrollTrigger (GreenSock) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Kinetic Inertia Scrolling (Darkroom Engineering) -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Main Terminal & Deck Controller Script -->
   <script src="script.js"></script>

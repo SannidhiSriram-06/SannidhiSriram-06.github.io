@@ -1,8 +1,9 @@
 /* ==========================================================================
    RHEL ENTERPRISE & MACOS SONOMA HYBRID DECK CONTROLLER
-   with Faceted WebGL Prism Sweep Transitions (Zero Purple / AI-slop)
-   - Faceted WebGL Caustic Prism Wavefront Shader Controller
-   - Midpoint DOM Slide Swap under Refractive Crest (50% progress)
+   with Noisy Circle Reveal & Radial Interpolation Transitions (Zero Purple / AI-slop)
+   - Persistent WebGL Circle Reveal Transition (SmoothUI / motion.dev)
+   - Noisy Circular Reveal with Radial Harmonic Interpolation
+   - Midpoint DOM Slide Swap under Radial Crest (50% progress)
    - Sliding macOS Segmented Dock Indicator Pill
    - Keyboard Navigation (←, →, Space, 1-7, M, T)
    - Mobile Touch Swiping (Horizontal Gesture Detection)
@@ -12,8 +13,8 @@
    - Formspree AJAX Submission
    ========================================================================== */
 
-/* ── WEBGL FACETED PRISM SWEEP CONTROLLER ── */
-class PrismSweepController {
+/* ── WEBGL CIRCLE REVEAL TRANSITION CONTROLLER (SmoothUI) ── */
+class CircleRevealController {
   constructor(canvas) {
     this.canvas = canvas;
     this.gl = null;
@@ -37,7 +38,7 @@ class PrismSweepController {
       }) || this.canvas.getContext('experimental-webgl');
 
       if (!this.gl) {
-        console.warn('[PrismSweep] WebGL not supported, graceful fallback active.');
+        console.warn('[CircleReveal] WebGL not supported, graceful fallback active.');
         return;
       }
 
@@ -65,92 +66,118 @@ class PrismSweepController {
           return fract(sin(p) * 43758.5453123);
         }
 
-        float voronoiFacet(vec2 p, out vec2 cellCenter) {
-          vec2 n = floor(p);
+        float noise(vec2 p) {
+          vec2 i = floor(p);
           vec2 f = fract(p);
-          float md = 8.0;
-          for (int j = -1; j <= 1; j++) {
-            for (int i = -1; i <= 1; i++) {
-              vec2 g = vec2(float(i), float(j));
-              vec2 o = hash2(n + g);
-              vec2 r = g + o - f;
-              float d = dot(r, r);
-              if (d < md) {
-                md = d;
-                cellCenter = n + g;
-              }
-            }
+          vec2 u = f * f * (3.0 - 2.0 * f);
+          return mix(mix(dot(hash2(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+                         dot(hash2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
+                     mix(dot(hash2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+                         dot(hash2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x), u.y);
+        }
+
+        float fbm(vec2 p) {
+          float total = 0.0;
+          float amp = 0.5;
+          for (int i = 0; i < 4; i++) {
+            total += amp * noise(p);
+            p = p * 2.08 + vec2(1.7, 3.2);
+            amp *= 0.5;
           }
-          return sqrt(md);
+          return total;
         }
 
         void main() {
           vec2 uv = vUv;
+          vec2 center = vec2(0.5, 0.5);
+          vec2 aspectCoord = uv - center;
           float aspect = uResolution.x / max(uResolution.y, 1.0);
+          aspectCoord.x *= aspect;
 
-          // Crystalline faceted lattice with terminal scanline alignment
-          vec2 facetCoord = vec2(uv.x * aspect * 7.0 - uv.y * 2.5, uv.y * 6.5 + uv.x * aspect * 1.5);
-          vec2 cellCenter;
-          float facetDist = voronoiFacet(facetCoord, cellCenter);
-          float facetEdge = smoothstep(0.05, 0.22, facetDist);
-          float facetNoise = sin(cellCenter.x * 4.2 + cellCenter.y * 3.1 + uTime * 1.5) * 0.5 + 0.5;
+          float dist = length(aspectCoord);
+          float angle = atan(aspectCoord.y, aspectCoord.x);
 
-          // Smooth wavefront crest motion across viewport
-          // Sweeps smoothly from off-screen left to off-screen right (or reverse)
-          float crestX = (uDirection > 0.0) 
-            ? mix(-0.4, 1.4, uProgress) 
-            : mix(1.4, -0.4, uProgress);
+          // Multi-frequency radial harmonic noise field with gentle motion
+          vec2 polarCoord = vec2(cos(angle) * 3.0, sin(angle) * 3.0);
+          float radialNoise = fbm(polarCoord * 1.8 + aspectCoord * 3.0 + vec2(uTime * 0.25, -uTime * 0.20));
+          float fineNoise = noise(aspectCoord * 12.0 + uTime * 0.4) * 0.04;
+          float grain = (fract(sin(dot(uv + uTime * 0.02, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.015;
 
-          // Chromatic dispersion offsets aligned with RHEL Crimson & macOS Sonoma Blue
-          float offsetR = -0.09 * uDirection;
-          float offsetG = 0.0;
-          float offsetB = 0.09 * uDirection;
+          float noisyDist = dist + radialNoise * 0.14 + fineNoise + grain;
+          float maxRadius = length(vec2(0.5 * aspect, 0.5)) * 1.20;
 
-          float distR = abs(uv.x - (crestX + offsetR) + (facetNoise - 0.5) * 0.07);
-          float distG = abs(uv.x - (crestX + offsetG) + (facetNoise - 0.5) * 0.08);
-          float distB = abs(uv.x - (crestX + offsetB) + (facetNoise - 0.5) * 0.07);
+          // Two-Phase Midpoint SmoothUI Reveal Cycle
+          // Phase 1 (uProgress 0.0 -> 0.5): Expanding velvety carbon veil blankets the current slide
+          // At midpoint (uProgress = 0.5): Viewport is smoothly occluded; DOM swaps invisibly
+          // Phase 2 (uProgress 0.5 -> 1.0): Radial aperture gently unfurls outward to reveal next slide
+          float curRadius = 0.0;
+          float cover = 0.0;
 
-          float bandDist = abs(uv.x - crestX + (facetNoise - 0.5) * 0.08);
-          float crestEnvelope = smoothstep(0.55, 0.0, bandDist);
+          if (uDirection > 0.0) {
+            // Forward: Center expands outward to edges, then aperture unfurls outward
+            if (uProgress < 0.5) {
+              float phaseT = uProgress * 2.0;
+              float easePhase = smoothstep(0.0, 1.0, phaseT);
+              curRadius = easePhase * maxRadius;
+              cover = smoothstep(curRadius + 0.20, curRadius - 0.12, noisyDist);
+            } else {
+              float phaseT = (uProgress - 0.5) * 2.0;
+              float easePhase = smoothstep(0.0, 1.0, phaseT);
+              curRadius = easePhase * maxRadius;
+              cover = smoothstep(curRadius - 0.12, curRadius + 0.20, noisyDist);
+            }
+          } else {
+            // Backward: Outer edges collapse inward to center, then center shrinks away
+            if (uProgress < 0.5) {
+              float phaseT = uProgress * 2.0;
+              float easePhase = smoothstep(0.0, 1.0, phaseT);
+              curRadius = (1.0 - easePhase) * maxRadius;
+              cover = smoothstep(curRadius - 0.12, curRadius + 0.20, noisyDist);
+            } else {
+              float phaseT = (uProgress - 0.5) * 2.0;
+              float easePhase = smoothstep(0.0, 1.0, phaseT);
+              curRadius = (1.0 - easePhase) * maxRadius;
+              cover = smoothstep(curRadius + 0.20, curRadius - 0.12, noisyDist);
+            }
+          }
 
-          float bandR = smoothstep(0.32, 0.0, distR);
-          float bandG = smoothstep(0.28, 0.0, distG);
-          float bandB = smoothstep(0.32, 0.0, distB);
+          // Soft smoky penumbra along the noisy circular boundary (broad & gentle, no sharp glare)
+          float edgeDist = abs(noisyDist - curRadius);
+          float rim = smoothstep(0.24, 0.0, edgeDist);
 
-          // Faceted caustic refraction intensity (soft, luminous)
-          float caustic = pow(1.0 - facetDist, 2.2) * 1.2;
-          float facetSparkle = pow(facetNoise, 3.5) * 0.9;
+          // Directional shift on chromatic fringes (subtle separation)
+          float dirOffset = (uDirection > 0.0) ? 0.025 : -0.025;
+          float rimR     = smoothstep(0.24, 0.0, abs(noisyDist - (curRadius + dirOffset)));
+          float rimG     = smoothstep(0.20, 0.0, abs(noisyDist - curRadius));
+          float rimAmber = smoothstep(0.18, 0.0, abs(noisyDist - (curRadius - dirOffset * 0.5)));
+          float rimB     = smoothstep(0.24, 0.0, abs(noisyDist - (curRadius - dirOffset)));
 
-          // BRAND PALETTE: Carbon obsidian base, RHEL Crimson, macOS Sonoma Blue, Terminal Mint, Warm Amber
+          // Strict mutual exclusion between Red and Blue to eliminate purple/magenta
+          float rbRatio = rimR / (rimR + rimB + 0.0001);
+          float redWeight  = smoothstep(0.44, 0.62, rbRatio) * rimR;
+          float blueWeight = smoothstep(0.56, 0.38, rbRatio) * rimB;
+
+          // SUBDUED BRAND PALETTE: Deep velvety carbon, muted wine crimson, midnight steel blue (ZERO FLASHBANG)
           vec3 colCarbon = vec3(0.063, 0.063, 0.071);   // #101012 Obsidian Carbon
-          vec3 colRed    = vec3(0.933, 0.0, 0.0);       // #ee0000 RHEL Red Hat Crimson
-          vec3 colBlue   = vec3(0.161, 0.592, 1.0);     // #2997ff macOS Sonoma Blue
-          vec3 colGreen  = vec3(0.188, 0.820, 0.345);   // #30d158 Terminal Mint
-          vec3 colAmber  = vec3(1.0, 0.624, 0.039);     // #ff9f0a Warm Amber
+          vec3 colRed    = vec3(0.64, 0.09, 0.09);       // Muted RHEL Wine Crimson (soft, non-glaring)
+          vec3 colBlue   = vec3(0.12, 0.36, 0.62);       // macOS Midnight Slate Blue (subtle, non-electric)
+          vec3 colGreen  = vec3(0.14, 0.44, 0.25);       // Muted Terminal Sage
+          vec3 colAmber  = vec3(0.58, 0.36, 0.10);       // Soft Warm Bronze Amber
 
-          // Mutual exclusion to preserve crisp identity without purple artifacts
-          float rbRatio = bandR / (bandR + bandB + 0.0001);
-          float redWeight   = smoothstep(0.44, 0.62, rbRatio) * bandR;
-          float blueWeight  = smoothstep(0.56, 0.38, rbRatio) * bandB;
-          float greenWeight = bandG * 0.45;
-          float amberWeight = bandR * 0.35 * facetNoise;
+          vec3 rimColor = vec3(0.0);
+          rimColor += colRed * (redWeight * 0.68);
+          rimColor += colBlue * (blueWeight * 0.60);
+          rimColor += colGreen * (rimG * 0.40);
+          rimColor += colAmber * (rimAmber * 0.35);
 
-          vec3 color = colCarbon;
-          color += colRed * (redWeight * 1.35 + caustic * bandR * 0.5);
-          color += colBlue * (blueWeight * 1.25 + caustic * bandB * 0.5);
-          color += colGreen * (greenWeight * 0.9 + caustic * bandG * 0.3);
-          color += colAmber * (amberWeight * 0.8);
+          // Velvety carbon body with soft smoky rim infusion (no white sparks or bright flashes)
+          vec3 color = mix(colCarbon, rimColor + colCarbon, rim * 0.50);
 
-          // Subtle crystalline edge highlight tinted with theme blue/red (no harsh white flash)
-          float edgeGlance = (1.0 - facetEdge) * crestEnvelope * 0.7;
-          vec3 sheenColor = mix(colBlue, colRed, smoothstep(0.4, 0.6, uv.x));
-          color += mix(sheenColor, vec3(0.92, 0.95, 1.0), 0.4) * (edgeGlance + facetSparkle * crestEnvelope * 0.4);
-
-          // Smooth bell-curve alpha envelope for transition cover & reveal
-          float progressEnvelope = sin(uProgress * 3.14159265);
-          float coreDense = smoothstep(0.24, 0.0, bandDist);
-          float alpha = (crestEnvelope * 0.7 + coreDense * 0.3) * progressEnvelope * 1.4;
-          alpha = clamp(alpha, 0.0, 0.96);
+          // Silky-smooth opacity envelope with feather-soft entrance and exit
+          float alpha = clamp(cover * 0.95 + rim * 0.25, 0.0, 0.96);
+          float edgeFade = smoothstep(0.0, 0.12, uProgress) * smoothstep(1.0, 0.88, uProgress);
+          alpha *= edgeFade;
+          alpha = clamp(alpha * 1.15, 0.0, 0.96);
 
           gl_FragColor = vec4(color, alpha);
         }
@@ -170,7 +197,7 @@ class PrismSweepController {
       gl.linkProgram(this.program);
 
       if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-        console.warn('[PrismSweep] Shader program link failed:', gl.getProgramInfoLog(this.program));
+        console.warn('[CircleReveal] Shader program link failed:', gl.getProgramInfoLog(this.program));
         this.supported = false;
         return;
       }
@@ -203,7 +230,7 @@ class PrismSweepController {
       this.resize();
       window.addEventListener('resize', () => this.resize());
     } catch (err) {
-      console.warn('[PrismSweep] WebGL initialization failed:', err);
+      console.warn('[CircleReveal] WebGL initialization failed:', err);
       this.supported = false;
     }
   }
@@ -214,7 +241,7 @@ class PrismSweepController {
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.warn('[PrismSweep] Shader compilation error:', gl.getShaderInfoLog(shader));
+      console.warn('[CircleReveal] Shader compilation error:', gl.getShaderInfoLog(shader));
       gl.deleteShader(shader);
       return null;
     }
@@ -233,7 +260,7 @@ class PrismSweepController {
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  sweep({ direction = 'forward', duration = 800, onMidpoint, onComplete }) {
+  reveal({ direction = 'forward', duration = 1150, onMidpoint, onComplete }) {
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!this.supported || prefersReducedMotion) {
@@ -263,10 +290,11 @@ class PrismSweepController {
       const elapsed = now - startTime;
       const linearT = Math.min(elapsed / duration, 1.0);
 
-      // Smooth cosine easing curve for natural, elegant motion (no harsh flash or snap)
-      const easedT = 0.5 * (1.0 - Math.cos(linearT * Math.PI));
+      // Silky 5th-order smootherstep curve: starts with zero jerk, glides gently through midpoint, cushions to rest
+      const t = linearT;
+      const easedT = t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
 
-      // Swaps the new content at the shader midpoint under the crest
+      // Swaps the new content at the shader midpoint under the dense radial veil
       if (linearT >= 0.5 && !midpointTriggered) {
         midpointTriggered = true;
         if (typeof onMidpoint === 'function') {
@@ -287,7 +315,7 @@ class PrismSweepController {
       if (linearT < 1.0) {
         this.animFrameId = requestAnimationFrame(frame);
       } else {
-        // Complete sweep
+        // Complete reveal transition
         this.canvas.classList.remove('is-active');
         gl.clearColor(0.0, 0.0, 0.0, 0.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -299,6 +327,185 @@ class PrismSweepController {
     };
 
     this.animFrameId = requestAnimationFrame(frame);
+  }
+}
+
+/* ── MAGICUI MACOS TERMINAL ENGINE ── */
+class MagicTerminalEngine {
+  constructor(containerEl, config = {}) {
+    this.container = containerEl;
+    this.codeEl = containerEl.querySelector('.magic-term-code');
+    this.replayBtn = containerEl.querySelector('.magic-term-replay');
+    this.typingSpeed = config.typingSpeed || 28;
+    this.spanDelay = config.spanDelay || 120;
+    this.isRunning = false;
+    this.timeouts = [];
+    this.hasRunOnce = false;
+
+    if (this.replayBtn) {
+      this.replayBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.restart();
+      });
+    }
+  }
+
+  clear() {
+    this.timeouts.forEach(clearTimeout);
+    this.timeouts = [];
+    this.isRunning = false;
+    if (this.codeEl) {
+      this.codeEl.innerHTML = '';
+    }
+  }
+
+  start(force = false) {
+    if (this.isRunning) return;
+    if (this.hasRunOnce && !force) return;
+    this.clear();
+    this.isRunning = true;
+    this.hasRunOnce = true;
+    this.runSequence();
+  }
+
+  restart() {
+    this.clear();
+    this.isRunning = true;
+    this.hasRunOnce = true;
+    this.runSequence();
+  }
+
+  schedule(fn, delay) {
+    const id = setTimeout(() => {
+      if (this.isRunning) fn();
+    }, delay);
+    this.timeouts.push(id);
+    return id;
+  }
+
+  runSequence() {
+    if (!this.codeEl) return;
+
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const sequenceData = [
+      {
+        type: 'cmd',
+        prompt: 'sriram@rhel-workstation:~$',
+        text: './boot.sh --role=cloud-sre --env=production'
+      },
+      {
+        type: 'span',
+        tag: '[KERNEL]',
+        text: 'Linux 6.8 · systemd, SELinux, RPM, cgroups active'
+      },
+      {
+        type: 'span',
+        tag: '[ACADEMICS]',
+        text: 'Lovely Professional University (Phagwara, Punjab) · B.Tech CSE (CGPA 7.33)'
+      },
+      {
+        type: 'span',
+        tag: '[CREDENTIALS]',
+        text: '6x Cloud Certs · Oracle OCI (Global Race Top 500) + Azure (2x)'
+      },
+      {
+        type: 'span',
+        tag: '[STACK]',
+        text: 'AWS · Azure · Terraform IaC · Docker · Kubernetes · ArgoCD GitOps'
+      },
+      {
+        type: 'span',
+        tag: '[STATUS]',
+        text: 'Self-healing clusters operational · Ready for Cloud / DevOps / SRE roles'
+      },
+      {
+        type: 'prompt',
+        prompt: 'sriram@rhel-workstation:~$'
+      }
+    ];
+
+    if (prefersReducedMotion) {
+      sequenceData.forEach(item => {
+        if (item.type === 'cmd') {
+          const row = document.createElement('div');
+          row.className = 'term-line-cmd';
+          row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-typed-text">${item.text}</span>`;
+          this.codeEl.appendChild(row);
+        } else if (item.type === 'span') {
+          const row = document.createElement('div');
+          row.className = 'term-line-span is-revealed';
+          row.innerHTML = `<span class="term-check">✔</span> <span class="term-tag">${item.tag}</span> <span class="term-desc">${item.text}</span>`;
+          this.codeEl.appendChild(row);
+        } else if (item.type === 'prompt') {
+          const row = document.createElement('div');
+          row.className = 'term-line-cmd';
+          row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-cursor" aria-hidden="true"></span>`;
+          this.codeEl.appendChild(row);
+        }
+      });
+      this.isRunning = false;
+      return;
+    }
+
+    let currentStep = 0;
+
+    const executeNext = () => {
+      if (!this.isRunning || currentStep >= sequenceData.length) {
+        this.isRunning = false;
+        return;
+      }
+
+      const item = sequenceData[currentStep++];
+
+      if (item.type === 'cmd') {
+        const row = document.createElement('div');
+        row.className = 'term-line-cmd';
+        row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-typed-text"></span><span class="term-cursor" aria-hidden="true"></span>`;
+        this.codeEl.appendChild(row);
+
+        const textEl = row.querySelector('.term-typed-text');
+        const cursorEl = row.querySelector('.term-cursor');
+        let charIndex = 0;
+
+        const typeChar = () => {
+          if (!this.isRunning) return;
+          if (charIndex < item.text.length) {
+            textEl.textContent += item.text.charAt(charIndex++);
+            const jitter = Math.random() * 18 - 9;
+            this.schedule(typeChar, Math.max(16, this.typingSpeed + jitter));
+          } else {
+            if (cursorEl) cursorEl.remove();
+            this.schedule(executeNext, 160);
+          }
+        };
+
+        this.schedule(typeChar, 120);
+
+      } else if (item.type === 'span') {
+        const row = document.createElement('div');
+        row.className = 'term-line-span';
+        row.innerHTML = `<span class="term-check">✔</span> <span class="term-tag">${item.tag}</span> <span class="term-desc">${item.text}</span>`;
+        this.codeEl.appendChild(row);
+
+        requestAnimationFrame(() => {
+          this.schedule(() => {
+            row.classList.add('is-revealed');
+            this.schedule(executeNext, this.spanDelay);
+          }, 30);
+        });
+
+      } else if (item.type === 'prompt') {
+        const row = document.createElement('div');
+        row.className = 'term-line-cmd';
+        row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-cursor" aria-hidden="true"></span>`;
+        this.codeEl.appendChild(row);
+        this.isRunning = false;
+      }
+    };
+
+    executeNext();
   }
 }
 
@@ -323,19 +530,76 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   const formFeedback = document.getElementById('form-feedback');
   const formSubmitBtn = document.getElementById('form-submit-btn');
-  const prismCanvas = document.getElementById('prism-sweep-canvas');
+  const circleRevealCanvas = document.getElementById('circle-reveal-canvas');
+  const heroTerminalEl = document.getElementById('hero-magic-terminal');
 
   let currentSlide = 1;
   const totalSlides = slides.length;
   if (crumbTotal) crumbTotal.textContent = String(totalSlides).padStart(2, '0');
 
   let isTransitioning = false;
-  let prismController = null;
-  if (prismCanvas) {
-    prismController = new PrismSweepController(prismCanvas);
+  let circleRevealController = null;
+  if (circleRevealCanvas) {
+    circleRevealController = new CircleRevealController(circleRevealCanvas);
   }
 
-  /* ── 2. MACOS SLIDING SEGMENTED DOCK PILL ── */
+  let heroTerminal = null;
+  if (heroTerminalEl) {
+    heroTerminal = new MagicTerminalEngine(heroTerminalEl);
+  }
+
+  /* ── 2. GSAP & LENIS RUNTIME DETECTION ── */
+  const hasGSAP = typeof gsap !== 'undefined';
+  const hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
+  const hasLenis = typeof Lenis !== 'undefined';
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (hasGSAP && hasScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  let lenis = null;
+
+  /* ── 3. LENIS SMOOTH SCROLL ENGINE (Scroll Mode) ── */
+  function initLenisScroll() {
+    if (prefersReducedMotion || !hasLenis) return;
+    if (lenis) return;
+
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    if (hasGSAP && hasScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        if (lenis) lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      function raf(time) {
+        if (lenis) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+      }
+      requestAnimationFrame(raf);
+    }
+  }
+
+  function destroyLenisScroll() {
+    if (lenis) {
+      lenis.destroy();
+      lenis = null;
+    }
+  }
+
+  /* ── 4. MACOS SLIDING SEGMENTED DOCK PILL ── */
   function updateDockPill(activeTab) {
     if (!dockPill || !activeTab) return;
     const parent = activeTab.parentElement;
@@ -352,9 +616,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     const activeTab = document.querySelector('.tmux-tab.is-active');
     if (activeTab) updateDockPill(activeTab);
+    if (hasScrollTrigger) ScrollTrigger.refresh();
   });
 
-  /* ── 3. VIEW MODE MANAGEMENT (Deck vs Scroll) ── */
+  /* ── 5. VIEW MODE MANAGEMENT (Deck vs Scroll) ── */
   let currentMode = localStorage.getItem('sriram_view_mode') || 'deck';
 
   function applyMode(mode) {
@@ -369,11 +634,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mode === 'deck') {
+      destroyLenisScroll();
+      if (hasScrollTrigger) {
+        ScrollTrigger.getAll().forEach(st => st.kill());
+      }
       goToSlide(currentSlide, false);
     } else {
+      initLenisScroll();
+      initScrollTriggers();
       const targetEl = document.getElementById(`slide-${currentSlide}`);
       if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
+        if (lenis) {
+          setTimeout(() => lenis.scrollTo(targetEl, { offset: -60, immediate: false }), 80);
+        } else {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }
   }
@@ -384,9 +659,98 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── 4. SLIDE NAVIGATION WITH WEBGL PRISM SWEEP ── */
+  /* ── 6. SLIDE TITLES & GSAP ENTRANCE ORCHESTRATION ── */
+  const slideTitles = {
+    1: "CH.01 // boot.sh · Identity — Sannidhi Durga Pavan Sriram",
+    2: "CH.02 // cluster-spec.yaml · Stack — Sannidhi Durga Pavan Sriram",
+    3: "CH.03 // projects.docker · Shipped Projects — Sannidhi Durga Pavan Sriram",
+    4: "CH.04 // deploy.log · Experience — Sannidhi Durga Pavan Sriram",
+    5: "CH.05 // certs.pem · Certifications — Sannidhi Durga Pavan Sriram",
+    6: "CH.06 // build-history · Education — Sannidhi Durga Pavan Sriram",
+    7: "CH.07 // ssh-session · Contact — Sannidhi Durga Pavan Sriram",
+  };
+
+  function animateSlideEntrance(slideIndex) {
+    if (!hasGSAP || prefersReducedMotion) return;
+    const slide = document.getElementById(`slide-${slideIndex}`);
+    if (!slide) return;
+
+    gsap.killTweensOf(slide.querySelectorAll('*'));
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+    // Header badge line drop
+    const badgeRow = slide.querySelector('.slide-badge-row, .hero-badge-strip');
+    const headerBlock = slide.querySelector('.slide-header-block');
+    if (badgeRow) tl.fromTo(badgeRow, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.3 }, 0);
+    if (headerBlock) tl.fromTo(headerBlock, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35 }, 0.05);
+
+    if (slideIndex === 1) {
+      const title = slide.querySelector('.hero-title');
+      const summary = slide.querySelector('.hero-summary');
+      const specGrid = slide.querySelector('.hero-spec-grid');
+      const metricCards = slide.querySelectorAll('.metric-card');
+      const ctas = slide.querySelectorAll('.hero-cta-group .cta-pill');
+      const terminal = slide.querySelector('.magic-terminal');
+
+      if (title) tl.fromTo(title, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35 }, 0.08);
+      if (summary) tl.fromTo(summary, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 }, 0.12);
+      if (specGrid) tl.fromTo(specGrid, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 }, 0.16);
+      if (metricCards.length) {
+        tl.fromTo(metricCards, { opacity: 0, y: 12, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, stagger: 0.05 }, 0.2);
+      }
+      if (ctas.length) {
+        tl.fromTo(ctas, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.28, stagger: 0.04 }, 0.26);
+      }
+      if (terminal) {
+        tl.fromTo(terminal, { opacity: 0, scale: 0.98, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.4 }, 0.15);
+      }
+    } else if (slideIndex === 2) {
+      const cards = slide.querySelectorAll('.stack-card');
+      if (cards.length) {
+        tl.fromTo(cards, { opacity: 0, y: 14, scale: 0.99 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, stagger: 0.06 }, 0.08);
+      }
+    } else if (slideIndex === 3) {
+      const rows = slide.querySelectorAll('.docker-row');
+      const activePanel = slide.querySelector('.case-detail-panel.is-active');
+      if (rows.length) {
+        tl.fromTo(rows, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.04 }, 0.08);
+      }
+      if (activePanel) {
+        tl.fromTo(activePanel, { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: 0.35 }, 0.12);
+      }
+    } else if (slideIndex === 4) {
+      const logCard = slide.querySelector('.exp-log-card');
+      const certPane = slide.querySelector('.cert-verify-pane');
+      if (logCard) tl.fromTo(logCard, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.38 }, 0.08);
+      if (certPane) tl.fromTo(certPane, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.38 }, 0.14);
+    } else if (slideIndex === 5) {
+      const banner = slide.querySelector('.oracle-top-banner');
+      const certCards = slide.querySelectorAll('.cert-card');
+      if (banner) tl.fromTo(banner, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.32 }, 0.08);
+      if (certCards.length) {
+        tl.fromTo(certCards, { opacity: 0, y: 12, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, stagger: 0.04 }, 0.14);
+      }
+    } else if (slideIndex === 6) {
+      const timelineRows = slide.querySelectorAll('.timeline-deck-row');
+      if (timelineRows.length) {
+        tl.fromTo(timelineRows, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.07 }, 0.08);
+      }
+    } else if (slideIndex === 7) {
+      const channelsCard = slide.querySelector('.contact-channels-card');
+      const formPane = slide.querySelector('.contact-form-pane');
+      if (channelsCard) tl.fromTo(channelsCard, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.35 }, 0.08);
+      if (formPane) tl.fromTo(formPane, { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.35 }, 0.12);
+    }
+  }
+
+  /* ── 7. SLIDE UI UPDATES & NAVIGATION ── */
   function updateSlideUI(index) {
     currentSlide = index;
+
+    // Dynamically update document title per chapter
+    if (slideTitles[index]) {
+      document.title = slideTitles[index];
+    }
 
     // Tmux dock active tab & sliding segmented pill
     tmuxTabs.forEach((tab) => {
@@ -421,9 +785,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Trigger stat counters if navigating to slide 1
+    // Trigger stat counters and MagicUI terminal if navigating to slide 1
     if (currentSlide === 1) {
       animateCounters();
+      if (heroTerminal) {
+        heroTerminal.start();
+      }
     }
   }
 
@@ -434,13 +801,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevIndex = currentSlide;
     const direction = index >= prevIndex ? 'forward' : 'backward';
 
-    // Deck mode with WebGL Prism Sweep Transition
-    if (currentMode === 'deck' && smooth && prevIndex !== index && prismController && prismController.supported) {
+    // Deck mode with WebGL Circle Reveal Transition & GSAP Stagger
+    if (currentMode === 'deck' && smooth && prevIndex !== index && circleRevealController && circleRevealController.supported) {
       isTransitioning = true;
 
-      prismController.sweep({
+      circleRevealController.reveal({
         direction,
-        duration: 800,
+        duration: 1150,
         onMidpoint: () => {
           slides.forEach((s) => {
             const sIdx = parseInt(s.getAttribute('data-slide-index'), 10);
@@ -452,6 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
           updateSlideUI(index);
+          animateSlideEntrance(index);
         },
         onComplete: () => {
           isTransitioning = false;
@@ -472,11 +840,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     updateSlideUI(index);
+    animateSlideEntrance(index);
 
     if (currentMode === 'scroll') {
       const target = document.getElementById(`slide-${index}`);
       if (target) {
-        target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -60, duration: 1.15 });
+        } else {
+          target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+        }
       }
     }
   }
@@ -602,40 +975,135 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* ── 7. SCROLL OBSERVER IN SCROLL MODE ── */
-  if ('IntersectionObserver' in window) {
-    const scrollObserver = new IntersectionObserver((entries) => {
-      if (currentMode !== 'scroll') return;
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const idx = parseInt(entry.target.getAttribute('data-slide-index'), 10);
-          if (idx) {
-            currentSlide = idx;
-            if (crumbCurrent) crumbCurrent.textContent = String(idx).padStart(2, '0');
-            const title = entry.target.getAttribute('data-slide-title') || '';
-            if (crumbName) crumbName.textContent = title;
+  /* ── 8. SCROLL OBSERVER & GSAP SCROLLTRIGGER (Scroll Mode) ── */
+  function onScrollSlideActive(idx, title) {
+    if (currentMode !== 'scroll') return;
+    currentSlide = idx;
+    if (crumbCurrent) crumbCurrent.textContent = String(idx).padStart(2, '0');
+    if (crumbName) crumbName.textContent = title;
+    if (slideTitles[idx]) document.title = slideTitles[idx];
 
-            tmuxTabs.forEach((tab) => {
-              const target = parseInt(tab.getAttribute('data-go'), 10);
-              if (target === idx) {
-                tab.classList.add('is-active');
-                updateDockPill(tab);
-              } else {
-                tab.classList.remove('is-active');
-              }
-            });
-          }
-        }
-      });
-    }, { threshold: 0.35 });
+    tmuxTabs.forEach((tab) => {
+      const target = parseInt(tab.getAttribute('data-go'), 10);
+      if (target === idx) {
+        tab.classList.add('is-active');
+        updateDockPill(tab);
+      } else {
+        tab.classList.remove('is-active');
+      }
+    });
 
-    slides.forEach((slide) => scrollObserver.observe(slide));
+    if (idx === 1) {
+      animateCounters();
+      if (heroTerminal) heroTerminal.start();
+    }
   }
 
-  /* ── 8. PROJECT WORKBENCH TAB SWITCHER (Slide 3) ── */
+  function initScrollTriggers() {
+    if (currentMode !== 'scroll') return;
+
+    if (hasGSAP && hasScrollTrigger && !prefersReducedMotion) {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+
+      slides.forEach((slide) => {
+        const idx = parseInt(slide.getAttribute('data-slide-index'), 10);
+        const title = slide.getAttribute('data-slide-title') || '';
+
+        ScrollTrigger.create({
+          trigger: slide,
+          start: "top 45%",
+          end: "bottom 45%",
+          onEnter: () => onScrollSlideActive(idx, title),
+          onEnterBack: () => onScrollSlideActive(idx, title),
+        });
+
+        const cards = slide.querySelectorAll('.stack-card, .timeline-card, .cert-card, .edu-timeline-card, .metric-card, .exp-log-card, .cert-preview-box, .contact-channels-card, .contact-form-pane');
+        if (cards.length) {
+          gsap.fromTo(cards, 
+            { opacity: 0, y: 22 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              stagger: 0.06,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: slide,
+                start: "top 75%",
+                toggleActions: "play none none none"
+              }
+            }
+          );
+        }
+      });
+    } else if ('IntersectionObserver' in window) {
+      const scrollObserver = new IntersectionObserver((entries) => {
+        if (currentMode !== 'scroll') return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = parseInt(entry.target.getAttribute('data-slide-index'), 10);
+            const title = entry.target.getAttribute('data-slide-title') || '';
+            if (idx) onScrollSlideActive(idx, title);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      slides.forEach((slide) => scrollObserver.observe(slide));
+    }
+  }
+
+  /* ── 9. DECK MODE VELOCITY-GATED WHEEL GESTURE ── */
+  let wheelAccumulator = 0;
+  let wheelCooldown = false;
+  const WHEEL_THRESHOLD = 52;
+
+  function handleDeckWheel(e) {
+    if (currentMode !== 'deck' || isTransitioning || wheelCooldown) return;
+
+    const activeSlide = document.querySelector('.deck-slide.is-active');
+    if (!activeSlide) return;
+
+    // Check if slide can scroll internally
+    const isScrollable = activeSlide.scrollHeight > activeSlide.clientHeight + 4;
+    if (isScrollable) {
+      const atBottom = activeSlide.scrollTop + activeSlide.clientHeight >= activeSlide.scrollHeight - 6;
+      const atTop = activeSlide.scrollTop <= 6;
+
+      // Allow natural inner scroll unless boundary is reached
+      if (e.deltaY > 0 && !atBottom) {
+        wheelAccumulator = 0;
+        return;
+      }
+      if (e.deltaY < 0 && !atTop) {
+        wheelAccumulator = 0;
+        return;
+      }
+    }
+
+    // Accumulate wheel delta for slide flip
+    wheelAccumulator += e.deltaY;
+
+    if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
+      const dir = wheelAccumulator > 0 ? 1 : -1;
+      wheelAccumulator = 0;
+      wheelCooldown = true;
+      setTimeout(() => { wheelCooldown = false; }, 850);
+
+      if (dir > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  }
+
+  window.addEventListener('wheel', handleDeckWheel, { passive: true });
+
+  /* ── 10. PROJECT WORKBENCH TAB SWITCHER (Slide 3 with GSAP Crossfade) ── */
   projectTabs.forEach((row) => {
     row.addEventListener('click', () => {
       const targetId = row.getAttribute('data-target');
+      if (row.classList.contains('is-selected')) return;
 
       projectTabs.forEach((r) => {
         r.classList.remove('is-selected');
@@ -647,6 +1115,12 @@ document.addEventListener('DOMContentLoaded', () => {
       projectPanels.forEach((panel) => {
         if (panel.id === targetId) {
           panel.classList.add('is-active');
+          if (hasGSAP && !prefersReducedMotion) {
+            gsap.fromTo(panel, 
+              { opacity: 0, x: 10 }, 
+              { opacity: 1, x: 0, duration: 0.28, ease: "power2.out" }
+            );
+          }
         } else {
           panel.classList.remove('is-active');
         }
@@ -654,7 +1128,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ── 9. THEME TOGGLE ── */
+  /* ── 11. MAGNETIC MACOS DOCK & TRAFFIC LIGHT PHYSICS ── */
+  function initMagneticDock() {
+    if (!hasGSAP || prefersReducedMotion) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const magneticElements = document.querySelectorAll('.tmux-tab, .dock-nav-btn, .term-dot');
+    magneticElements.forEach((el) => {
+      const xTo = gsap.quickTo(el, "x", { duration: 0.25, ease: "power3.out" });
+      const yTo = gsap.quickTo(el, "y", { duration: 0.25, ease: "power3.out" });
+
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const relX = e.clientX - (rect.left + rect.width / 2);
+        const relY = e.clientY - (rect.top + rect.height / 2);
+        xTo(relX * 0.2);
+        yTo(relY * 0.2);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        xTo(0);
+        yTo(0);
+      });
+    });
+  }
+
+  /* ── 12. THEME TOGGLE ── */
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -670,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleBtn.addEventListener('click', toggleTheme);
   }
 
-  /* ── 10. STAT COUNTER TICK ANIMATION (Slide 1) ── */
+  /* ── 13. STAT COUNTER TICK ANIMATION (Slide 1 with GSAP Precision) ── */
   let countersAnimated = false;
   function animateCounters() {
     if (countersAnimated) return;
@@ -678,31 +1177,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const counters = document.querySelectorAll('.metric-num[data-target]');
     counters.forEach((el) => {
-      const target = parseInt(el.getAttribute('data-target'), 10);
+      const target = parseFloat(el.getAttribute('data-target'));
       if (isNaN(target)) return;
 
-      const duration = 1200;
-      const startTime = performance.now();
+      if (hasGSAP && !prefersReducedMotion) {
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 1.3,
+          ease: "power2.out",
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val);
+          },
+          onComplete: () => {
+            el.textContent = target;
+          }
+        });
+      } else {
+        const duration = 1200;
+        const startTime = performance.now();
 
-      function updateCounter(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(easeOut * target);
-        el.textContent = current;
+        function updateCounter(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(easeOut * target);
+          el.textContent = current;
 
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
-          el.textContent = target;
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            el.textContent = target;
+          }
         }
-      }
 
-      requestAnimationFrame(updateCounter);
+        requestAnimationFrame(updateCounter);
+      }
     });
   }
 
-  /* ── 11. FORMSPREE AJAX SUBMISSION (Slide 7) ── */
+  /* ── 14. FORMSPREE AJAX SUBMISSION (Slide 7) ── */
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -750,13 +1264,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── 12. INITIALIZATION ── */
+  /* ── 15. INITIALIZATION ── */
   applyMode(currentMode);
   goToSlide(1, false);
+  initMagneticDock();
 
-  // Initial pill positioning after fonts and layout settle
+  // Initial pill positioning & MagicUI terminal boot sequence
   setTimeout(() => {
     const activeTab = document.querySelector('.tmux-tab.is-active');
     if (activeTab) updateDockPill(activeTab);
-  }, 120);
+    if (heroTerminal) heroTerminal.start(true);
+  }, 220);
 });
