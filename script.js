@@ -330,17 +330,24 @@ class CircleRevealController {
   }
 }
 
-/* ── MAGICUI MACOS TERMINAL ENGINE ── */
+/* ── MAGICUI MACOS INTERACTIVE TERMINAL ENGINE ── */
 class MagicTerminalEngine {
   constructor(containerEl, config = {}) {
     this.container = containerEl;
     this.codeEl = containerEl.querySelector('.magic-term-code');
+    this.bodyEl = containerEl.querySelector('.magic-term-body') || containerEl.querySelector('#hero-terminal-body');
     this.replayBtn = containerEl.querySelector('.magic-term-replay');
-    this.typingSpeed = config.typingSpeed || 28;
-    this.spanDelay = config.spanDelay || 120;
+    this.inputRow = containerEl.querySelector('#terminal-interactive-row');
+    this.inputEl = containerEl.querySelector('#terminal-cli-input');
+    this.chipsContainer = containerEl.querySelector('#terminal-quick-chips');
+
+    this.typingSpeed = config.typingSpeed || 26;
+    this.spanDelay = config.spanDelay || 110;
     this.isRunning = false;
     this.timeouts = [];
     this.hasRunOnce = false;
+    this.history = [];
+    this.historyIndex = -1;
 
     if (this.replayBtn) {
       this.replayBtn.addEventListener('click', (e) => {
@@ -349,6 +356,8 @@ class MagicTerminalEngine {
         this.restart();
       });
     }
+
+    this.initCLI();
   }
 
   clear() {
@@ -357,6 +366,9 @@ class MagicTerminalEngine {
     this.isRunning = false;
     if (this.codeEl) {
       this.codeEl.innerHTML = '';
+    }
+    if (this.inputRow) {
+      this.inputRow.style.display = 'none';
     }
   }
 
@@ -382,6 +394,284 @@ class MagicTerminalEngine {
     }, delay);
     this.timeouts.push(id);
     return id;
+  }
+
+  scrollToBottom() {
+    if (this.bodyEl) {
+      this.bodyEl.scrollTop = this.bodyEl.scrollHeight;
+    }
+  }
+
+  initCLI() {
+    if (this.inputEl) {
+      this.inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const cmd = this.inputEl.value.trim();
+          if (!cmd) return;
+
+          this.history.push(cmd);
+          this.historyIndex = this.history.length;
+
+          this.appendPromptLine(cmd);
+          this.executeCommand(cmd);
+
+          this.inputEl.value = '';
+          this.scrollToBottom();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (this.history.length > 0) {
+            if (this.historyIndex > 0) this.historyIndex--;
+            this.inputEl.value = this.history[this.historyIndex] || '';
+          }
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (this.historyIndex < this.history.length - 1) {
+            this.historyIndex++;
+            this.inputEl.value = this.history[this.historyIndex];
+          } else {
+            this.historyIndex = this.history.length;
+            this.inputEl.value = '';
+          }
+        }
+      });
+    }
+
+    if (this.chipsContainer) {
+      this.chipsContainer.addEventListener('click', (e) => {
+        const chip = e.target.closest('.term-chip');
+        if (!chip) return;
+        const cmd = chip.getAttribute('data-cmd');
+        if (cmd) {
+          if (this.inputEl) this.inputEl.value = cmd;
+          this.appendPromptLine(cmd);
+          this.executeCommand(cmd);
+          if (this.inputEl) {
+            this.inputEl.value = '';
+            this.inputEl.focus();
+          }
+          this.scrollToBottom();
+        }
+      });
+    }
+  }
+
+  enableInteractiveMode() {
+    if (this.inputRow) {
+      this.inputRow.style.display = 'flex';
+      requestAnimationFrame(() => {
+        this.scrollToBottom();
+      });
+    }
+  }
+
+  appendPromptLine(cmd) {
+    if (!this.codeEl) return;
+    const row = document.createElement('div');
+    row.className = 'term-line-cmd';
+    row.innerHTML = `<span class="term-prompt-sym">sriram@rhel-workstation:~$</span> <span class="term-typed-text">${this.escapeHtml(cmd)}</span>`;
+    this.codeEl.appendChild(row);
+  }
+
+  printLines(lines) {
+    if (!this.codeEl) return;
+    lines.forEach(item => {
+      const el = document.createElement('div');
+      if (item.type === 'header') {
+        el.className = 'term-out-header';
+        el.innerHTML = item.html;
+      } else if (item.type === 'cmd-desc') {
+        el.className = 'term-out-cmd-desc';
+        el.innerHTML = `<span class="term-out-cmd-name">${this.escapeHtml(item.cmd)}</span> <span>${item.desc}</span>`;
+      } else if (item.type === 'hint') {
+        el.className = 'term-out-hint';
+        el.innerHTML = item.html;
+      } else if (item.type === 'error') {
+        el.className = 'term-out-error';
+        el.innerHTML = item.html;
+      } else {
+        el.className = 'term-out-line';
+        el.innerHTML = item.html;
+      }
+      this.codeEl.appendChild(el);
+    });
+    this.scrollToBottom();
+  }
+
+  executeCommand(rawCmd) {
+    const clean = rawCmd.trim();
+    if (!clean) return;
+
+    const parts = clean.split(/\s+/);
+    const main = parts[0].toLowerCase();
+    const args = parts.slice(1);
+
+    switch (main) {
+      case 'help':
+      case 'man':
+        this.printLines([
+          { type: 'header', html: '── SRIRAM PORTFOLIO LINUX CLI ──' },
+          { type: 'cmd-desc', cmd: 'ls', desc: 'List files and portfolio chapters' },
+          { type: 'cmd-desc', cmd: 'cat <file>', desc: 'View file content (e.g. cat projects, cat certs, cat exp, cat cv, cat contact)' },
+          { type: 'cmd-desc', cmd: 'cd <1-7|name>', desc: 'Navigate to chapter (e.g. cd 3 or cd projects)' },
+          { type: 'cmd-desc', cmd: 'neofetch', desc: 'Display system specs & Cloud SRE profile' },
+          { type: 'cmd-desc', cmd: 'whoami', desc: 'Print active engineer profile & title' },
+          { type: 'cmd-desc', cmd: 'uname -r', desc: 'Print Linux kernel build version' },
+          { type: 'cmd-desc', cmd: 'clear', desc: 'Clear terminal screen' },
+          { type: 'cmd-desc', cmd: 'boot', desc: 'Replay boot diagnostics sequence' }
+        ]);
+        break;
+
+      case 'ls':
+        this.printLines([
+          { type: 'line', html: '<span style="color:var(--macos-blue)">boot.sh</span>          <span style="color:var(--macos-blue)">cluster-spec.yaml</span>    <span style="color:var(--terminal-mint)">projects/</span>' },
+          { type: 'line', html: '<span style="color:var(--macos-blue)">experience.log</span>   <span style="color:var(--macos-blue)">certs.pem</span>            <span style="color:var(--macos-blue)">education.txt</span>' },
+          { type: 'line', html: '<span style="color:var(--macos-blue)">contact.sh</span>       <span style="color:var(--terminal-amber)">cv.pdf</span>' },
+          { type: 'hint', html: "💡 Try: <b>cat projects</b>, <b>cat certs</b>, or <b>cd 3</b>" }
+        ]);
+        break;
+
+      case 'cat':
+        const target = args[0] ? args[0].toLowerCase() : '';
+        if (!target) {
+          this.printLines([
+            { type: 'error', html: 'cat: missing file operand. Try: cat projects, cat certs, cat exp, cat cv, cat contact' }
+          ]);
+        } else if (target.includes('proj')) {
+          this.printLines([
+            { type: 'header', html: '── SHIPPED CLOUD / DEVOPS / SRE PROJECTS (6) ──' },
+            { type: 'line', html: '<b>[1] aws/support-eng-simulation</b> · Incident triage & EC2 simulator<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/aws-support-engineer-cloud-simulation" target="_blank" rel="noopener" class="term-out-link">github.com/.../aws-support-engineer-cloud-simulation ↗</a>' },
+            { type: 'line', html: '<b>[2] ecs/observability-fargate</b> · Terraform ECS + Prometheus + Grafana<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate" target="_blank" rel="noopener" class="term-out-link">github.com/.../Cloud-Security-Observability-Stack-on-ECS-Fargate ↗</a>' },
+            { type: 'line', html: '<b>[3] gitops/ai-test-generator</b> · ArgoCD + K8s + Groq AI delivery<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/ai-test-generator-gitops-pipeline" target="_blank" rel="noopener" class="term-out-link">github.com/.../ai-test-generator-gitops-pipeline ↗</a>' },
+            { type: 'line', html: '<b>[4] sre/java-self-healing</b> · AWS 5-layer auto-recovery & Snyk<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="term-out-link">github.com/.../java-self-healing-microservice ↗</a>' },
+            { type: 'line', html: '<b>[5] azure/patient-triage</b> · Azure App Service + OpenAI GPT-4o<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="term-out-link">github.com/.../AI-Patient-Triage-System-on-Azure-CSA-Case-Study- ↗</a>' },
+            { type: 'line', html: '<b>[6] aws/bookstore-serverless</b> · AWS Lambda + API Gateway + MongoDB<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="term-out-link">github.com/.../Bookstore-Microservice-Architecture-on-AWS ↗</a>' },
+            { type: 'hint', html: "💡 Type <b>cd 3</b> to inspect interactive topology in the Workbench." }
+          ]);
+        } else if (target.includes('cert')) {
+          this.printLines([
+            { type: 'header', html: '── VERIFIED CLOUD CREDENTIALS (6) ──' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure Foundations 2024 Associate' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Architect Associate' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Developer Professional' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Generative AI Certified Professional' },
+            { type: 'line', html: '✔ Microsoft Certified: Azure Fundamentals (AZ-900)' },
+            { type: 'line', html: '✔ Microsoft Certified: Azure AI Fundamentals (AI-900)' },
+            { type: 'line', html: '🏆 <b>Global Top 500</b> — Oracle Race to Certification 2025' },
+            { type: 'hint', html: "💡 Type <b>cd 5</b> to view credential cards." }
+          ]);
+        } else if (target.includes('exp')) {
+          this.printLines([
+            { type: 'header', html: '── INTERNSHIP EXPERIENCE ──' },
+            { type: 'line', html: '<b>Infosys Springboard</b> · AI Intern — Cloud Deployment Lead (Feb 2026 – Mar 2026)' },
+            { type: 'line', html: '• Directed cloud deployment architecture for a 25-member cohort building AI KYC system.' },
+            { type: 'line', html: '• Provisioned AWS EC2 Flask inference + S3 static React frontend.' },
+            { type: 'line', html: '• Mitigated 5 critical blockers: ERR_CORS, ERR_BIND, ERR_PM2, ERR_PAYLOAD.' },
+            { type: 'hint', html: "💡 Type <b>cd 4</b> to view deployment log and verified certificate." }
+          ]);
+        } else if (target.includes('cv') || target.includes('resume')) {
+          this.printLines([
+            { type: 'header', html: '── OFFICIAL RÉSUMÉ ──' },
+            { type: 'line', html: '✔ Opening Sannidhi_Sriram_CV.pdf...' },
+            { type: 'line', html: '↳ <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="term-out-link">Download Sannidhi_Sriram_CV.pdf ↗</a>' }
+          ]);
+          window.open('assets/media/Sannidhi_Sriram_CV.pdf', '_blank');
+        } else if (target.includes('contact')) {
+          this.printLines([
+            { type: 'header', html: '── TRANSMISSION CHANNELS ──' },
+            { type: 'line', html: 'Email:    <a href="mailto:sannidhisriram8@gmail.com" class="term-out-link">sannidhisriram8@gmail.com</a>' },
+            { type: 'line', html: 'LinkedIn: <a href="https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a" target="_blank" rel="noopener" class="term-out-link">linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a ↗</a>' },
+            { type: 'line', html: 'GitHub:   <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="term-out-link">github.com/SannidhiSriram-06 ↗</a>' },
+            { type: 'line', html: 'Location: Hyderabad, Telangana, India (IST / UTC+5:30)' },
+            { type: 'hint', html: "💡 Type <b>cd 7</b> to dispatch an encrypted transmission." }
+          ]);
+        } else if (target.includes('edu')) {
+          this.printLines([
+            { type: 'header', html: '── ACADEMIC BACKGROUND ──' },
+            { type: 'line', html: '<b>B.Tech in Computer Science and Engineering (Hons)</b> — CGPA: 7.33' },
+            { type: 'line', html: 'Lovely Professional University (Phagwara, Punjab) · Minor: Cloud Computing' },
+            { type: 'line', html: 'Intermediate (MPC): Keshav Smarak Junior College, Hyderabad (77.5%)' },
+            { type: 'line', html: 'Class X (SSC): Oxford Grammar High School, Hyderabad (84.6%)' },
+            { type: 'hint', html: "💡 Type <b>cd 6</b> to inspect education timeline." }
+          ]);
+        } else {
+          this.printLines([
+            { type: 'error', html: `cat: ${this.escapeHtml(target)}: No such file or directory. Try: cat projects, cat certs, cat exp, cat cv, cat contact` }
+          ]);
+        }
+        break;
+
+      case 'cd':
+      case 'goto':
+        const dest = args[0] ? args[0].toLowerCase() : '';
+        const destMap = {
+          '1': 1, 'boot': 1, 'hero': 1,
+          '2': 2, 'stack': 2, 'cluster': 2,
+          '3': 3, 'projects': 3, 'project': 3, 'docker': 3,
+          '4': 4, 'experience': 4, 'exp': 4, 'deploy': 4,
+          '5': 5, 'certs': 5, 'certifications': 5, 'auth': 5,
+          '6': 6, 'education': 6, 'edu': 6, 'history': 6,
+          '7': 7, 'contact': 7, 'ssh': 7, 'connect': 7
+        };
+        if (destMap[dest] && window.deckNav) {
+          this.printLines([{ type: 'line', html: `✔ Navigating to Chapter 0${destMap[dest]}...` }]);
+          window.deckNav.goTo(destMap[dest]);
+        } else {
+          this.printLines([{ type: 'error', html: `cd: invalid destination '${this.escapeHtml(dest)}'. Valid targets: 1-7 (or boot, stack, projects, experience, certs, education, contact)` }]);
+        }
+        break;
+
+      case 'neofetch':
+      case 'fastfetch':
+        this.printLines([
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">       _---_         </span>  <span style="color:var(--text-bright);font-weight:700">sriram@rhel-workstation</span>' },
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">     /       \\       </span>  <span style="color:var(--text-muted)">-----------------------</span>' },
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">    |  (o) (o) |     </span>  <b>OS:</b> Red Hat Enterprise Linux 9.4 (Plow)' },
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">    |    -     |     </span>  <b>Host:</b> Hybrid Cloud SRE Workstation' },
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">    \\   ---   /      </span>  <b>Kernel:</b> Linux 6.8.0-cloud-sre x86_64' },
+          { type: 'line', html: '<span style="color:var(--rhel-red);font-weight:700">     \\_______/       </span>  <b>Uptime:</b> 99.98% High Availability' },
+          { type: 'line', html: '                      <b>Role:</b> Cloud / DevOps / SRE Engineer' },
+          { type: 'line', html: '                      <b>Stack:</b> AWS, Azure, K8s, Terraform, ArgoCD' },
+          { type: 'line', html: '                      <b>Credentials:</b> 6x Certs (Oracle Global Top 500)' },
+          { type: 'line', html: '                      <b>Status:</b> Production Ready — Open to Roles' }
+        ]);
+        break;
+
+      case 'whoami':
+        this.printLines([
+          { type: 'line', html: '<b>sannidhi-durga-pavan-sriram</b> · Cloud Infrastructure, DevOps &amp; Site Reliability Engineer' }
+        ]);
+        break;
+
+      case 'uname':
+        this.printLines([
+          { type: 'line', html: 'Linux rhel-workstation 6.8.0-cloud-sre #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux' }
+        ]);
+        break;
+
+      case 'clear':
+        if (this.codeEl) this.codeEl.innerHTML = '';
+        break;
+
+      case 'boot':
+        this.restart();
+        break;
+
+      default:
+        this.printLines([
+          { type: 'error', html: `zsh: command not found: <code>${this.escapeHtml(clean)}</code>. Type <b>help</b> or click the quick chips above.` }
+        ]);
+        break;
+    }
+  }
+
+  escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   runSequence() {
@@ -419,10 +709,6 @@ class MagicTerminalEngine {
         type: 'span',
         tag: '[STATUS]',
         text: 'Self-healing clusters operational · Ready for Cloud / DevOps / SRE roles'
-      },
-      {
-        type: 'prompt',
-        prompt: 'sriram@rhel-workstation:~$'
       }
     ];
 
@@ -438,22 +724,21 @@ class MagicTerminalEngine {
           row.className = 'term-line-span is-revealed';
           row.innerHTML = `<span class="term-check">✔</span> <span class="term-tag">${item.tag}</span> <span class="term-desc">${item.text}</span>`;
           this.codeEl.appendChild(row);
-        } else if (item.type === 'prompt') {
-          const row = document.createElement('div');
-          row.className = 'term-line-cmd';
-          row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-cursor" aria-hidden="true"></span>`;
-          this.codeEl.appendChild(row);
         }
       });
       this.isRunning = false;
+      this.enableInteractiveMode();
       return;
     }
 
     let currentStep = 0;
 
     const executeNext = () => {
-      if (!this.isRunning || currentStep >= sequenceData.length) {
+      if (!this.isRunning) return;
+
+      if (currentStep >= sequenceData.length) {
         this.isRunning = false;
+        this.enableInteractiveMode();
         return;
       }
 
@@ -477,7 +762,7 @@ class MagicTerminalEngine {
             this.schedule(typeChar, Math.max(16, this.typingSpeed + jitter));
           } else {
             if (cursorEl) cursorEl.remove();
-            this.schedule(executeNext, 160);
+            this.schedule(executeNext, 150);
           }
         };
 
@@ -495,17 +780,207 @@ class MagicTerminalEngine {
             this.schedule(executeNext, this.spanDelay);
           }, 30);
         });
-
-      } else if (item.type === 'prompt') {
-        const row = document.createElement('div');
-        row.className = 'term-line-cmd';
-        row.innerHTML = `<span class="term-prompt-sym">${item.prompt}</span> <span class="term-cursor" aria-hidden="true"></span>`;
-        this.codeEl.appendChild(row);
-        this.isRunning = false;
       }
     };
 
     executeNext();
+  }
+}
+
+/* ── ACTION TOAST FEEDBACK NOTIFICATION ── */
+let toastTimeout = null;
+function showToast(msg, duration = 2400) {
+  const toast = document.getElementById('toast-notification');
+  if (!toast) return;
+
+  toast.innerHTML = msg;
+  toast.classList.add('is-visible');
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, duration);
+}
+
+/* ── SPOTLIGHT / RAYCAST COMMAND PALETTE CONTROLLER (⌘K) ── */
+class CommandPaletteController {
+  constructor(modalEl, options = {}) {
+    this.modal = modalEl;
+    this.windowEl = modalEl.querySelector('.cmd-palette-window');
+    this.input = modalEl.querySelector('.cmd-palette-input');
+    this.resultsEl = modalEl.querySelector('.cmd-palette-results');
+    this.triggerBtn = options.triggerBtn || document.getElementById('cmd-palette-btn');
+    this.isOpen = false;
+    this.selectedIndex = 0;
+    this.filteredItems = [];
+    this.getItems = options.getItems || (() => []);
+
+    this.initEvents();
+  }
+
+  open() {
+    if (this.isOpen) return;
+    this.isOpen = true;
+    this.modal.classList.add('is-open');
+    this.modal.setAttribute('aria-hidden', 'false');
+    this.items = this.getItems();
+    this.input.value = '';
+    this.filter('');
+    this.input.focus();
+
+    if (typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.fromTo(this.windowEl, 
+        { opacity: 0, scale: 0.96, y: -10 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "power2.out" }
+      );
+    }
+  }
+
+  close() {
+    if (!this.isOpen) return;
+    this.isOpen = false;
+    this.modal.classList.remove('is-open');
+    this.modal.setAttribute('aria-hidden', 'true');
+    this.input.blur();
+  }
+
+  toggle() {
+    if (this.isOpen) this.close();
+    else this.open();
+  }
+
+  initEvents() {
+    if (this.triggerBtn) {
+      this.triggerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggle();
+      });
+    }
+
+    this.modal.addEventListener('click', (e) => {
+      if (e.target === this.modal) {
+        this.close();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      // ⌘K or Ctrl+K opens/toggles palette
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        this.toggle();
+        return;
+      }
+
+      if (!this.isOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this.close();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        this.moveSelection(1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        this.moveSelection(-1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        this.executeSelected();
+      }
+    });
+
+    this.input.addEventListener('input', () => {
+      this.filter(this.input.value);
+    });
+  }
+
+  filter(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      this.filteredItems = [...this.items];
+    } else {
+      this.filteredItems = this.items.filter(item => {
+        return item.title.toLowerCase().includes(q) ||
+               (item.subtitle && item.subtitle.toLowerCase().includes(q)) ||
+               (item.category && item.category.toLowerCase().includes(q)) ||
+               (item.keywords && item.keywords.toLowerCase().includes(q));
+      });
+    }
+    this.selectedIndex = 0;
+    this.render();
+  }
+
+  moveSelection(direction) {
+    if (this.filteredItems.length === 0) return;
+    this.selectedIndex = (this.selectedIndex + direction + this.filteredItems.length) % this.filteredItems.length;
+    this.updateActiveItem();
+  }
+
+  updateActiveItem() {
+    const domItems = this.resultsEl.querySelectorAll('.cmd-palette-item');
+    domItems.forEach((el, i) => {
+      if (i === this.selectedIndex) {
+        el.classList.add('is-selected');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('is-selected');
+      }
+    });
+  }
+
+  executeSelected() {
+    const item = this.filteredItems[this.selectedIndex];
+    if (item && item.action) {
+      this.close();
+      item.action();
+    }
+  }
+
+  render() {
+    this.resultsEl.innerHTML = '';
+
+    if (this.filteredItems.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'cmd-palette-empty';
+      empty.textContent = 'No matching commands or projects found.';
+      this.resultsEl.appendChild(empty);
+      return;
+    }
+
+    let currentCategory = null;
+
+    this.filteredItems.forEach((item, index) => {
+      if (item.category && item.category !== currentCategory) {
+        currentCategory = item.category;
+        const catHeader = document.createElement('div');
+        catHeader.className = 'cmd-palette-section-title';
+        catHeader.textContent = currentCategory;
+        this.resultsEl.appendChild(catHeader);
+      }
+
+      const row = document.createElement('div');
+      row.className = `cmd-palette-item ${index === this.selectedIndex ? 'is-selected' : ''}`;
+      row.setAttribute('role', 'option');
+      row.innerHTML = `
+        <div class="cmd-item-left">
+          <span class="cmd-item-icon">${item.icon || '►'}</span>
+          <span class="cmd-item-text">${item.title}</span>
+          ${item.subtitle ? `<span class="cmd-item-sub">${item.subtitle}</span>` : ''}
+        </div>
+        <span class="cmd-item-badge">${item.badge || '↵'}</span>
+      `;
+
+      row.addEventListener('click', () => {
+        this.selectedIndex = index;
+        this.executeSelected();
+      });
+
+      row.addEventListener('mouseenter', () => {
+        this.selectedIndex = index;
+        this.updateActiveItem();
+      });
+
+      this.resultsEl.appendChild(row);
+    });
   }
 }
 
@@ -1264,7 +1739,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── 15. INITIALIZATION ── */
+  /* ── 15. PROJECT WORKBENCH SELECTION HELPER ── */
+  function selectProjectTab(targetId) {
+    goToSlide(3);
+    setTimeout(() => {
+      const row = document.querySelector(`.docker-row[data-target="${targetId}"]`);
+      if (row) {
+        projectTabs.forEach((r) => {
+          r.classList.remove('is-selected');
+          r.setAttribute('aria-selected', 'false');
+        });
+        row.classList.add('is-selected');
+        row.setAttribute('aria-selected', 'true');
+
+        projectPanels.forEach((panel) => {
+          if (panel.id === targetId) {
+            panel.classList.add('is-active');
+            if (hasGSAP && !prefersReducedMotion) {
+              gsap.fromTo(panel, 
+                { opacity: 0, x: 10 }, 
+                { opacity: 1, x: 0, duration: 0.28, ease: "power2.out" }
+              );
+            }
+          } else {
+            panel.classList.remove('is-active');
+          }
+        });
+        showToast(`✔ Inspected ${row.querySelector('.ps-name')?.textContent || 'Project'}`);
+      }
+    }, 200);
+  }
+
+  window.selectProjectTab = selectProjectTab;
+
+  /* ── 16. COMMAND PALETTE INITIALIZATION (⌘K) ── */
+  const cmdPaletteModal = document.getElementById('cmd-palette-modal');
+  let cmdPalette = null;
+
+  if (cmdPaletteModal) {
+    cmdPalette = new CommandPaletteController(cmdPaletteModal, {
+      triggerBtn: document.getElementById('cmd-palette-btn'),
+      getItems: () => [
+        // Chapters (1-7)
+        { category: 'Chapters', title: 'CH.01 // boot.sh', subtitle: 'Identity & Metrics Overview', icon: '01', badge: 'Jump ↵', keywords: 'hero identity bio 1 boot', action: () => goToSlide(1) },
+        { category: 'Chapters', title: 'CH.02 // cluster-spec.yaml', subtitle: 'Multi-Cloud Runtime Stack', icon: '02', badge: 'Jump ↵', keywords: 'stack aws azure k8s terraform 2 cluster', action: () => goToSlide(2) },
+        { category: 'Chapters', title: 'CH.03 // projects.docker', subtitle: 'Shipped SRE Projects Workbench', icon: '03', badge: 'Jump ↵', keywords: 'projects case study docker workbench 3', action: () => goToSlide(3) },
+        { category: 'Chapters', title: 'CH.04 // deploy.log', subtitle: 'Infosys Springboard Internship Experience', icon: '04', badge: 'Jump ↵', keywords: 'experience infosys work internship 4 deploy', action: () => goToSlide(4) },
+        { category: 'Chapters', title: 'CH.05 // registry.auth', subtitle: '6x Cloud Certs & Oracle Global Top 500', icon: '05', badge: 'Jump ↵', keywords: 'certs certifications oracle credentials 5 auth', action: () => goToSlide(5) },
+        { category: 'Chapters', title: 'CH.06 // build-history', subtitle: 'Education & Core Academic Rigor', icon: '06', badge: 'Jump ↵', keywords: 'education college university btech degree 6 build', action: () => goToSlide(6) },
+        { category: 'Chapters', title: 'CH.07 // ssh-session', subtitle: 'Contact, Direct Channels & Transmission', icon: '07', badge: 'Jump ↵', keywords: 'contact email linkedin message ssh 7 connect', action: () => goToSlide(7) },
+
+        // Shipped Projects (Direct Workbench Jumps)
+        { category: 'Projects', title: 'aws/support-eng-simulation', subtitle: 'Cloud Support Engineering Simulator', icon: 'AWS', badge: 'Inspect ↵', keywords: 'aws ec2 simulation support ticket project 1', action: () => selectProjectTab('case-1') },
+        { category: 'Projects', title: 'ecs/observability-fargate', subtitle: 'ECS Fargate + Prometheus + Grafana Observability', icon: 'ECS', badge: 'Inspect ↵', keywords: 'ecs fargate terraform prometheus grafana project 2', action: () => selectProjectTab('case-2') },
+        { category: 'Projects', title: 'gitops/ai-test-generator', subtitle: 'AI Test Generator & GitOps Pipeline (ArgoCD)', icon: 'K8S', badge: 'Inspect ↵', keywords: 'gitops argocd kubernetes groq ai project 3', action: () => selectProjectTab('case-3') },
+        { category: 'Projects', title: 'sre/java-self-healing', subtitle: 'Self-Healing Java Microservice on AWS (5 layers)', icon: 'SRE', badge: 'Inspect ↵', keywords: 'java self-healing resilience snyk project 4', action: () => selectProjectTab('case-4') },
+        { category: 'Projects', title: 'azure/patient-triage', subtitle: 'Clinical AI Patient Triage on Azure + GPT-4o', icon: 'AZR', badge: 'Inspect ↵', keywords: 'azure openai patient triage healthcare project 5', action: () => selectProjectTab('case-5') },
+        { category: 'Projects', title: 'aws/bookstore-serverless', subtitle: 'Bookstore Serverless Architecture on AWS', icon: 'SRV', badge: 'Inspect ↵', keywords: 'serverless lambda api gateway mongodb project 6', action: () => selectProjectTab('case-6') },
+
+        // Quick Actions
+        { category: 'Actions', title: 'Download Official Résumé (PDF)', subtitle: 'Sannidhi_Sriram_CV.pdf', icon: '📄', badge: 'Download ↵', keywords: 'cv resume pdf download', action: () => {
+          showToast('✔ Downloading official Résumé (PDF)...');
+          window.open('assets/media/Sannidhi_Sriram_CV.pdf', '_blank');
+        }},
+        { category: 'Actions', title: 'Copy Email Address', subtitle: 'sannidhisriram8@gmail.com', icon: '✉', badge: 'Copy ↵', keywords: 'email contact mail', action: () => {
+          navigator.clipboard.writeText('sannidhisriram8@gmail.com');
+          showToast('✔ Email copied to clipboard: sannidhisriram8@gmail.com');
+        }},
+        { category: 'Actions', title: 'Copy LinkedIn Profile Link', subtitle: 'linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a', icon: '🔗', badge: 'Copy ↵', keywords: 'linkedin profile social', action: () => {
+          navigator.clipboard.writeText('https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a');
+          showToast('✔ LinkedIn profile link copied!');
+        }},
+        { category: 'Actions', title: 'Copy GitHub Profile Link', subtitle: 'github.com/SannidhiSriram-06', icon: '🐙', badge: 'Copy ↵', keywords: 'github repo code', action: () => {
+          navigator.clipboard.writeText('https://github.com/SannidhiSriram-06');
+          showToast('✔ GitHub profile link copied!');
+        }},
+        { category: 'Actions', title: 'Toggle View Mode', subtitle: 'Switch between Deck Presentation and Continuous Scroll', icon: '◫', badge: 'Toggle ↵', keywords: 'view mode deck scroll switch', action: () => {
+          applyMode(currentMode === 'deck' ? 'scroll' : 'deck');
+          showToast(`✔ Switched to ${currentMode === 'deck' ? 'Deck Mode' : 'Continuous Scroll'}`);
+        }},
+        { category: 'Actions', title: 'Toggle Color Theme', subtitle: 'Switch between Dark and Light mode', icon: '◑', badge: 'Toggle ↵', keywords: 'theme dark light color', action: () => {
+          toggleTheme();
+          showToast('✔ Color theme toggled');
+        }}
+      ]
+    });
+  }
+
+  /* ── 17. INITIALIZATION ── */
   applyMode(currentMode);
   goToSlide(1, false);
   initMagneticDock();

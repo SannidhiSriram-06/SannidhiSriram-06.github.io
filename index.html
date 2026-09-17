@@ -62,6 +62,8 @@
   <!-- Preconnect & Fonts: Sans + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
     rel="stylesheet" />
@@ -138,6 +140,12 @@
           </button>
         </div>
 
+        <!-- Command Palette Trigger -->
+        <button id="cmd-palette-btn" class="btn-term-action btn-cmd-palette" aria-label="Open Command Palette [Shortcut: ⌘K or Ctrl+K]" title="Command Palette [⌘K / Ctrl+K]">
+          <span class="cmd-icon" aria-hidden="true">⌘</span>
+          <span class="cmd-key">K</span>
+        </button>
+
         <!-- Theme Toggle -->
         <button id="theme-toggle" class="btn-term-icon" aria-label="Toggle light/dark theme" title="Toggle Theme [Shortcut: T]">
           <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -208,8 +216,21 @@
                     <span>Replay</span>
                   </button>
                 </div>
-                <div class="magic-term-body" tabindex="0">
+                <div class="magic-term-chips" id="terminal-quick-chips" aria-label="Quick Linux Commands">
+                  <span class="chips-label">QUICK:</span>
+                  <button type="button" class="term-chip" data-cmd="help">help</button>
+                  <button type="button" class="term-chip" data-cmd="ls">ls</button>
+                  <button type="button" class="term-chip" data-cmd="cat projects">cat projects</button>
+                  <button type="button" class="term-chip" data-cmd="neofetch">neofetch</button>
+                  <button type="button" class="term-chip" data-cmd="cat certs">cat certs</button>
+                  <button type="button" class="term-chip" data-cmd="clear">clear</button>
+                </div>
+                <div class="magic-term-body" id="hero-terminal-body" tabindex="0">
                   <pre class="magic-term-pre"><code class="magic-term-code" id="hero-terminal-code"></code></pre>
+                  <div class="term-interactive-row" id="terminal-interactive-row">
+                    <span class="term-prompt-sym">sriram@rhel-workstation:~$</span>
+                    <input type="text" id="terminal-cli-input" class="term-cli-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="type command (e.g. cat projects, ls, help)..." aria-label="Interactive Linux CLI command input" />
+                  </div>
                 </div>
               </div>
 
@@ -1102,6 +1123,32 @@
     </footer>
 
   </div>
+
+  <!-- ── SPOTLIGHT / RAYCAST COMMAND PALETTE MODAL (⌘K) ── -->
+  <div class="cmd-palette-backdrop" id="cmd-palette-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="cmd-palette-window" id="cmd-palette-window">
+      <div class="cmd-palette-header">
+        <svg class="cmd-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="cmd-palette-input" class="cmd-palette-input" placeholder="Search chapters, projects, actions... (or type 1-7)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <span class="cmd-esc-badge"><kbd>ESC</kbd></span>
+      </div>
+      <div class="cmd-palette-results" id="cmd-palette-results" role="listbox"></div>
+      <div class="cmd-palette-footer">
+        <div class="cmd-footer-keys">
+          <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+          <span><kbd>↵</kbd> select</span>
+          <span><kbd>esc</kbd> close</span>
+        </div>
+        <span class="cmd-footer-tag">RHEL + macOS Spotlight</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACTION TOAST FEEDBACK ── -->
+  <div class="toast-notification" id="toast-notification" aria-live="polite" aria-atomic="true"></div>
 
   <!-- GSAP Core & ScrollTrigger (GreenSock) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
