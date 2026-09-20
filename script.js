@@ -539,13 +539,15 @@ class MagicTerminalEngine {
           ]);
         } else if (target.includes('proj')) {
           this.printLines([
-            { type: 'header', html: '── SHIPPED CLOUD / DEVOPS / SRE PROJECTS (6) ──' },
+            { type: 'header', html: '── SHIPPED CLOUD / DEVOPS / SRE PROJECTS (8) ──' },
             { type: 'line', html: '<b>[1] aws/support-eng-simulation</b> · Incident triage & EC2 simulator<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/aws-support-engineer-cloud-simulation" target="_blank" rel="noopener" class="term-out-link">github.com/.../aws-support-engineer-cloud-simulation ↗</a>' },
             { type: 'line', html: '<b>[2] ecs/observability-fargate</b> · Terraform ECS + Prometheus + Grafana<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate" target="_blank" rel="noopener" class="term-out-link">github.com/.../Cloud-Security-Observability-Stack-on-ECS-Fargate ↗</a>' },
             { type: 'line', html: '<b>[3] gitops/ai-test-generator</b> · ArgoCD + K8s + Groq AI delivery<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/ai-test-generator-gitops-pipeline" target="_blank" rel="noopener" class="term-out-link">github.com/.../ai-test-generator-gitops-pipeline ↗</a>' },
             { type: 'line', html: '<b>[4] sre/java-self-healing</b> · AWS 5-layer auto-recovery & Snyk<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="term-out-link">github.com/.../java-self-healing-microservice ↗</a>' },
             { type: 'line', html: '<b>[5] azure/patient-triage</b> · Azure App Service + OpenAI GPT-4o<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="term-out-link">github.com/.../AI-Patient-Triage-System-on-Azure-CSA-Case-Study- ↗</a>' },
             { type: 'line', html: '<b>[6] aws/bookstore-serverless</b> · AWS Lambda + API Gateway + MongoDB<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="term-out-link">github.com/.../Bookstore-Microservice-Architecture-on-AWS ↗</a>' },
+            { type: 'line', html: '<b>[7] aws/compliance-vendor-risk</b> · Terraform AWS Security Hub + Config + GRC TPRM<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener" class="term-out-link">github.com/.../cloud-compliance-vendor-risk ↗</a>' },
+            { type: 'line', html: '<b>[8] secops/vault-wazuh-threat-lab</b> · HashiCorp Vault + Wazuh SIEM + MITRE ATT&amp;CK<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener" class="term-out-link">github.com/.../identity-threat-detection-lab ↗</a>' },
             { type: 'hint', html: "💡 Type <b>cd 3</b> to inspect interactive topology in the Workbench." }
           ]);
         } else if (target.includes('cert')) {
@@ -1796,6 +1798,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { category: 'Projects', title: 'sre/java-self-healing', subtitle: 'Self-Healing Java Microservice on AWS (5 layers)', icon: 'SRE', badge: 'Inspect ↵', keywords: 'java self-healing resilience snyk project 4', action: () => selectProjectTab('case-4') },
         { category: 'Projects', title: 'azure/patient-triage', subtitle: 'Clinical AI Patient Triage on Azure + GPT-4o', icon: 'AZR', badge: 'Inspect ↵', keywords: 'azure openai patient triage healthcare project 5', action: () => selectProjectTab('case-5') },
         { category: 'Projects', title: 'aws/bookstore-serverless', subtitle: 'Bookstore Serverless Architecture on AWS', icon: 'SRV', badge: 'Inspect ↵', keywords: 'serverless lambda api gateway mongodb project 6', action: () => selectProjectTab('case-6') },
+        { category: 'Projects', title: 'aws/compliance-vendor-risk', subtitle: 'Cloud Compliance & Vendor Risk Management Lab (CIS 1.4)', icon: 'GRC', badge: 'Inspect ↵', keywords: 'cloud compliance vendor risk tprm security hub aws config cis benchmark project 7', action: () => selectProjectTab('case-7') },
+        { category: 'Projects', title: 'secops/vault-wazuh-threat-lab', subtitle: 'Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)', icon: 'SOC', badge: 'Inspect ↵', keywords: 'identity threat detection response vault wazuh siem mitre attack soc jit iam project 8', action: () => selectProjectTab('case-8') },
 
         // Quick Actions
         { category: 'Actions', title: 'Download Official Résumé (PDF)', subtitle: 'Sannidhi_Sriram_CV.pdf', icon: '📄', badge: 'Download ↵', keywords: 'cv resume pdf download', action: () => {

@@ -51,6 +51,16 @@
    - *Architecture:* AWS Lambda compute (Node.js 20.x), Amazon API Gateway HTTP routing, and MongoDB Atlas database. Operates at $0/month idle operational cost with automated on-demand scaling.
    - *GitHub:* https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS
 
+7. **Cloud Compliance & Vendor Risk Management Lab**
+   - *Focus:* Enterprise IaC Security Governance, Continuous Compliance, Third-Party Risk Management (TPRM).
+   - *Architecture:* Terraform provisions continuous compliance auditing via AWS Config and AWS Security Hub (CIS AWS Foundations Benchmark v1.4.0). Captures non-compliant events via Amazon EventBridge, enriches failed controls with ISO 27001:2022 and NIST CSF v1.1 crosswalks using an AWS Lambda logger, builds a live consolidated S3 Risk Register (JSON/CSV), and features a CLI TPRM vendor scoring engine with a self-hosted GRC portal (Docker Compose).
+   - *GitHub:* https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk
+
+8. **Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)**
+   - *Focus:* Identity Security, Detection Engineering, SOC Incident Response, MITRE ATT&CK.
+   - *Architecture:* HashiCorp Vault 1.15 Community dynamic JIT IAM user generation (900s TTL auto-deletion) paired with single-node Wazuh 4.7.5 SIEM on AWS (t3.large provisioned via Terraform). Ingests real-time host auth telemetry (/var/log/auth.log) and AWS CloudTrail management events via S3 wodle. Verified 33 custom detection alerts mapped to MITRE ATT&CK techniques (T1110 password guessing/spraying, T1548 sudo abuse escalation, T1078/T1098 IAM persistence) with actionable SOC containment runbooks.
+   - *GitHub:* https://github.com/SannidhiSriram-06/identity-threat-detection-lab
+
 ## Certifications (6x Certified)
 1. **Oracle Cloud Infrastructure 2025 Certified DevOps Professional** (Aug 2025)
 2. **Oracle Cloud Infrastructure 2025 Certified Observability Professional** (Aug 2025)

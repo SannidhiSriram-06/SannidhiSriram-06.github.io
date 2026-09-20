@@ -242,9 +242,9 @@
                   <div class="metric-sub">Oracle OCI (4x) + Azure (2x)</div>
                 </div>
                 <div class="metric-card">
-                  <div class="metric-num" data-target="6">6</div>
+                  <div class="metric-num" data-target="8">8</div>
                   <div class="metric-lbl">Shipped Projects</div>
-                  <div class="metric-sub">ECS, GitOps, SRE, Serverless</div>
+                  <div class="metric-sub">SecOps, GRC, ECS, GitOps, SRE</div>
                 </div>
                 <div class="metric-card">
                   <div class="metric-num">Top 500</div>
@@ -493,6 +493,22 @@
                   <span class="ps-col ps-status status-up">zero-cost idle</span>
                 </button>
 
+                <!-- Project 7 Tab -->
+                <button class="docker-row" role="tab" aria-selected="false" data-target="case-7" title="Inspect aws/compliance-vendor-risk">
+                  <span class="ps-col ps-id">c-5290e4</span>
+                  <span class="ps-col ps-name">aws/compliance-vendor-risk</span>
+                  <span class="ps-col ps-tech badge-aws">AWS GRC</span>
+                  <span class="ps-col ps-status status-up">audited: CIS 1.4</span>
+                </button>
+
+                <!-- Project 8 Tab -->
+                <button class="docker-row" role="tab" aria-selected="false" data-target="case-8" title="Inspect secops/vault-wazuh-threat-lab">
+                  <span class="ps-col ps-id">c-8302f1</span>
+                  <span class="ps-col ps-name">secops/vault-wazuh-threat-lab</span>
+                  <span class="ps-col ps-tech badge-aws">AWS SecOps</span>
+                  <span class="ps-col ps-status status-up">33 SIEM alerts</span>
+                </button>
+
               </div>
             </div>
 
@@ -674,6 +690,71 @@
                   <span class="term-tag">Node.js 20</span>
                   <span class="term-tag">CloudWatch Logs</span>
                   <span class="term-tag">Cost Optimization</span>
+                </div>
+              </article>
+
+              <!-- Case 7 Details -->
+              <article class="case-detail-panel" id="case-7">
+                <div class="case-panel-header">
+                  <div class="case-title-wrap">
+                    <span class="case-tag">PROJECT 07 · CLOUD COMPLIANCE &amp; VENDOR RISK (GRC)</span>
+                    <h3 class="case-title">Cloud Compliance &amp; Vendor Risk Management Lab</h3>
+                  </div>
+                  <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener" class="btn-github">
+                    <span>GitHub Repo ↗</span>
+                  </a>
+                </div>
+                <p class="case-summary">
+                  Enterprise-grade Infrastructure-as-Code (IaC) continuous compliance auditing and Third-Party Risk Management (TPRM) lab. Automates CIS AWS Foundations Benchmark v1.4.0 governance via AWS Config and Security Hub, ingests real-time violation telemetry through Amazon EventBridge and AWS Lambda into an auditable Risk Register, crosswalks findings to ISO 27001:2022 &amp; NIST CSF v1.1, and powers an automated TPRM scoring engine with a self-hosted GRC dashboard.
+                </p>
+                <div class="case-pipeline-box">
+                  <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
+                  <code class="pipe-flow">Terraform IaC ──► AWS Config + Security Hub (CIS v1.4.0) ──► EventBridge ──► Python Lambda ──► S3 Risk Register (JSON/CSV) ──► TPRM Scoring Engine &amp; GRC Portal (Docker)</code>
+                  <p class="pipe-details">Evaluated sandbox vulnerabilities across S3, Security Groups, EBS gp3 encryption, and IAM MFA. Enriched 21 live scanner findings with ISO/NIST control crosswalks and governance SLAs while maintaining strict telemetry provenance and deduplication.</p>
+                </div>
+                <div class="case-tags-row">
+                  <span class="term-tag">Terraform</span>
+                  <span class="term-tag">AWS Security Hub</span>
+                  <span class="term-tag">AWS Config</span>
+                  <span class="term-tag">Amazon EventBridge</span>
+                  <span class="term-tag">AWS Lambda (Python)</span>
+                  <span class="term-tag">CIS Benchmark v1.4.0</span>
+                  <span class="term-tag">ISO 27001:2022</span>
+                  <span class="term-tag">NIST CSF v1.1</span>
+                  <span class="term-tag">Docker Compose</span>
+                  <span class="term-tag">TPRM / GRC</span>
+                </div>
+              </article>
+
+              <!-- Case 8 Details -->
+              <article class="case-detail-panel" id="case-8">
+                <div class="case-panel-header">
+                  <div class="case-title-wrap">
+                    <span class="case-tag">PROJECT 08 · IDENTITY THREAT DETECTION &amp; SOC INCIDENT RESPONSE</span>
+                    <h3 class="case-title">Identity Threat Detection &amp; Response Lab (Vault + Wazuh on AWS)</h3>
+                  </div>
+                  <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener" class="btn-github">
+                    <span>GitHub Repo ↗</span>
+                  </a>
+                </div>
+                <p class="case-summary">
+                  End-to-end identity security and detection engineering lab running HashiCorp Vault Community Edition and a single-node Wazuh SIEM stack on AWS (t3.large provisioned with Terraform). Implements dynamic Just-In-Time (JIT) AWS IAM credential brokering, captures host auth telemetry and AWS CloudTrail events, maps attack indicators against MITRE ATT&amp;CK, and validates SOC incident response runbooks across 33 live custom security alerts.
+                </p>
+                <div class="case-pipeline-box">
+                  <span class="pipe-label">TOPOLOGY SPECIFICATION</span>
+                  <code class="pipe-flow">Terraform IaC ──► HashiCorp Vault (AWS Dynamic JIT IAM) ──► Wazuh SIEM ──► Linux Syslog (auth.log) + CloudTrail (aws-s3) ──► MITRE ATT&amp;CK Rules (33 Alerts) ──► SOC Containment Runbook</code>
+                  <p class="pipe-details">Simulated and detected real-world threats: SSH brute-force username spraying (T1110.001/003), sudo privilege escalation abuse (T1548.003), and CloudTrail IAM persistence manipulation (T1078.004/T1098). Verified dynamic JIT IAM user auto-deletion on 900s lease expiration and explicit revocation.</p>
+                </div>
+                <div class="case-tags-row">
+                  <span class="term-tag">HashiCorp Vault</span>
+                  <span class="term-tag">Wazuh SIEM</span>
+                  <span class="term-tag">Terraform</span>
+                  <span class="term-tag">AWS CloudTrail</span>
+                  <span class="term-tag">AWS IAM JIT Brokering</span>
+                  <span class="term-tag">MITRE ATT&amp;CK</span>
+                  <span class="term-tag">Docker Compose</span>
+                  <span class="term-tag">SOC Incident Response</span>
+                  <span class="term-tag">Linux Syslog (auth.log)</span>
                 </div>
               </article>
 
