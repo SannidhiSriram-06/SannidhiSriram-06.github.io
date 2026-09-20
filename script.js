@@ -540,25 +540,25 @@ class MagicTerminalEngine {
         } else if (target.includes('proj')) {
           this.printLines([
             { type: 'header', html: '── SHIPPED CLOUD / DEVOPS / SRE PROJECTS (8) ──' },
-            { type: 'line', html: '<b>[1] aws/support-eng-simulation</b> · Incident triage & EC2 simulator<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/aws-support-engineer-cloud-simulation" target="_blank" rel="noopener" class="term-out-link">github.com/.../aws-support-engineer-cloud-simulation ↗</a>' },
-            { type: 'line', html: '<b>[2] ecs/observability-fargate</b> · Terraform ECS + Prometheus + Grafana<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate" target="_blank" rel="noopener" class="term-out-link">github.com/.../Cloud-Security-Observability-Stack-on-ECS-Fargate ↗</a>' },
-            { type: 'line', html: '<b>[3] gitops/ai-test-generator</b> · ArgoCD + K8s + Groq AI delivery<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/ai-test-generator-gitops-pipeline" target="_blank" rel="noopener" class="term-out-link">github.com/.../ai-test-generator-gitops-pipeline ↗</a>' },
-            { type: 'line', html: '<b>[4] sre/java-self-healing</b> · AWS 5-layer auto-recovery & Snyk<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="term-out-link">github.com/.../java-self-healing-microservice ↗</a>' },
-            { type: 'line', html: '<b>[5] azure/patient-triage</b> · Azure App Service + OpenAI GPT-4o<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="term-out-link">github.com/.../AI-Patient-Triage-System-on-Azure-CSA-Case-Study- ↗</a>' },
-            { type: 'line', html: '<b>[6] aws/bookstore-serverless</b> · AWS Lambda + API Gateway + MongoDB<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="term-out-link">github.com/.../Bookstore-Microservice-Architecture-on-AWS ↗</a>' },
-            { type: 'line', html: '<b>[7] aws/compliance-vendor-risk</b> · Terraform AWS Security Hub + Config + GRC TPRM<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener" class="term-out-link">github.com/.../cloud-compliance-vendor-risk ↗</a>' },
-            { type: 'line', html: '<b>[8] secops/vault-wazuh-threat-lab</b> · HashiCorp Vault + Wazuh SIEM + MITRE ATT&amp;CK<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener" class="term-out-link">github.com/.../identity-threat-detection-lab ↗</a>' },
+            { type: 'line', html: '<b>[1] secops/vault-wazuh-threat-lab</b> · HashiCorp Vault + Wazuh SIEM + MITRE ATT&amp;CK<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener" class="term-out-link">github.com/.../identity-threat-detection-lab ↗</a>' },
+            { type: 'line', html: '<b>[2] aws/compliance-vendor-risk</b> · Terraform AWS Security Hub + Config + GRC TPRM<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener" class="term-out-link">github.com/.../cloud-compliance-vendor-risk ↗</a>' },
+            { type: 'line', html: '<b>[3] aws/support-eng-simulation</b> · Incident triage & EC2 simulator<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank" rel="noopener" class="term-out-link">github.com/.../cloud-support-ticket-simulation ↗</a>' },
+            { type: 'line', html: '<b>[4] ecs/observability-fargate</b> · Terraform ECS + Prometheus + Grafana<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="term-out-link">github.com/.../observability-fargate ↗</a>' },
+            { type: 'line', html: '<b>[5] gitops/ai-test-generator</b> · ArgoCD + K8s + Groq AI delivery<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/ai-pytest-generator-gitops" target="_blank" rel="noopener" class="term-out-link">github.com/.../ai-pytest-generator-gitops ↗</a>' },
+            { type: 'line', html: '<b>[6] sre/java-self-healing</b> · AWS 5-layer auto-recovery & Snyk<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="term-out-link">github.com/.../java-self-healing-microservice ↗</a>' },
+            { type: 'line', html: '<b>[7] aws/bookstore-serverless</b> · AWS Lambda + API Gateway + MongoDB<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="term-out-link">github.com/.../Bookstore-Microservice-Architecture-on-AWS ↗</a>' },
+            { type: 'line', html: '<b>[8] azure/patient-triage</b> · Azure App Service + OpenAI GPT-4o<br>&nbsp;&nbsp;&nbsp;↳ <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="term-out-link">github.com/.../AI-Patient-Triage-System-on-Azure-CSA-Case-Study- ↗</a>' },
             { type: 'hint', html: "💡 Type <b>cd 3</b> to inspect interactive topology in the Workbench." }
           ]);
         } else if (target.includes('cert')) {
           this.printLines([
             { type: 'header', html: '── VERIFIED CLOUD CREDENTIALS (6) ──' },
-            { type: 'line', html: '✔ Oracle Cloud Infrastructure Foundations 2024 Associate' },
-            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Architect Associate' },
-            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Developer Professional' },
-            { type: 'line', html: '✔ Oracle Cloud Infrastructure 2024 Generative AI Certified Professional' },
-            { type: 'line', html: '✔ Microsoft Certified: Azure Fundamentals (AZ-900)' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure DevOps Professional 2025' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure Observability Professional 2025' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure Multicloud Architect 2025' },
+            { type: 'line', html: '✔ Oracle Cloud Infrastructure Generative AI Professional 2025' },
             { type: 'line', html: '✔ Microsoft Certified: Azure AI Fundamentals (AI-900)' },
+            { type: 'line', html: '✔ Microsoft Certified: Azure Fundamentals (AZ-900)' },
             { type: 'line', html: '🏆 <b>Global Top 500</b> — Oracle Race to Certification 2025' },
             { type: 'hint', html: "💡 Type <b>cd 5</b> to view credential cards." }
           ]);
@@ -1792,14 +1792,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { category: 'Chapters', title: 'CH.07 // ssh-session', subtitle: 'Contact, Direct Channels & Transmission', icon: '07', badge: 'Jump ↵', keywords: 'contact email linkedin message ssh 7 connect', action: () => goToSlide(7) },
 
         // Shipped Projects (Direct Workbench Jumps)
-        { category: 'Projects', title: 'aws/support-eng-simulation', subtitle: 'Cloud Support Engineering Simulator', icon: 'AWS', badge: 'Inspect ↵', keywords: 'aws ec2 simulation support ticket project 1', action: () => selectProjectTab('case-1') },
-        { category: 'Projects', title: 'ecs/observability-fargate', subtitle: 'ECS Fargate + Prometheus + Grafana Observability', icon: 'ECS', badge: 'Inspect ↵', keywords: 'ecs fargate terraform prometheus grafana project 2', action: () => selectProjectTab('case-2') },
-        { category: 'Projects', title: 'gitops/ai-test-generator', subtitle: 'AI Test Generator & GitOps Pipeline (ArgoCD)', icon: 'K8S', badge: 'Inspect ↵', keywords: 'gitops argocd kubernetes groq ai project 3', action: () => selectProjectTab('case-3') },
-        { category: 'Projects', title: 'sre/java-self-healing', subtitle: 'Self-Healing Java Microservice on AWS (5 layers)', icon: 'SRE', badge: 'Inspect ↵', keywords: 'java self-healing resilience snyk project 4', action: () => selectProjectTab('case-4') },
-        { category: 'Projects', title: 'azure/patient-triage', subtitle: 'Clinical AI Patient Triage on Azure + GPT-4o', icon: 'AZR', badge: 'Inspect ↵', keywords: 'azure openai patient triage healthcare project 5', action: () => selectProjectTab('case-5') },
-        { category: 'Projects', title: 'aws/bookstore-serverless', subtitle: 'Bookstore Serverless Architecture on AWS', icon: 'SRV', badge: 'Inspect ↵', keywords: 'serverless lambda api gateway mongodb project 6', action: () => selectProjectTab('case-6') },
-        { category: 'Projects', title: 'aws/compliance-vendor-risk', subtitle: 'Cloud Compliance & Vendor Risk Management Lab (CIS 1.4)', icon: 'GRC', badge: 'Inspect ↵', keywords: 'cloud compliance vendor risk tprm security hub aws config cis benchmark project 7', action: () => selectProjectTab('case-7') },
-        { category: 'Projects', title: 'secops/vault-wazuh-threat-lab', subtitle: 'Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)', icon: 'SOC', badge: 'Inspect ↵', keywords: 'identity threat detection response vault wazuh siem mitre attack soc jit iam project 8', action: () => selectProjectTab('case-8') },
+        { category: 'Projects', title: 'secops/vault-wazuh-threat-lab', subtitle: 'Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)', icon: 'SOC', badge: 'Inspect ↵', keywords: 'identity threat detection response vault wazuh siem mitre attack soc jit iam project 1', action: () => selectProjectTab('case-1') },
+        { category: 'Projects', title: 'aws/compliance-vendor-risk', subtitle: 'Cloud Compliance & Vendor Risk Management Lab (CIS 1.4)', icon: 'GRC', badge: 'Inspect ↵', keywords: 'cloud compliance vendor risk tprm security hub aws config cis benchmark project 2', action: () => selectProjectTab('case-2') },
+        { category: 'Projects', title: 'aws/support-eng-simulation', subtitle: 'Cloud Support Engineering Simulator', icon: 'AWS', badge: 'Inspect ↵', keywords: 'aws ec2 simulation support ticket project 3', action: () => selectProjectTab('case-3') },
+        { category: 'Projects', title: 'ecs/observability-fargate', subtitle: 'ECS Fargate + Prometheus + Grafana Observability', icon: 'ECS', badge: 'Inspect ↵', keywords: 'ecs fargate terraform prometheus grafana project 4', action: () => selectProjectTab('case-4') },
+        { category: 'Projects', title: 'gitops/ai-test-generator', subtitle: 'AI Test Generator & GitOps Pipeline (ArgoCD)', icon: 'K8S', badge: 'Inspect ↵', keywords: 'gitops argocd kubernetes groq ai project 5', action: () => selectProjectTab('case-5') },
+        { category: 'Projects', title: 'sre/java-self-healing', subtitle: 'Self-Healing Java Microservice on AWS (5 layers)', icon: 'SRE', badge: 'Inspect ↵', keywords: 'java self-healing resilience snyk project 6', action: () => selectProjectTab('case-6') },
+        { category: 'Projects', title: 'aws/bookstore-serverless', subtitle: 'Bookstore Serverless Architecture on AWS', icon: 'SRV', badge: 'Inspect ↵', keywords: 'serverless lambda api gateway mongodb project 7', action: () => selectProjectTab('case-7') },
+        { category: 'Projects', title: 'azure/patient-triage', subtitle: 'Clinical AI Patient Triage on Azure + GPT-4o', icon: 'AZR', badge: 'Inspect ↵', keywords: 'azure openai patient triage healthcare project 8', action: () => selectProjectTab('case-8') },
 
         // Quick Actions
         { category: 'Actions', title: 'Download Official Résumé (PDF)', subtitle: 'Sannidhi_Sriram_CV.pdf', icon: '📄', badge: 'Download ↵', keywords: 'cv resume pdf download', action: () => {
