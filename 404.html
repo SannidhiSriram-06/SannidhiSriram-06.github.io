@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 :: Route Not Found — Sannidhi Durga Pavan Sriram</title>
-  <meta name="description" content="404 Error: The requested route does not exist in this terminal deployment." />
+  <title>Page not found — Sannidhi Durga Pavan Sriram</title>
+  <meta name="description" content="This page does not exist." />
   <meta name="robots" content="noindex, follow" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -55,6 +55,8 @@
       letter-spacing: -0.03em;
     }
     .error-title {
+      font-family: var(--font-sans, 'Inter', sans-serif);
+      overflow-wrap: anywhere;
       font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-primary, #e6edf3);
@@ -80,6 +82,18 @@
       gap: 0.75rem;
       flex-wrap: wrap;
     }
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-sm, 6px);
+      font: 600 0.88rem var(--font-sans, 'Inter', sans-serif);
+      text-decoration: none;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.14));
+      color: var(--text-primary, #e6edf3);
+    }
+    .error-btn.primary { background: var(--rhel-red, #e00); border-color: transparent; color: #fff; }
+    .error-btn:focus-visible { outline: 2px solid var(--text-primary, #e6edf3); outline-offset: 2px; }
   </style>
 </head>
 
@@ -98,22 +112,14 @@
       </div>
       <div class="error-body">
         <div class="error-status-code">404</div>
-        <div class="error-title">ERR_TARGET_GROUP_UNREACHABLE</div>
+        <div class="error-title">Page not found</div>
         <p class="error-msg">
-          The requested route or container service does not exist in this cluster namespace. Check your requested URI or return to the main dashboard deck.
+          This link is broken or the page was moved. Everything on the site lives on the main page.
         </p>
 
-        <div class="error-terminal-block">
-          <code>$ curl -I https://sriram.dev/unknown<br />HTTP/2 404 Not Found<br />x-rhel-cluster-status: ROUTE_UNRESOLVED</code>
-        </div>
-
         <div class="error-actions">
-          <a href="/" class="btn-term-primary" style="text-decoration: none;">
-            <span>➔ Return to Main Deck</span>
-          </a>
-          <a href="/#slide-3" class="btn-term-secondary" style="text-decoration: none;">
-            <span>docker ps --projects ↗</span>
-          </a>
+          <a href="/" class="error-btn primary">Go to the homepage</a>
+          <a href="/#slide-3" class="error-btn">See projects</a>
         </div>
       </div>
     </div>
