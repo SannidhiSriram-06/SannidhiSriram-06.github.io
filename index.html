@@ -1,1222 +1,489 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-view="deck">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sannidhi Durga Pavan Sriram | Cloud, DevOps and SRE</title>
   <meta name="description"
-    content="Cloud, DevOps &amp; SRE engineer. 6 cloud certifications (OCI + Azure), Oracle Race to Certification global top 500, 8 AWS/Azure projects covering Terraform, ECS, Kubernetes GitOps and observability." />
+    content="Cloud, DevOps and SRE student engineer. Eight AWS and Azure projects with Terraform, ECS, Kubernetes GitOps and detection engineering, each written up with what works and what doesn't. Six cloud certifications." />
   <meta name="author" content="Sannidhi Durga Pavan Sriram" />
-  <meta name="theme-color" content="#0c1017" />
+  <meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15140F" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://sannidhisriram-06.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
 
-  <!-- Open Graph & Social -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sannidhisriram-06.github.io/" />
-  <meta property="og:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
+  <meta property="og:title" content="Sannidhi Durga Pavan Sriram | Cloud, DevOps and SRE" />
   <meta property="og:description"
-    content="Cloud, DevOps &amp; SRE engineer. 6 cloud certifications (OCI + Azure), Oracle Race to Certification global top 500, 8 AWS/Azure projects covering Terraform, ECS, Kubernetes GitOps and observability." />
-  <meta property="og:image" content="https://sannidhisriram-06.github.io/assets/media/Sriram.jpg" />
-  <meta property="og:image:alt" content="Sannidhi Durga Pavan Sriram" />
+    content="Eight AWS and Azure projects, each written up with what works and what doesn't. Six cloud certifications." />
+  <meta property="og:image" content="https://sannidhisriram-06.github.io/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Sannidhi Durga Pavan Sriram, Cloud, DevOps and SRE" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE" />
+  <meta name="twitter:title" content="Sannidhi Durga Pavan Sriram | Cloud, DevOps and SRE" />
   <meta name="twitter:description"
-    content="Cloud, DevOps &amp; SRE engineer. 6 cloud certifications (OCI + Azure), Oracle Race to Certification global top 500, 8 AWS/Azure projects covering Terraform, ECS, Kubernetes GitOps and observability." />
-  <meta name="twitter:image" content="https://sannidhisriram-06.github.io/assets/media/Sriram.jpg" />
+    content="Eight AWS and Azure projects, each written up with what works and what doesn't. Six cloud certifications." />
+  <meta name="twitter:image" content="https://sannidhisriram-06.github.io/assets/og-card.png" />
 
-  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Sannidhi Durga Pavan Sriram",
     "url": "https://sannidhisriram-06.github.io/",
-    "image": "https://sannidhisriram-06.github.io/assets/media/Sriram.jpg",
-    "jobTitle": "Cloud Infrastructure, DevOps & Site Reliability Engineer",
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "Lovely Professional University"
-    },
+    "image": "https://sannidhisriram-06.github.io/assets/media/portrait.jpg",
+    "jobTitle": "Cloud, DevOps and SRE student engineer",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Lovely Professional University" },
     "sameAs": [
       "https://github.com/SannidhiSriram-06",
       "https://www.linkedin.com/in/sannidhi-sriram"
-    ],
-    "knowsAbout": [
-      "Cloud Infrastructure",
-      "Site Reliability Engineering (SRE)",
-      "DevOps",
-      "Amazon Web Services (AWS)",
-      "Microsoft Azure",
-      "Oracle Cloud Infrastructure (OCI)",
-      "Kubernetes",
-      "Docker",
-      "Terraform",
-      "ArgoCD",
-      "CI/CD",
-      "Prometheus & Grafana"
     ]
   }
   </script>
 
-  <!-- Preconnect & Fonts: Sans + JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-    rel="stylesheet" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
-
-  <!-- Main Terminal & Deck Stylesheet -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Theme & View Mode initialization before paint to eliminate flash -->
   <script>
+    /* Set the theme before first paint so there is no flash. */
     (function () {
-      try {
-        var theme = localStorage.getItem('sriram_theme') ||
-          (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        document.documentElement.setAttribute('data-theme', theme);
-
-        var mode = localStorage.getItem('sriram_view_mode') || 'deck';
-        document.documentElement.setAttribute('data-view', mode);
-      } catch (e) { }
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) { }
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="mode-deck">
-
-  <!-- ── APP CONTAINER ── -->
-  <div class="deck-app" id="app">
-
-    <!-- ── TOP TERMINAL BAR / APP HEADER ── -->
-    <header class="terminal-bar" id="terminal-bar">
-      <div class="term-left">
-        <div class="term-controls" aria-hidden="true">
-          <span class="ctrl-dot dot-close"></span>
-          <span class="ctrl-dot dot-min"></span>
-          <span class="ctrl-dot dot-max"></span>
-        </div>
-        <div class="term-session">
-          <span class="session-user">sriram@rhel-workstation</span>
-          <span class="session-sep">:</span>
-          <span class="session-path">~/portfolio</span>
-          <span class="session-git"><span class="git-icon">⎇</span> main</span>
-        </div>
-      </div>
-
-      <div class="term-center">
-        <div class="slide-breadcrumbs" id="slide-breadcrumbs">
-          <span class="crumb-num">PAGE <b id="crumb-current">01</b>/<span id="crumb-total">07</span></span>
-          <span class="crumb-divider">·</span>
-          <span class="crumb-name" id="crumb-name">CH.01 // boot.sh</span>
-        </div>
-      </div>
-
-      <div class="term-right">
-        <!-- View Mode Switcher: Deck vs Scroll -->
-        <div class="view-toggle-wrap">
-          <button id="mode-toggle" class="btn-term-action" title="Toggle Deck View / Scroll View [Shortcut: M]">
-            <span class="icon-deck" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-            </span>
-            <span class="icon-scroll" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-            </span>
-            <span id="mode-toggle-text">Deck View</span>
-          </button>
-        </div>
-
-        <!-- Command Palette Trigger -->
-        <button id="cmd-palette-btn" class="btn-term-action btn-cmd-palette" aria-label="Open Command Palette [Shortcut: ⌘K or Ctrl+K]" title="Command Palette [⌘K / Ctrl+K]">
-          <span class="cmd-icon" aria-hidden="true">⌘</span>
-          <span class="cmd-key">K</span>
-        </button>
-
-        <!-- Theme Toggle -->
-        <button id="theme-toggle" class="btn-term-icon" aria-label="Toggle light/dark theme" title="Toggle Theme [Shortcut: T]">
-          <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-          </svg>
-          <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
-        <!-- Resume Download -->
-        <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="btn-resume" title="Download Official Résumé (PDF)">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>CV</span>
-        </a>
-      </div>
-    </header>
-
-    <!-- ── SLIDE VIEWPORT / MAIN STAGE (Noisy Circle Reveal with Radial Interpolation) ── -->
-    <main class="deck-viewport" id="deck-viewport" tabindex="0" aria-label="Portfolio Slideshow">
-      <canvas id="circle-reveal-canvas" class="circle-reveal-canvas" aria-hidden="true"></canvas>
-
-      <!-- ====================================================================
-           SLIDE 01: boot.sh — System Identity & Cloud SRE Profile
-           ==================================================================== -->
-      <section class="deck-slide is-active" id="slide-1" data-slide-index="1" data-slide-title="CH.01 // boot.sh (Identity)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># ./boot.sh --role=cloud-sre
-            </span>
-          </div>
-
-          <div class="hero-split-grid">
-            <!-- Left Column: Specs, Lead, Metrics -->
-            <div class="hero-info-pane">
-              <div class="terminal-banner">
-                <span class="terminal-tag">B.Tech CSE · LPU · 2027</span>
-                <h1 class="hero-heading">Sannidhi Durga Pavan Sriram</h1>
-                <p class="hero-role-title">Cloud Infrastructure, DevOps &amp; Site Reliability Engineer</p>
-              </div>
-
-              <!-- MagicUI MacOS Interactive Boot Terminal -->
-              <div class="magic-terminal" id="hero-magic-terminal" role="region" aria-label="Interactive Boot Terminal">
-                <div class="magic-term-header">
-                  <div class="magic-term-dots" aria-hidden="true">
-                    <span class="term-dot dot-red" title="Close"></span>
-                    <span class="term-dot dot-yellow" title="Minimize"></span>
-                    <span class="term-dot dot-green" title="Zoom"></span>
-                  </div>
-                  <div class="magic-term-title">
-                    <svg class="term-title-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <polyline points="4 17 10 11 4 5"></polyline>
-                      <line x1="12" y1="19" x2="20" y2="19"></line>
-                    </svg>
-                    <span>sriram@rhel-workstation: ~ (zsh)</span>
-                  </div>
-                  <button class="magic-term-replay" id="btn-replay-terminal" title="Replay boot sequence" aria-label="Replay boot sequence">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <polyline points="1 4 1 10 7 10"></polyline>
-                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                    </svg>
-                    <span>Replay</span>
-                  </button>
-                </div>
-                <div class="magic-term-chips" id="terminal-quick-chips" aria-label="Quick Linux Commands">
-                  <span class="chips-label">QUICK:</span>
-                  <button type="button" class="term-chip" data-cmd="help">help</button>
-                  <button type="button" class="term-chip" data-cmd="ls">ls</button>
-                  <button type="button" class="term-chip" data-cmd="cat projects">cat projects</button>
-                  <button type="button" class="term-chip" data-cmd="neofetch">neofetch</button>
-                  <button type="button" class="term-chip" data-cmd="cat certs">cat certs</button>
-                  <button type="button" class="term-chip" data-cmd="clear">clear</button>
-                </div>
-                <div class="magic-term-body" id="hero-terminal-body" tabindex="0">
-                  <pre class="magic-term-pre"><code class="magic-term-code" id="hero-terminal-code"></code></pre>
-                  <div class="term-interactive-row" id="terminal-interactive-row">
-                    <span class="term-prompt-sym">sriram@rhel-workstation:~$</span>
-                    <input type="text" id="terminal-cli-input" class="term-cli-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="type command (e.g. cat projects, ls, help)..." aria-label="Interactive Linux CLI command input" />
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Metrics Ribbon -->
-              <div class="term-metrics-grid">
-                <div class="metric-card">
-                  <div class="metric-num" data-target="6">6</div>
-                  <div class="metric-lbl">Cloud Certifications</div>
-                  <div class="metric-sub">Oracle OCI (4x) + Azure (2x)</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-num" data-target="8">8</div>
-                  <div class="metric-lbl">Projects</div>
-                  <div class="metric-sub">SecOps, GRC, ECS, GitOps, SRE</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-num">Top 500</div>
-                  <div class="metric-lbl">Oracle Race to Certification</div>
-                  <div class="metric-sub">Global leaderboard, 2025</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-num" data-target="25">25</div>
-                  <div class="metric-lbl">Member Team, Co-Lead</div>
-                  <div class="metric-sub">Cloud sub-team lead · Infosys</div>
-                </div>
-              </div>
-
-              <!-- Quick Actions -->
-              <div class="hero-actions-row">
-                <button class="btn-term-primary" onclick="window.deckNav.goTo(3)">
-                  <span>docker ps --projects ➔</span>
-                </button>
-                <button class="btn-term-secondary" onclick="window.deckNav.goTo(7)">
-                  <span>ssh contact ➔</span>
-                </button>
-                <a href="assets/media/Sannidhi_Sriram_CV.pdf" download="Sannidhi_Sriram_CV.pdf" class="btn-term-outline">
-                  <span>cat resume.pdf ↗</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Right Column: Containerized Profile Box -->
-            <div class="hero-visual-pane">
-              <div class="docker-window-frame">
-                <div class="docker-win-header">
-                  <span class="docker-win-title">whoami</span>
-                </div>
-                <div class="docker-portrait-wrap">
-                  <img src="assets/media/Sriram.jpg" alt="Sannidhi Durga Pavan Sriram" class="portrait-img" loading="eager" />
-                  <div class="portrait-grid-lines" aria-hidden="true"></div>
-                </div>
-                <div class="docker-win-footer">
-                  <div class="docker-env-specs">
-                    <code>ENV CLOUD="AWS+AZURE" IAC="TERRAFORM" ORCH="K8S"</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 02: cluster-spec.yaml — Cloud & Tech Stack
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-2" data-slide-index="2" data-slide-title="CH.02 // cluster-spec.yaml (Stack)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># kubectl get cluster-spec --all-namespaces
-            </span>
-          </div>
-
-          <div class="slide-header-block">
-            <h2 class="slide-title">Stack</h2>
-            <p class="slide-subtitle">Tools I have used, with the projects each one appears in.</p>
-          </div>
-
-          <div class="stack-matrix-grid">
-            <div class="stack-card">
-              <h3 class="stack-group-title">Cloud</h3>
-              <div class="stack-items-list">
-                <div class="stack-item">
-                  <div class="stack-ico-box"><img src="assets/icons/logos/aws.svg" alt="" class="tech-icon" /></div>
-                  <div class="stack-item-info">
-                    <span class="tech-name">AWS</span>
-                    <span class="tech-detail">ECS Fargate, EC2, ALB, ASG, Lambda, API Gateway, Config, Security Hub, IAM, CloudWatch, S3, ECR, VPC, Client VPN</span>
-                  </div>
-                </div>
-                <div class="stack-item">
-                  <div class="stack-ico-box"><img src="assets/icons/logos/azure.svg" alt="" class="tech-icon" /></div>
-                  <div class="stack-item-info">
-                    <span class="tech-name">Azure</span>
-                    <span class="tech-detail">App Service, Azure OpenAI, Table Storage</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="stack-card">
-              <h3 class="stack-group-title">IaC &amp; Containers</h3>
-              <div class="stack-items-grid">
-                <div class="tech-chip"><img src="assets/icons/logos/terraform.svg" alt="" class="chip-icon" /><span>Terraform</span><small class="chip-used">Identity Lab, Compliance Lab, Support Sim, Observability, AI Test Gen, Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/docker.svg" alt="" class="chip-icon" /><span>Docker &amp; Compose</span><small class="chip-used">Identity Lab, Compliance Lab, Observability, AI Test Gen, Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/kubernetes.svg" alt="" class="chip-icon" /><span>Kubernetes</span><small class="chip-used">AI Test Gen (Minikube)</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/helm.svg" alt="" class="chip-icon" /><span>Helm</span><small class="chip-used">AI Test Gen</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/argocd.svg" alt="" class="chip-icon" /><span>ArgoCD</span><small class="chip-used">AI Test Gen</small></div>
-              </div>
-            </div>
-
-            <div class="stack-card">
-              <h3 class="stack-group-title">CI/CD &amp; Security</h3>
-              <div class="stack-items-grid">
-                <div class="tech-chip"><img src="assets/icons/logos/githubactions.svg" alt="" class="chip-icon" /><span>GitHub Actions</span><small class="chip-used">Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/jenkins.svg" alt="" class="chip-icon" /><span>Jenkins</span><small class="chip-used">AI Test Gen</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/snyk.svg" alt="" class="chip-icon" /><span>Snyk</span><small class="chip-used">Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/git.svg" alt="" class="chip-icon" /><span>Git</span></div>
-              </div>
-            </div>
-
-            <div class="stack-card">
-              <h3 class="stack-group-title">Languages &amp; AI</h3>
-              <div class="stack-items-grid">
-                <div class="tech-chip"><img src="assets/icons/logos/python.svg" alt="" class="chip-icon" /><span>Python (Boto3)</span><small class="chip-used">Compliance Lab, AI Test Gen, Patient Triage, Infosys</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/bash.svg" alt="" class="chip-icon" /><span>Bash</span></div>
-                <div class="tech-chip"><img src="assets/icons/logos/groq.svg" alt="" class="chip-icon" /><span>Groq LLaMA 3.1</span><small class="chip-used">AI Test Gen</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/openai.svg" alt="" class="chip-icon" /><span>Azure OpenAI</span><small class="chip-used">Patient Triage</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/huggingface.svg" alt="" class="chip-icon" /><span>HuggingFace</span></div>
-              </div>
-            </div>
-
-            <div class="stack-card stack-card-wide">
-              <h3 class="stack-group-title">Linux</h3>
-              <div class="stack-items-grid">
-                <div class="tech-chip"><span class="chip-os-tag tag-rhel">RHEL</span><span>RHEL 9 / CentOS</span></div>
-                <div class="tech-chip"><span class="chip-os-tag tag-ubuntu">UBUNTU</span><span>Ubuntu / Debian</span><small class="chip-used">Infosys (EC2)</small></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 03: docker-compose.projects.yml — Selected Architectures
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-3" data-slide-index="3" data-slide-title="CH.03 // projects.docker (Projects)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-            </span>
-            
-          </div>
-
-          <div class="slide-header-block">
-            <h2 class="slide-title">Infrastructure &amp; SRE Projects</h2>
-            <p class="slide-subtitle">Pick a project to see its architecture, what I tested, and the repo.</p>
-          </div>
-
-          <!-- Project Workbench Split -->
-          <div class="projects-workbench">
-            <!-- Left: Docker PS Table Selector -->
-            <div class="docker-ps-container">
-              <div class="docker-ps-bar">
-                <span class="ps-th ps-name">PROJECT</span>
-                <span class="ps-th ps-tech">PLATFORM</span>
-                <span class="ps-th ps-status">KEY RESULT</span>
-              </div>
-              <div class="docker-ps-rows" id="project-tabs" role="tablist">
-                
-                <!-- Project 1 Tab: secops/vault-wazuh-threat-lab (Sep 19, 2026 05:46) -->
-                <button class="docker-row is-selected" role="tab" aria-selected="true" data-target="case-1" title="Inspect secops/vault-wazuh-threat-lab">
-                  <span class="ps-col ps-name">secops/vault-wazuh-threat-lab</span>
-                  <span class="ps-col ps-tech badge-aws">AWS SecOps</span>
-                  <span class="ps-col ps-status status-up">33 alerts</span>
-                </button>
-
-                <!-- Project 2 Tab: aws/compliance-vendor-risk (Sep 19, 2026 05:36) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-2" title="Inspect aws/compliance-vendor-risk">
-                  <span class="ps-col ps-name">aws/compliance-vendor-risk</span>
-                  <span class="ps-col ps-tech badge-aws">AWS GRC</span>
-                  <span class="ps-col ps-status status-up">CIS v1.4.0</span>
-                </button>
-
-                <!-- Project 3 Tab: aws/support-eng-simulation (Jul 26, 2026 17:02) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-3" title="Inspect aws/support-eng-simulation">
-                  <span class="ps-col ps-name">aws/support-eng-simulation</span>
-                  <span class="ps-col ps-tech badge-aws">AWS Edge</span>
-                  <span class="ps-col ps-status status-up">mTLS VPN</span>
-                </button>
-
-                <!-- Project 4 Tab: aws/ecs-fargate-prometheus (Apr 27, 2026 15:36) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-4" title="Inspect aws/ecs-fargate-prometheus">
-                  <span class="ps-col ps-name">aws/ecs-fargate-prometheus</span>
-                  <span class="ps-col ps-tech badge-aws">AWS Fargate</span>
-                  <span class="ps-col ps-status status-up">Grafana alert</span>
-                </button>
-
-                <!-- Project 5 Tab: k8s/gitops-ai-testgen (Mar 31, 2026 11:56 / 17:47) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-5" title="Inspect k8s/gitops-ai-testgen">
-                  <span class="ps-col ps-name">k8s/gitops-ai-testgen</span>
-                  <span class="ps-col ps-tech badge-k8s">K8s GitOps</span>
-                  <span class="ps-col ps-status status-up">ArgoCD sync</span>
-                </button>
-
-                <!-- Project 6 Tab: aws/self-healing-asg-alb (Feb 13, 2026 15:32) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-6" title="Inspect aws/self-healing-asg-alb">
-                  <span class="ps-col ps-name">aws/self-healing-asg-alb</span>
-                  <span class="ps-col ps-tech badge-aws">AWS SRE</span>
-                  <span class="ps-col ps-status status-up">ASG recovery</span>
-                </button>
-
-                <!-- Project 7 Tab: aws/serverless-bookstore (Jan 30, 2026 17:53) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-7" title="Inspect aws/serverless-bookstore">
-                  <span class="ps-col ps-name">aws/serverless-bookstore</span>
-                  <span class="ps-col ps-tech badge-aws">AWS Serverless</span>
-                  <span class="ps-col ps-status status-up">$0 idle</span>
-                </button>
-
-                <!-- Project 8 Tab: azure/ai-patient-triage (Jan 30, 2026 17:47) -->
-                <button class="docker-row" role="tab" aria-selected="false" data-target="case-8" title="Inspect azure/ai-patient-triage">
-                  <span class="ps-col ps-name">azure/ai-patient-triage</span>
-                  <span class="ps-col ps-tech badge-azure">Azure App</span>
-                  <span class="ps-col ps-status status-up">GPT-4o</span>
-                </button>
-
-              </div>
-            </div>
-
-            <!-- Right: Interactive Inspection Viewport -->
-            <div class="project-inspect-pane" id="project-inspect-pane">
-
-              <!-- Case 1 Details: secops/vault-wazuh-threat-lab (Sep 19, 2026 05:46) -->
-              <article class="case-detail-panel is-active" id="case-1">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 01 · IDENTITY THREAT DETECTION &amp; SOC INCIDENT RESPONSE</span>
-                    <h3 class="case-title">Identity Threat Detection &amp; Response Lab (Vault + Wazuh on AWS)</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  End-to-end identity security and detection engineering lab running HashiCorp Vault Community Edition and a single-node Wazuh SIEM stack on AWS (t3.large provisioned with Terraform). Implements dynamic Just-In-Time (JIT) AWS IAM credential brokering, captures host auth telemetry and AWS CloudTrail events, maps attack indicators against MITRE ATT&amp;CK, and verifies 33 custom Wazuh alerts across 5 detection rules. The SOC response runbook is written but was not executed against the live alerts.
-                </p>
-                <p class="case-results">Simulated from localhost on one lab host and detected: SSH username spraying (T1110.001/003), sudo abuse (T1548.003), and CloudTrail IAM user creation, including the users Vault mints (T1078.004/T1098). Verified that a JIT IAM user is deleted when its 900s lease expires and when it is explicitly revoked.</p>
-                <button type="button" class="btn-explainer" data-diagram="identity-threat-lab">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">HashiCorp Vault</span>
-                  <span class="term-tag">Wazuh SIEM</span>
-                  <span class="term-tag">Terraform</span>
-                  <span class="term-tag">AWS CloudTrail</span>
-                  <span class="term-tag">AWS IAM JIT Brokering</span>
-                  <span class="term-tag">MITRE ATT&amp;CK</span>
-                  <span class="term-tag">Docker Compose</span>
-                  <span class="term-tag">SOC Incident Response</span>
-                  <span class="term-tag">Linux Syslog (auth.log)</span>
-                </div>
-              </article>
-
-              <!-- Case 2 Details: aws/compliance-vendor-risk (Sep 19, 2026 05:36) -->
-              <article class="case-detail-panel" id="case-2">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 02 · CLOUD COMPLIANCE &amp; VENDOR RISK (GRC)</span>
-                    <h3 class="case-title">Cloud Compliance &amp; Vendor Risk Management Lab</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Terraform-built sandbox for continuous compliance auditing and Third-Party Risk Management (TPRM). AWS Config and Security Hub check deliberately misconfigured resources against the CIS AWS Foundations Benchmark v1.4.0, EventBridge and Lambda write failed controls into a JSON/CSV Risk Register in S3 with indicative ISO 27001:2022 and NIST CSF v1.1 crosswalks, and a CLI scores a fictional vendor from a sample questionnaire. A small Flask dashboard shows both.
-                </p>
-                <p class="case-results">Flagged the planted issues in S3, a security group, an unencrypted EBS volume and an IAM user without MFA. Recorded 21 live findings (17 mapped to CIS controls, 4 unmapped), each with an owner and SLA; AWS-sourced fields are kept apart from analyst-assigned ones, and duplicates from Config and Security Hub are merged.</p>
-                <button type="button" class="btn-explainer" data-diagram="compliance-vendor-risk">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">Terraform</span>
-                  <span class="term-tag">AWS Security Hub</span>
-                  <span class="term-tag">AWS Config</span>
-                  <span class="term-tag">Amazon EventBridge</span>
-                  <span class="term-tag">AWS Lambda (Python)</span>
-                  <span class="term-tag">CIS Benchmark v1.4.0</span>
-                  <span class="term-tag">ISO 27001:2022</span>
-                  <span class="term-tag">NIST CSF v1.1</span>
-                  <span class="term-tag">Docker Compose</span>
-                  <span class="term-tag">TPRM / GRC</span>
-                </div>
-              </article>
-
-              <!-- Case 3 Details: aws/support-eng-simulation (Jul 26, 2026 17:02) -->
-              <article class="case-detail-panel" id="case-3">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 03 · CLOUD SUPPORT ENGINEERING</span>
-                    <h3 class="case-title">Cloud Support &amp; Customer Engineering Simulation</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Two simulated support tickets against a Flask app on one EC2 instance in the default VPC. Access came through SSM Session Manager and an AWS Client VPN endpoint using mutual-TLS certificates. CloudWatch Logs Insights pointed to a missing security group rule, and deleted data was restored from an AWS Backup recovery point. The write-ups are incident reports, KB articles and customer updates; the instance is built with Terraform.
-                </p>
-                <p class="case-results">No bastion host or SSH port was needed. The restore job reported COMPLETED, but checking the restored instance showed a file written seconds before the backup was missing, so recovery was verified directly before updating the customer. The scoped analyst user was denied when it tried to create an access key.</p>
-                <button type="button" class="btn-explainer" data-diagram="support-vpn-sim">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">AWS Client VPN</span>
-                  <span class="term-tag">SSM Session Manager</span>
-                  <span class="term-tag">CloudWatch Logs</span>
-                  <span class="term-tag">Mutual TLS</span>
-                  <span class="term-tag">IAM Security</span>
-                  <span class="term-tag">EC2 (default VPC)</span>
-                  <span class="term-tag">AWS Backup</span>
-                  <span class="term-tag">Terraform</span>
-                </div>
-              </article>
-
-              <!-- Case 4 Details: aws/ecs-fargate-prometheus (Apr 27, 2026 15:36) -->
-              <article class="case-detail-panel" id="case-4">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 04 · OBSERVABILITY &amp; SRE</span>
-                    <h3 class="case-title">Observability Stack on ECS Fargate</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Prometheus and Grafana running as two ECS Fargate services, all provisioned with Terraform (VPC, subnets, security group, IAM roles, CloudWatch log group). Prometheus is a custom image pushed to ECR and scrapes its own metrics; Grafana charts them and runs one alert rule.
-                </p>
-                <p class="case-results">Three dashboard panels (HTTP requests, 5m request rate, active time series) and a Grafana alert that fires when the request rate goes above 0.5. Deployed to ap-south-1 with terraform apply and torn down afterwards. No application workload was monitored.</p>
-                <button type="button" class="btn-explainer" data-diagram="observability-fargate">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">AWS ECS Fargate</span>
-                  <span class="term-tag">Prometheus TSDB</span>
-                  <span class="term-tag">Grafana</span>
-                  <span class="term-tag">PromQL</span>
-                  <span class="term-tag">Terraform</span>
-                  <span class="term-tag">AWS ECR</span>
-                </div>
-              </article>
-
-              <!-- Case 5 Details: k8s/gitops-ai-testgen (Mar 31, 2026 11:56 / 17:47) -->
-              <article class="case-detail-panel" id="case-5">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 05 · GITOPS &amp; KUBERNETES</span>
-                    <h3 class="case-title">AI Test Generator &amp; GitOps Delivery Pipeline</h3>
-                  </div>
-                  <div class="btn-group">
-                    <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener" class="btn-github">App Repo ↗</a>
-                    <a href="https://github.com/SannidhiSriram-06/ai-pytest-generator-gitops" target="_blank" rel="noopener" class="btn-github">GitOps Repo ↗</a>
-                  </div>
-                </div>
-                <p class="case-summary">
-                  GitOps delivery pipeline for a FastAPI service that generates pytest files with Groq (llama-3.1-8b-instant). Jenkins runs pytest with a 70% coverage gate, builds a Docker image tagged with the build number and commit, pushes it to AWS ECR (created with Terraform), and commits the tag to a Helm chart repository that an Argo CD application can sync to Kubernetes (Minikube).
-                </p>
-                <p class="case-results">Jenkins holds no cluster credentials: it only commits the new image tag to the GitOps repo. The Argo CD application and the Minikube cluster are set up outside the two repos, so the repos show the chart and the CI side, not Argo CD itself.</p>
-                <button type="button" class="btn-explainer" data-diagram="gitops-ai-testgen">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">FastAPI</span>
-                  <span class="term-tag">Groq LLaMA 3.1</span>
-                  <span class="term-tag">Jenkins</span>
-                  <span class="term-tag">Docker</span>
-                  <span class="term-tag">AWS ECR</span>
-                  <span class="term-tag">ArgoCD</span>
-                  <span class="term-tag">Kubernetes (Minikube)</span>
-                  <span class="term-tag">Helm</span>
-                  <span class="term-tag">Terraform</span>
-                </div>
-              </article>
-
-              <!-- Case 6 Details: aws/self-healing-asg-alb (Feb 13, 2026 15:32) -->
-              <article class="case-detail-panel" id="case-6">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 06 · HIGH AVAILABILITY &amp; SRE</span>
-                    <h3 class="case-title">Self-Healing Java Microservice on AWS</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/self-healing-microservice" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Spring Boot service in Docker on an EC2 Auto Scaling Group (2-4 t3.micro across two AZs) behind an ALB, all in Terraform. Recovery comes in layers: the Actuator health endpoint, a Docker health check and restart policy, ALB health checks that drop bad targets, and an ASG that replaces failed instances and scales on CPU. GitHub Actions builds, tests, pushes to Docker Hub and runs Snyk dependency and image scans.
-                </p>
-                <p class="case-results">The ALB marks a target unhealthy after 3 failed 30s checks (about 90s) and the ASG then replaces the instance. Snyk scans run after the image is pushed, so a finding fails the workflow but does not stop publishing, and deploying a new image to EC2 is still manual. CI ran green in Feb 2026; recent runs fail at Docker Hub login because the secrets are no longer set.</p>
-                <button type="button" class="btn-explainer" data-diagram="self-healing-asg">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">Spring Boot</span>
-                  <span class="term-tag">AWS ASG</span>
-                  <span class="term-tag">Application Load Balancer</span>
-                  <span class="term-tag">Terraform</span>
-                  <span class="term-tag">Docker</span>
-                  <span class="term-tag">Snyk (SCA + image scan)</span>
-                  <span class="term-tag">GitHub Actions</span>
-                </div>
-              </article>
-
-              <!-- Case 7 Details: aws/serverless-bookstore (Jan 30, 2026 17:53) -->
-              <article class="case-detail-panel" id="case-7">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 07 · SERVERLESS &amp; COST OPTIMIZATION</span>
-                    <h3 class="case-title">Bookstore Serverless Architecture on AWS</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Case study mapping a Node.js bookstore REST API onto AWS Lambda (Node.js 20) behind an API Gateway REST API, with CloudWatch Logs. A MongoDB Atlas M0 cluster was set up as the intended database, but the committed handler serves GET and POST /books from an in-memory array.
-                </p>
-                <p class="case-results">$0/month idle on the AWS Free Tier, since Lambda and API Gateway bill per request and there are no servers to maintain. Data does not persist between invocations; connecting the MongoDB driver is the next step. The AWS resources were deleted after testing.</p>
-                <button type="button" class="btn-explainer" data-diagram="serverless-bookstore">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">AWS Lambda</span>
-                  <span class="term-tag">API Gateway</span>
-                  <span class="term-tag">MongoDB Atlas (planned)</span>
-                  <span class="term-tag">Node.js 20</span>
-                  <span class="term-tag">CloudWatch Logs</span>
-                  <span class="term-tag">Cost Optimization</span>
-                </div>
-              </article>
-
-              <!-- Case 8 Details: azure/ai-patient-triage (Jan 30, 2026 17:47) -->
-              <article class="case-detail-panel" id="case-8">
-                <div class="case-panel-header">
-                  <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 08 · CLOUD-NATIVE AZURE AI</span>
-                    <h3 class="case-title">AI Patient Triage System on Azure</h3>
-                  </div>
-                  <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener" class="btn-github">
-                    <span>GitHub Repo ↗</span>
-                  </a>
-                </div>
-                <p class="case-summary">
-                  Symptom-triage demo: a Flask app on Azure App Service (Linux, B1, Gunicorn) sends symptoms to an Azure OpenAI gpt-4o deployment, shows the classification (Urgent Care, Non-Urgent Visit or Self Care), and writes each symptoms-and-result pair to Azure Table Storage.
-                </p>
-                <p class="case-results">Compute, inference and logging are separate managed services, and all keys come from App Service settings, none from the repo. Resources were decommissioned after validation; the repo keeps a PDF of timestamped console screenshots. It has no authentication, input validation or rate limiting, so it is a proof of concept.</p>
-                <button type="button" class="btn-explainer" data-diagram="azure-patient-triage">Open full breakdown + architecture diagram</button>
-                <div class="case-tags-row">
-                  <span class="term-tag">Python Flask</span>
-                  <span class="term-tag">Azure OpenAI</span>
-                  <span class="term-tag">Azure App Service</span>
-                  <span class="term-tag">Azure Table Storage</span>
-                  <span class="term-tag">Gunicorn</span>
-                  <span class="term-tag">Built-in monitoring</span>
-                </div>
-              </article>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 04: deploy.log — Production Internship Experience
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-4" data-slide-index="4" data-slide-title="CH.04 // deploy.log (Experience)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># journalctl -u infosys-springboard.service -b
-            </span>
-            
-          </div>
-
-          <div class="slide-header-block">
-            <h2 class="slide-title">Internship Experience</h2>
-            <p class="slide-subtitle">Cloud deployment lead on a team project at Infosys Springboard.</p>
-          </div>
-
-          <div class="experience-deck-grid">
-            <!-- Left: Deployment Log & Role Breakdown -->
-            <div class="exp-log-card">
-              <div class="exp-log-header">
-                <div>
-                  <span class="exp-tag">AI KYC VERIFICATION SYSTEM</span>
-                  <h3 class="exp-title">AI Intern — Cloud Deployment Lead</h3>
-                  <span class="exp-org">Infosys Springboard · Remote</span>
-                </div>
-                <span class="exp-period">Feb 2026 – Apr 2026</span>
-              </div>
-
-              <div class="exp-log-body">
-                <div class="log-entry">
-                  <span class="log-prefix">▸ ROLE:</span>
-                  <p>The <strong>25-member team</strong> split into three sub-teams: ML, web and cloud deployment. I led the cloud sub-team and was one of two co-leads coordinating all three, alongside the ML lead.</p>
-                </div>
-
-                <div class="log-entry">
-                  <span class="log-prefix">▸ DEPLOYMENT (SPRINT 14):</span>
-                  <p>Took the system to AWS: React frontend on <strong>S3</strong> static hosting, Node.js API and the Flask ML service (3 GNN document models) on <strong>EC2</strong>, both run under <strong>PM2</strong>.</p>
-                </div>
-
-                <div class="log-entry">
-                  <span class="log-prefix">▸ DEPLOYMENT DEFECTS RESOLVED:</span>
-                  <ul class="exp-defects-list">
-                    <li><span class="defect-code">ARCH</span> Frontend called the ML service directly, bypassing the backend and breaking auth and CORS. Routed everything through one backend endpoint.</li>
-                    <li><span class="defect-code">BIND</span> Node.js API listened on 127.0.0.1 only, refusing external connections. Bound it to 0.0.0.0.</li>
-                    <li><span class="defect-code">CORS</span> API only allowed localhost:5173, so the S3-hosted frontend was blocked. Added the S3 origin.</li>
-                    <li><span class="defect-code">PM2</span> PM2 started the ML service with system Python, which crashed on a missing numpy. Pointed PM2 at the venv interpreter.</li>
-                    <li><span class="defect-code">INPUT</span> Non-KYC uploads (random images) could crash the flow. Added a "Non-KYC Document" result path end to end.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right: Verified Certificate Preview Frame -->
-            <div class="cert-verify-pane">
-              <div class="cert-preview-box">
-                <div class="cert-preview-bar">
-                  <span class="cert-file-name">Infosys_Internship_Certification.pdf</span>
-                  
-                </div>
-                <div class="cert-img-container">
-                  <img src="assets/Infosys_Internship_Certification_page-0001.jpg" alt="Infosys Springboard Certificate" class="cert-preview-img" loading="lazy" />
-                </div>
-                <div class="cert-preview-footer">
-                  <span class="cert-issuer-text">Issuer: Infosys Springboard</span>
-                  <a href="assets/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener" class="btn-cert-expand">
-                    <span>View Full Certificate ↗</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 05: registry.auth — Certifications & Recognition
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-5" data-slide-index="5" data-slide-title="CH.05 // registry.auth (Credentials)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># docker search registry.oracle.com/sriram --stars=top500
-            </span>
-            <span class="badge-status status-healthy">6 CERTIFICATIONS</span>
-          </div>
-
-          <!-- Oracle Top 500 Recognition Banner -->
-          <div class="oracle-top-banner">
-            <div class="oracle-banner-content">
-              <div class="oracle-banner-text">
-                <div class="oracle-tag-line">
-                  <span class="rank-tag">GLOBAL LEADERBOARD</span>
-                  <span class="rank-season">RACE TO CERTIFICATION 2025</span>
-                </div>
-                <h3 class="oracle-title">Oracle Race to Certification — Ranked Top 500 Globally</h3>
-                <p class="oracle-desc">
-                  Placed in the <strong>Top 500 worldwide</strong> on the Race to Certification 2025 leaderboard, which ranks participants by the number of OCI certifications earned during the event and their exam scores. I earned 4 OCI Professional-level certifications: DevOps, Observability, Multicloud Architect and Generative AI.</p>
-              </div>
-              <div class="oracle-badge-box">
-                <img src="assets/media/SQOPXYT5EP4C.png" alt="Oracle Top 500 Badge" class="oracle-badge-img" loading="lazy" />
-                <span class="oracle-rank-pill">TOP 500 GLOBALLY</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Certifications 6-Card Grid -->
-          <div class="certs-deck-grid">
-
-            <!-- Cert 1 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-oracle">ORACLE OCI</span>
-                <span class="cert-date">Sep 2025</span>
-              </div>
-              <h4 class="cert-name">OCI DevOps Professional 2025</h4>
-              <p class="cert-info">CI/CD automation, containerized microservices, IaC on OCI, and OKE Kubernetes cluster deployments.</p>
-              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (CertView) ↗</span>
-              </a>
-            </div>
-
-            <!-- Cert 2 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-oracle">ORACLE OCI</span>
-                <span class="cert-date">Aug 2025</span>
-              </div>
-              <h4 class="cert-name">OCI Observability Professional 2025</h4>
-              <p class="cert-info">Enterprise full-stack monitoring, Logging Analytics, Application Performance Monitoring (APM), and alarm routing.</p>
-              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (CertView) ↗</span>
-              </a>
-            </div>
-
-            <!-- Cert 3 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-oracle">ORACLE OCI</span>
-                <span class="cert-date">Aug 2025</span>
-              </div>
-              <h4 class="cert-name">OCI Multicloud Architect 2025</h4>
-              <p class="cert-info">Interconnecting cross-cloud networks (OCI with Azure &amp; AWS), federated IAM identity, and database interconnects.</p>
-              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (CertView) ↗</span>
-              </a>
-            </div>
-
-            <!-- Cert 4 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-oracle">ORACLE OCI</span>
-                <span class="cert-date">Aug 2025</span>
-              </div>
-              <h4 class="cert-name">OCI Gen AI Professional 2025</h4>
-              <p class="cert-info">Enterprise LLM deployment, Retrieval-Augmented Generation (RAG) with Oracle Database 23ai, and autonomous agent design.</p>
-              <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (CertView) ↗</span>
-              </a>
-            </div>
-
-            <!-- Cert 5 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-azure">MICROSOFT</span>
-                <span class="cert-date">Jun 2025</span>
-              </div>
-              <h4 class="cert-name">Azure AI Fundamentals (AI-900)</h4>
-              <p class="cert-info">Core machine learning concepts, computer vision, natural language processing, and Azure OpenAI service integration.</p>
-              <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (Microsoft) ↗</span>
-              </a>
-            </div>
-
-            <!-- Cert 6 -->
-            <div class="cert-deck-card">
-              <div class="cert-card-top">
-                <span class="cert-org org-azure">MICROSOFT</span>
-                <span class="cert-date">Jan 2025</span>
-              </div>
-              <h4 class="cert-name">Azure Fundamentals (AZ-900)</h4>
-              <p class="cert-info">Fundamental Azure cloud infrastructure, high availability SLA design, Azure Virtual Networks, and governance security.</p>
-              <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8" target="_blank" rel="noopener" class="cert-verify-link">
-                <span>Verify Credential (Microsoft) ↗</span>
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 06: build-history — Academic Record & Coursework
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-6" data-slide-index="6" data-slide-title="CH.06 // build-history (Education)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># git log --oneline --graph education/
-            </span>
-            <span class="badge-status status-blue">ACADEMIC FOUNDATION</span>
-          </div>
-
-          <div class="slide-header-block">
-            <h2 class="slide-title">Education &amp; Core Coursework</h2>
-            <p class="slide-subtitle">Degree and schooling.</p>
-          </div>
-
-          <div class="timeline-deck-container">
-            <!-- Degree 1 -->
-            <div class="timeline-deck-row is-primary">
-              <div class="timeline-marker">
-                <span class="marker-dot"></span>
-                <span class="marker-line"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="timeline-head">
-                  <div>
-                    <span class="edu-level">UNDERGRADUATE DEGREE</span>
-                    <h3 class="edu-degree">B.Tech in Computer Science and Engineering</h3>
-                    <span class="edu-school">Lovely Professional University (Phagwara, Punjab) · Minor in Cloud Computing</span>
-                  </div>
-                  <div class="edu-score-box">
-                    <span class="edu-score">7.33 CGPA</span>
-                    <span class="edu-years">Aug 2023 – May 2027</span>
-                  </div>
-                </div>
-                <div class="edu-coursework">
-                  <span class="cw-label">COURSEWORK:</span>
-                  <div class="cw-tags">
-                    <span class="cw-tag">Cloud Infrastructure</span>
-                    <span class="cw-tag">Distributed Systems</span>
-                    <span class="cw-tag">Operating Systems</span>
-                    <span class="cw-tag">Computer Networks &amp; Protocols</span>
-                    <span class="cw-tag">Data Structures &amp; Algorithms</span>
-                    <span class="cw-tag">Database Management Systems</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Degree 2 -->
-            <div class="timeline-deck-row">
-              <div class="timeline-marker">
-                <span class="marker-dot"></span>
-                <span class="marker-line"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="timeline-head">
-                  <div>
-                    <span class="edu-level">SENIOR SECONDARY (CLASS XII)</span>
-                    <h3 class="edu-degree">Intermediate Education (MPC: Math, Physics, Chemistry)</h3>
-                    <span class="edu-school">Keshav Smarak Junior College · Hyderabad, Telangana</span>
-                  </div>
-                  <div class="edu-score-box">
-                    <span class="edu-score">77.5%</span>
-                    <span class="edu-years">Apr 2021 – Mar 2023</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Degree 3: 10th Grade -->
-            <div class="timeline-deck-row">
-              <div class="timeline-marker">
-                <span class="marker-dot"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="timeline-head">
-                  <div>
-                    <span class="edu-level">SECONDARY EDUCATION (CLASS X)</span>
-                    <h3 class="edu-degree">10th Grade / Secondary School Certificate (SSC)</h3>
-                    <span class="edu-school">Oxford Grammar High School · Hyderabad, Telangana</span>
-                  </div>
-                  <div class="edu-score-box">
-                    <span class="edu-score">84.6%</span>
-                    <span class="edu-years">2020 – 2021</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           SLIDE 07: ssh-session — Contact
-           ==================================================================== -->
-      <section class="deck-slide" id="slide-7" data-slide-index="7" data-slide-title="CH.07 // ssh-session (Contact)">
-        <div class="slide-inner">
-          <div class="slide-badge-row">
-            <span class="cli-prompt-line">
-              <span class="prompt-user">sriram@rhel-workstation</span>:<span class="prompt-dir">~</span># cat contact.vcf
-            </span>
-            
-          </div>
-
-          <div class="slide-header-block">
-            <h2 class="slide-title">Get in Touch</h2>
-            <p class="slide-subtitle">Open to Cloud, DevOps, and SRE opportunities, internships, and engineering collaborations.</p>
-          </div>
-
-          <div class="contact-deck-grid">
-            <!-- Left: Direct Channels & SSH Info -->
-            <div class="contact-channels-card">
-              <div class="conn-box-header">
-                <span class="conn-pill">OPEN TO WORK</span>
-                <span class="conn-geo">HYDERABAD, TELANGANA, INDIA (IST / UTC+5:30)</span>
-              </div>
-
-              <div class="channels-list">
-                <!-- Email -->
-                <a href="mailto:sannidhisriram8@gmail.com" class="channel-row">
-                  <div class="chan-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                    </svg>
-                  </div>
-                  <div class="chan-info">
-                    <span class="chan-type">DIRECT EMAIL</span>
-                    <span class="chan-val">sannidhisriram8@gmail.com</span>
-                  </div>
-                  <span class="chan-arrow">↗</span>
-                </a>
-
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/sannidhi-sriram" target="_blank" rel="noopener" class="channel-row">
-                  <div class="chan-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </div>
-                  <div class="chan-info">
-                    <span class="chan-type">PROFESSIONAL NETWORK</span>
-                    <span class="chan-val">linkedin.com/in/sannidhi-sriram</span>
-                  </div>
-                  <span class="chan-arrow">↗</span>
-                </a>
-
-                <!-- GitHub -->
-                <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="channel-row">
-                  <div class="chan-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                    </svg>
-                  </div>
-                  <div class="chan-info">
-                    <span class="chan-type">OPEN SOURCE WORK</span>
-                    <span class="chan-val">github.com/SannidhiSriram-06</span>
-                  </div>
-                  <span class="chan-arrow">↗</span>
-                </a>
-              </div>
-
-              <div class="flip-card" id="contact-card">
-                <div class="flip-inner">
-                  <div class="flip-face flip-front">
-                    <div class="glass-layer" aria-hidden="true"></div>
-                    <div class="flip-content">
-                      <span class="biz-mark" aria-hidden="true">SS</span>
-                      <div class="biz-name">Sannidhi Durga Pavan Sriram</div>
-                      <div class="biz-role">Cloud · DevOps · SRE</div>
-                      <div class="biz-meta">Hyderabad, India · B.Tech CSE, LPU 2027</div>
-                    </div>
-                  </div>
-                  <div class="flip-face flip-back" inert>
-                    <div class="glass-layer" aria-hidden="true"></div>
-                    <div class="flip-content flip-back-grid">
-                      <dl class="biz-lines">
-                        <div><dt>Phone</dt><dd><a href="tel:+919182137828">+91 91821 37828</a></dd></div>
-                        <div><dt>Email</dt><dd><a href="mailto:sannidhisriram8@gmail.com">sannidhisriram8@gmail.com</a></dd></div>
-                        <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/sannidhi-sriram" target="_blank" rel="noopener">in/sannidhi-sriram</a></dd></div>
-                        <div><dt>GitHub</dt><dd><a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener">SannidhiSriram-06</a></dd></div>
-                      </dl>
-                      <figure class="biz-qr">
-                        <img src="assets/contact-qr.svg" width="118" height="118" alt="QR code linking to Sannidhi Sriram's contact card (.vcf)" />
-                        <figcaption>Scan to save</figcaption>
-                      </figure>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flip-actions">
-                <button type="button" class="flip-toggle" aria-pressed="false" aria-controls="contact-card">Flip card ↻</button>
-                <a href="assets/sannidhi-sriram.vcf" download="Sannidhi-Sriram.vcf" class="biz-save">Save contact (.vcf)</a>
-              </div>
-            </div>
-
-            <!-- Right: Interactive Formspree Form -->
-            <div class="contact-form-pane">
-              <form action="https://formspree.io/f/maqpenyw" method="POST" class="term-form" id="contact-form">
-                <div class="form-row-duo">
-                  <div class="form-field">
-                    <label for="cf-name" class="field-label">NAME <span class="req">*</span></label>
-                    <input id="cf-name" type="text" name="name" required placeholder="Jane Doe" class="term-input" />
-                  </div>
-                  <div class="form-field">
-                    <label for="cf-email" class="field-label">EMAIL <span class="req">*</span></label>
-                    <input id="cf-email" type="email" name="email" required placeholder="jane@company.com" class="term-input" />
-                  </div>
-                </div>
-
-                <div class="form-field">
-                  <label for="cf-subject" class="field-label">SUBJECT</label>
-                  <input id="cf-subject" type="text" name="subject" placeholder="Cloud / SRE Opportunity or Project" class="term-input" />
-                </div>
-
-                <div class="form-field">
-                  <label for="cf-message" class="field-label">MESSAGE <span class="req">*</span></label>
-                  <textarea id="cf-message" name="message" required rows="4" placeholder="What would you like to talk about?" class="term-input"></textarea>
-                </div>
-
-                <div class="form-submit-row">
-                  <button type="submit" class="btn-term-primary" id="form-submit-btn">
-                    <span>Send message</span>
-                  </button>
-                  <span class="submit-note">Sent via Formspree</span>
-                </div>
-                <div id="form-feedback" class="form-feedback" role="status" aria-live="polite"></div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- ── BOTTOM TMUX STATUS BAR / DECK NAVIGATION DOCK ── -->
-    <footer class="tmux-dock" id="tmux-dock" role="navigation" aria-label="Deck Slide Controller">
-      <!-- Left: Prev Button -->
-      <div class="tmux-dock-left">
-        <button id="btn-prev-slide" class="dock-nav-btn" aria-label="Previous Slide [Shortcut: Left Arrow]" title="Previous Slide [←]">
-          <span class="nav-arrow">◄</span>
-          <span class="nav-label">PREV</span>
-        </button>
-      </div>
-
-      <!-- Center: Tmux Window Tabs -->
-      <div class="tmux-dock-center">
-        <nav class="tmux-tabs" id="tmux-tabs" aria-label="Slide Selection">
-          <div class="dock-segmented-pill" id="dock-segmented-pill" aria-hidden="true"></div>
-          <button class="tmux-tab is-active" data-go="1"><span class="tab-idx">01</span><span class="tab-name">boot</span></button>
-          <button class="tmux-tab" data-go="2"><span class="tab-idx">02</span><span class="tab-name">stack</span></button>
-          <button class="tmux-tab" data-go="3"><span class="tab-idx">03</span><span class="tab-name">projects</span></button>
-          <button class="tmux-tab" data-go="4"><span class="tab-idx">04</span><span class="tab-name">experience</span></button>
-          <button class="tmux-tab" data-go="5"><span class="tab-idx">05</span><span class="tab-name">certs</span></button>
-          <button class="tmux-tab" data-go="6"><span class="tab-idx">06</span><span class="tab-name">education</span></button>
-          <button class="tmux-tab" data-go="7"><span class="tab-idx">07</span><span class="tab-name">connect</span></button>
-        </nav>
-      </div>
-
-      <!-- Right: Progress Indicator, Key Hints & Next Button -->
-      <div class="tmux-dock-right">
-        <div class="dock-meta" aria-hidden="true">
-          <span class="key-hint"><kbd>←</kbd> <kbd>→</kbd> <kbd>Space</kbd> <kbd>1-7</kbd></span>
-        </div>
-
-        <button id="btn-next-slide" class="dock-nav-btn dock-btn-next" aria-label="Next Slide [Shortcut: Right Arrow or Space]" title="Next Slide [→ or Space]">
-          <span class="nav-label">NEXT</span>
-          <span class="nav-arrow">►</span>
-        </button>
-      </div>
-    </footer>
-
-  </div>
-
-  <!-- ── SPOTLIGHT / RAYCAST COMMAND PALETTE MODAL (⌘K) ── -->
-  <div class="cmd-palette-backdrop" id="cmd-palette-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Command Palette">
-    <div class="cmd-palette-window" id="cmd-palette-window">
-      <div class="cmd-palette-header">
-        <svg class="cmd-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="cmd-palette-input" class="cmd-palette-input" placeholder="Search chapters, projects, actions... (or type 1-7)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-        <span class="cmd-esc-badge"><kbd>ESC</kbd></span>
-      </div>
-      <div class="cmd-palette-results" id="cmd-palette-results" role="listbox"></div>
-      <div class="cmd-palette-footer">
-        <div class="cmd-footer-keys">
-          <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
-          <span><kbd>↵</kbd> select</span>
-          <span><kbd>esc</kbd> close</span>
-        </div>
-        <span class="cmd-footer-tag">Command palette</span>
-      </div>
+<body>
+  <a class="skip-link" href="#work">Skip to projects</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top">Sannidhi Sriram</a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#work">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle-label">Dark mode</span>
+      </button>
     </div>
-  </div>
+  </header>
 
-  <!-- ── ACTION TOAST FEEDBACK ── -->
-  <div class="toast-notification" id="toast-notification" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- GSAP Core & ScrollTrigger (GreenSock) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@18.3.1",
-        "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-        "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
-        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
-        "@samasante/liquid-glass": "https://esm.sh/@samasante/liquid-glass@0.1.1?external=react,react-dom"
-      }
-    }
-  </script>
-  <script type="module" src="contact-card.js"></script>
-
-  <dialog id="project-explainer" class="explainer" aria-labelledby="explainer-title">
-    <div class="explainer-head">
-      <h2 id="explainer-title" class="explainer-title"></h2>
-      <div class="explainer-actions">
-        <span class="explainer-repos"></span>
-        <button type="button" class="explainer-close" aria-label="Close">✕</button>
+  <main id="top">
+    <!-- ───────────── Intro ───────────── -->
+    <section class="intro wrap" aria-labelledby="intro-title">
+      <div class="intro-text">
+        <h1 id="intro-title">Sannidhi Durga Pavan Sriram</h1>
+        <p class="intro-role">Cloud, DevOps and SRE. B.Tech CSE student at Lovely Professional University, graduating
+          2027.</p>
+        <p class="lede">I build small AWS and Azure systems and then try to break them, to learn how they fail:
+          Terraform stacks, a GitOps pipeline, health checks that replace dead servers, detection rules for attacks I
+          ran myself. Eight projects are below. Each one says what works and what doesn't.</p>
+        <p class="intro-status">Looking for a cloud, DevOps or SRE internship or entry-level role.</p>
+        <p class="intro-actions">
+          <a class="button button-primary" href="assets/media/Sannidhi_Sriram_CV.pdf" download>Download CV (PDF)</a>
+          <a class="button" href="#contact">Get in touch</a>
+        </p>
       </div>
+      <figure class="portrait">
+        <img src="assets/media/portrait.jpg" width="600" height="838" alt="Portrait of Sannidhi Sriram" />
+      </figure>
+    </section>
+
+    <!-- ───────────── Projects ───────────── -->
+    <section class="section wrap" id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Projects</h2>
+      <p class="section-note">Every AWS and Azure resource was torn down after testing to avoid bills, so the evidence
+        is in each repo: screenshots, Terraform and write-ups.</p>
+
+      <!-- Featured -->
+      <article class="project project-featured">
+        <p class="project-meta"><span class="project-num">01</span> AWS, us-east-1 · Terraform</p>
+        <h3>Identity Threat Detection and Response Lab</h3>
+        <div class="project-cols">
+          <div>
+            <p>One t3.large on AWS running HashiCorp Vault and a single-node Wazuh SIEM, built with Terraform. Vault
+              issues short-lived IAM users on request. Wazuh reads the host's auth log and AWS CloudTrail and raises
+              alerts that I mapped to MITRE ATT&amp;CK.</p>
+            <p class="project-stack">Terraform, HashiCorp Vault, Wazuh, AWS CloudTrail, Docker Compose</p>
+          </div>
+          <div>
+            <p><strong>What works.</strong> 33 alerts from 5 custom rules: SSH username spraying (T1110), sudo abuse
+              (T1548.003) and IAM user creation (T1078.004, T1098). A Vault-issued IAM user was deleted when its 900
+              second lease expired and when I revoked it.</p>
+            <p><strong>Limits.</strong> I ran the attacks from localhost on the same host. The incident-response
+              runbook is written but I did not run it against the live alerts. Wazuh uses default credentials, so this
+              is lab-only.</p>
+          </div>
+        </div>
+        <p class="project-links">
+          <a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank"
+            rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          <button type="button" class="link-button" data-diagram="identity-threat-lab"
+            data-title="Identity Threat Detection and Response Lab">Architecture diagram</button>
+        </p>
+      </article>
+
+      <ol class="project-list">
+        <li class="project">
+          <p class="project-meta"><span class="project-num">02</span> AWS · Terraform</p>
+          <h3>Cloud Compliance and Vendor Risk Lab</h3>
+          <p>Terraform deploys deliberately misconfigured resources: a public S3 bucket, an open SSH security group, an
+            unencrypted EBS volume and an IAM user without MFA. AWS Config and Security Hub check them against the CIS
+            AWS Foundations Benchmark v1.4.0. EventBridge sends failures to a Lambda that writes a risk register to S3.
+          </p>
+          <p><strong>What works.</strong> 21 findings recorded, 17 mapped to CIS controls and 4 unmapped, each with an
+            owner and an SLA. A command-line script scores a fictional vendor from a sample questionnaire, and a small
+            Flask dashboard shows the register and the score.</p>
+          <p><strong>Limits.</strong> The ISO 27001 and NIST CSF mappings are my own indicative crosswalk, not an
+            official one. The vendor and its answers are made up.</p>
+          <p class="project-stack">Terraform, AWS Config, Security Hub, Lambda (Python), Flask</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank"
+              rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+            <button type="button" class="link-button" data-diagram="compliance-vendor-risk"
+              data-title="Cloud Compliance and Vendor Risk Lab">Architecture diagram</button>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">03</span> AWS, us-east-1 · Terraform</p>
+          <h3>Cloud Support Simulation</h3>
+          <p>Two support tickets against a Flask app on one EC2 instance, worked the way a support engineer would:
+            over an AWS Client VPN endpoint with mutual-TLS certificates and SSM Session Manager, with logs in
+            CloudWatch Logs Insights.</p>
+          <p><strong>What works.</strong> Ticket 1: a missing security group rule, found from the logs and fixed.
+            Ticket 2: deleted data restored from an AWS Backup recovery point. The restore reported COMPLETED, but a
+            file written seconds before the backup was missing, so I checked the restored instance before telling the
+            customer. The write-ups are two incident reports, two knowledge-base articles and customer updates.</p>
+          <p><strong>Limits.</strong> One instance in the default VPC with a public IP. SSM session logging is not
+            configured.</p>
+          <p class="project-stack">Terraform, AWS Client VPN, SSM Session Manager, AWS Backup, CloudWatch</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank"
+              rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">04</span> AWS, ap-south-1 · Terraform</p>
+          <h3>Observability Stack on ECS Fargate</h3>
+          <p>Prometheus and Grafana as two Fargate services, provisioned with Terraform: VPC, security group, IAM
+            roles and a log group. Prometheus runs as a custom image in ECR.</p>
+          <p><strong>What works.</strong> A three-panel Grafana dashboard and an alert that fires when the request rate
+            passes 0.5.</p>
+          <p><strong>Limits.</strong> Prometheus scrapes only itself, so no application was monitored. Both ports are
+            open to the internet on public IPs.</p>
+          <p class="project-stack">Terraform, ECS Fargate, Prometheus, Grafana, ECR</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank"
+              rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+            <button type="button" class="link-button" data-diagram="observability-fargate"
+              data-title="Observability Stack on ECS Fargate">Architecture diagram</button>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">05</span> Kubernetes (Minikube) · GitOps</p>
+          <h3>AI Test Generator and GitOps Pipeline</h3>
+          <p>A FastAPI service that asks Groq (llama-3.1-8b-instant) to write pytest files, and the pipeline that ships
+            it. Jenkins runs pytest with a 70% coverage gate, builds the image, pushes it to ECR and commits the new
+            tag to a separate Helm chart repository.</p>
+          <p><strong>What works.</strong> Jenkins never holds cluster credentials. Argo CD syncs the chart to a Minikube
+            cluster.</p>
+          <p><strong>Limits.</strong> The Argo CD application and the cluster live outside the two repositories, so the
+            repos show the chart and the CI side only.</p>
+          <p class="project-stack">FastAPI, Jenkins, Docker, ECR (Terraform), Helm, Argo CD</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener">App
+              repository<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/SannidhiSriram-06/ai-pytest-generator-gitops" target="_blank"
+              rel="noopener">GitOps chart repository<span class="sr-only"> (opens in a new tab)</span></a>
+            <button type="button" class="link-button" data-diagram="gitops-ai-testgen"
+              data-title="AI Test Generator and GitOps Pipeline">Architecture diagram</button>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">06</span> AWS, us-east-1 · Terraform</p>
+          <h3>Self-Healing Java Microservice</h3>
+          <p>A Spring Boot service in Docker on an Auto Scaling Group (2 to 4 t3.micro across two Availability Zones)
+            behind an Application Load Balancer, all in Terraform. The recovery layers are an Actuator health endpoint,
+            a Docker health check, ALB health checks, ASG instance replacement and CPU target tracking at 80%.</p>
+          <p><strong>What works.</strong> The ALB marks a target unhealthy after 3 failed 30 second checks (about 90
+            seconds) and the ASG replaces it. GitHub Actions builds, tests, pushes to Docker Hub and runs Snyk scans; it
+            ran green in February 2026.</p>
+          <p><strong>Limits.</strong> Snyk runs after the image is pushed, so a finding fails the run but does not stop
+            publishing. Deploying the new image to EC2 is manual. CI now fails at the Docker Hub login because the
+            secrets are no longer set.</p>
+          <p class="project-stack">Terraform, ALB and ASG, Spring Boot, GitHub Actions, Snyk</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/self-healing-microservice" target="_blank"
+              rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+            <button type="button" class="link-button" data-diagram="self-healing-asg"
+              data-title="Self-Healing Java Microservice">Architecture diagram</button>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">07</span> AWS, us-east-1 · Serverless</p>
+          <h3>Bookstore Serverless API</h3>
+          <p>A Node.js 20 Lambda behind an API Gateway REST API serving <code>GET</code> and <code>POST /books</code>,
+            with CloudWatch Logs. I built it to map a bookstore API onto serverless services.</p>
+          <p><strong>What works.</strong> It costs $0 a month while idle on the Free Tier. The AWS resources were deleted
+            after testing.</p>
+          <p><strong>Limits.</strong> The handler keeps books in an in-memory array. A MongoDB Atlas cluster was set up
+            but never connected, so a POSTed book does not persist.</p>
+          <p class="project-stack">AWS Lambda, API Gateway, CloudWatch Logs</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank"
+              rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </li>
+
+        <li class="project">
+          <p class="project-meta"><span class="project-num">08</span> Azure · Python</p>
+          <h3>Patient Triage on Azure</h3>
+          <p>A Flask app on Azure App Service (Linux, B1, Gunicorn) sends symptoms to an Azure OpenAI gpt-4o
+            deployment, shows the category (Urgent Care, Non-Urgent Visit or Self Care) and writes each request and
+            result to Azure Table Storage.</p>
+          <p><strong>What works.</strong> Keys come from App Service settings and none are in the repository. A PDF of
+            timestamped console screenshots shows it running.</p>
+          <p><strong>Limits.</strong> Proof of concept: no authentication, input validation or rate limiting. The
+            resources were decommissioned after validation.</p>
+          <p class="project-stack">Azure App Service, Azure OpenAI, Azure Table Storage, Flask</p>
+          <p class="project-links">
+            <a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-"
+              target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────── Tools ───────────── -->
+    <section class="section wrap" id="tools" aria-labelledby="tools-title">
+      <h2 id="tools-title">Tools, and where I used them</h2>
+      <dl class="tools">
+        <div><dt>AWS</dt>
+          <dd>ECS Fargate, EC2, ALB, Auto Scaling, Lambda, API Gateway, Config, Security Hub, CloudTrail, CloudWatch,
+            S3, ECR, IAM, Client VPN, SSM, Backup</dd>
+        </div>
+        <div><dt>Azure</dt>
+          <dd>App Service, Azure OpenAI, Table Storage</dd>
+        </div>
+        <div><dt>Terraform</dt>
+          <dd>Identity lab, compliance lab, support simulation, observability, ECR for the test generator,
+            self-healing service</dd>
+        </div>
+        <div><dt>Docker</dt>
+          <dd>Identity lab, compliance dashboard, observability, test generator, self-healing service</dd>
+        </div>
+        <div><dt>Kubernetes, Helm, Argo CD</dt>
+          <dd>Test generator, on Minikube</dd>
+        </div>
+        <div><dt>CI and security</dt>
+          <dd>GitHub Actions and Snyk in the self-healing service; Jenkins in the test generator</dd>
+        </div>
+        <div><dt>Languages</dt>
+          <dd>Python (compliance lab, test generator, triage app, Infosys), Java (self-healing service), Node.js
+            (bookstore, Infosys), Bash (lab scripts and EC2 user data)</dd>
+        </div>
+        <div><dt>AI services</dt>
+          <dd>Groq in the test generator; Azure OpenAI in the triage app</dd>
+        </div>
+        <div><dt>Linux</dt>
+          <dd>Ubuntu and Amazon Linux on the lab hosts</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ───────────── Experience ───────────── -->
+    <section class="section wrap" id="experience" aria-labelledby="experience-title">
+      <h2 id="experience-title">Experience</h2>
+      <article class="experience">
+        <h3>AI Intern and Cloud Deployment Lead, Infosys Springboard</h3>
+        <p class="project-meta">Remote · February to April 2026 · AI KYC verification system</p>
+        <p>A 25-member team split into ML, web and cloud sub-teams. I led the cloud sub-team and was one of two
+          co-leads, alongside the ML lead, coordinating all three.</p>
+        <p>In sprint 14 I took the system to AWS: the React frontend on S3 static hosting, and the Node.js API and the
+          Flask ML service (three GNN document models) on EC2, both run under PM2. Five deployment defects came up:</p>
+        <dl class="defects">
+          <div><dt>Request path</dt>
+            <dd>The frontend called the ML service directly, bypassing the backend and breaking auth and CORS. I routed
+              everything through one backend endpoint.</dd>
+          </div>
+          <div><dt>Bind address</dt>
+            <dd>The Node.js API listened on 127.0.0.1 only and refused outside connections. I bound it to 0.0.0.0.
+            </dd>
+          </div>
+          <div><dt>CORS</dt>
+            <dd>The API only allowed localhost:5173, which blocked the S3-hosted frontend. I added the S3 origin.</dd>
+          </div>
+          <div><dt>PM2 interpreter</dt>
+            <dd>PM2 started the ML service with system Python, which crashed on a missing numpy. I pointed PM2 at the
+              virtual environment's interpreter.</dd>
+          </div>
+          <div><dt>Bad uploads</dt>
+            <dd>A random non-KYC image could crash the flow. I added a "Non-KYC Document" result path end to end.</dd>
+          </div>
+        </dl>
+        <p><a href="assets/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">View the
+            internship certificate<span class="sr-only"> (opens in a new tab)</span></a></p>
+      </article>
+    </section>
+
+    <!-- ───────────── Certifications ───────────── -->
+    <section class="section wrap" id="certifications" aria-labelledby="certifications-title">
+      <h2 id="certifications-title">Certifications</h2>
+      <div class="rank">
+        <img src="assets/media/oracle-top500-badge.png" width="96" height="96"
+          alt="Oracle Race to Certification Top 500 badge" />
+        <p>Top 500 worldwide on Oracle's Race to Certification 2025 leaderboard, which ranks people by the number of
+          OCI certifications earned during the event and their exam scores. I earned four OCI Professional-level
+          certifications.</p>
+      </div>
+      <ol class="certs">
+        <li>
+          <span class="cert-name">OCI DevOps Professional 2025</span>
+          <span class="cert-meta">Oracle · September 2025</span>
+          <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=54B0AF46FE2B6BD6CC7292468F92EF5D088401CDF50312D452B96D0BBD28379F"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for OCI DevOps Professional (opens
+              in a new tab)</span></a>
+        </li>
+        <li>
+          <span class="cert-name">OCI Observability Professional 2025</span>
+          <span class="cert-meta">Oracle · August 2025</span>
+          <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=64807D8C9CC5BBC61DD96F0324BF7D77C1AFEB60BC61CF50DF96149E80FFEB70"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for OCI Observability Professional
+              (opens in a new tab)</span></a>
+        </li>
+        <li>
+          <span class="cert-name">OCI Multicloud Architect 2025</span>
+          <span class="cert-meta">Oracle · August 2025</span>
+          <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FC64DC4BA0D9C67691BBD991D0BF100F5302848DEC380B16914C0D47F307E331"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for OCI Multicloud Architect (opens
+              in a new tab)</span></a>
+        </li>
+        <li>
+          <span class="cert-name">OCI Generative AI Professional 2025</span>
+          <span class="cert-meta">Oracle · August 2025</span>
+          <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=8CBA55A54691C3ABEC110546AB462960A4EB0C8896AC43E8877496986E0FB5BE"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for OCI Generative AI Professional
+              (opens in a new tab)</span></a>
+        </li>
+        <li>
+          <span class="cert-name">Azure AI Fundamentals (AI-900)</span>
+          <span class="cert-meta">Microsoft · June 2025</span>
+          <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/9d634342d9e8e02e"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for Azure AI Fundamentals (opens in
+              a new tab)</span></a>
+        </li>
+        <li>
+          <span class="cert-name">Azure Fundamentals (AZ-900)</span>
+          <span class="cert-meta">Microsoft · January 2025</span>
+          <a href="https://learn.microsoft.com/en-us/users/durgapavansriramsannidhi-0715/credentials/b5b5b846eb3575a8"
+            target="_blank" rel="noopener">Verify credential<span class="sr-only"> for Azure Fundamentals (opens in a
+              new tab)</span></a>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────── Education ───────────── -->
+    <section class="section wrap" id="education" aria-labelledby="education-title">
+      <h2 id="education-title">Education</h2>
+      <ul class="education">
+        <li>
+          <h3>B.Tech in Computer Science and Engineering, minor in Cloud Computing</h3>
+          <p>Lovely Professional University, Phagwara, Punjab · August 2023 to May 2027 · CGPA 7.33</p>
+          <p class="muted">Coursework: Cloud Infrastructure, Distributed Systems, Operating Systems, Computer Networks
+            and Protocols, Data Structures and Algorithms, Database Management Systems.</p>
+        </li>
+        <li>
+          <h3>Intermediate (MPC), Keshav Smarak Junior College</h3>
+          <p>Hyderabad, Telangana · 2021 to 2023 · 77.5%</p>
+        </li>
+        <li>
+          <h3>Secondary School Certificate, Oxford Grammar High School</h3>
+          <p>Hyderabad, Telangana · 2020 to 2021 · 84.6%</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ───────────── Contact ───────────── -->
+    <section class="section wrap contact" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p class="section-note">I'm in Hyderabad (IST, UTC+5:30). Email is the fastest way to reach me.</p>
+      <div class="contact-grid">
+        <ul class="contact-list">
+          <li><span class="contact-label">Email</span>
+            <a href="mailto:sannidhisriram8@gmail.com">sannidhisriram8@gmail.com</a></li>
+          <li><span class="contact-label">Phone</span>
+            <a href="tel:+919182137828">+91 91821 37828</a></li>
+          <li><span class="contact-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/sannidhi-sriram" target="_blank" rel="noopener">linkedin.com/in/sannidhi-sriram<span
+                class="sr-only"> (opens in a new tab)</span></a></li>
+          <li><span class="contact-label">GitHub</span>
+            <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener">github.com/SannidhiSriram-06<span
+                class="sr-only"> (opens in a new tab)</span></a></li>
+          <li><span class="contact-label">Contact card</span>
+            <a href="assets/sannidhi-sriram.vcf" download>Save as .vcf</a></li>
+        </ul>
+
+        <form action="https://formspree.io/f/maqpenyw" method="POST" id="contact-form" novalidate>
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="cf-subject">Subject <span class="optional">(optional)</span></label>
+            <input id="cf-subject" name="subject" type="text" />
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" required></textarea>
+          </div>
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <p class="form-row">
+            <button type="submit" class="button button-primary" id="form-submit">Send message</button>
+            <span class="form-status" id="form-status" role="status" aria-live="polite"></span>
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Sannidhi Durga Pavan Sriram. Built by hand with plain HTML, CSS and a little JavaScript.</p>
     </div>
-    <div class="explainer-body">
-      <div class="explainer-diagram"><iframe title="Architecture diagram" loading="lazy"></iframe></div>
-      <div class="explainer-text"></div>
+  </footer>
+
+  <dialog id="diagram-dialog" class="diagram-dialog" aria-labelledby="diagram-title">
+    <div class="diagram-bar">
+      <h2 id="diagram-title">Architecture diagram</h2>
+      <button type="button" class="button" id="diagram-close">Close</button>
     </div>
+    <iframe id="diagram-frame" title="Architecture diagram" src="about:blank"></iframe>
   </dialog>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <!-- Main Terminal & Deck Controller Script -->
   <script src="script.js"></script>
 </body>
 
