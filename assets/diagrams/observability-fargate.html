@@ -5127,8 +5127,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <text data-detail="context" x="595" y="404" class="t-muted" font-size="9" text-anchor="middle">Prometheus image</text>
         </g>
 
-        <g id="node-cwexp" data-node-id="cwexp" data-node-label="CloudWatch exporter" tabindex="0" role="button" aria-label="Focus CloudWatch exporter, not deployed, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="not deployed" data-node-context="Architecture component">
-          <title>CloudWatch exporter · not deployed · Architecture component</title>
+        <g id="node-cwexp" data-node-id="cwexp" data-node-label="CloudWatch exporter" tabindex="0" role="button" aria-label="Focus CloudWatch exporter, removed, unused, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="removed, unused" data-node-context="Architecture component">
+          <title>CloudWatch exporter · removed, unused · Architecture component</title>
           <rect x="760" y="360" width="150" height="60" rx="6" class="c-mask"/>
           <rect x="760" y="360" width="150" height="60" rx="6" class="c-external" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(766 366) scale(0.6875)">
@@ -5136,7 +5136,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="835" y="388" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">CloudWatch exporter</text>
-        <text data-detail="context" x="835" y="404" class="t-muted" font-size="9" text-anchor="middle">not deployed</text>
+        <text data-detail="context" x="835" y="404" class="t-muted" font-size="9" text-anchor="middle">removed, unused</text>
         </g>
 
         <g id="node-graf" data-node-id="graf" data-node-label="Grafana service" tabindex="0" role="button" aria-label="Focus Grafana service, dashboards, alerts, Architecture component" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="dashboards, alerts" data-node-context="Architecture component">
@@ -5429,7 +5429,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>Scope</h3>
         </div>
         <ul>
-          <li>Prometheus scrapes itself; a CloudWatch exporter target is configured but no exporter is deployed</li>
+          <li>Prometheus scrapes only itself; the unused CloudWatch exporter target was removed from the config</li>
           <li>Both tasks ship container logs to CloudWatch Logs</li>
         </ul>
       </div>
