@@ -565,10 +565,10 @@ class MagicTerminalEngine {
         } else if (target.includes('exp')) {
           this.printLines([
             { type: 'header', html: '── INTERNSHIP EXPERIENCE ──' },
-            { type: 'line', html: '<b>Infosys Springboard</b> · AI Intern — Cloud Deployment Lead (Feb 2026 – Mar 2026)' },
-            { type: 'line', html: '• Directed cloud deployment architecture for a 25-member cohort building AI KYC system.' },
-            { type: 'line', html: '• Provisioned AWS EC2 Flask inference + S3 static React frontend.' },
-            { type: 'line', html: '• Mitigated 5 critical blockers: ERR_CORS, ERR_BIND, ERR_PM2, ERR_PAYLOAD.' },
+            { type: 'line', html: '<b>Infosys Springboard</b> · AI Intern — Cloud Deployment Lead (Feb 2026 – Apr 2026)' },
+            { type: 'line', html: '• Cloud sub-team lead and co-lead of a 25-member team building an AI KYC verification system.' },
+            { type: 'line', html: '• Deployed React on S3, Node.js API + Flask ML service on EC2 under PM2.' },
+            { type: 'line', html: '• Logged and fixed 5 deployment defects: ML calls bypassing backend, localhost bind, S3 CORS, PM2 venv, non-KYC uploads.' },
             { type: 'hint', html: "💡 Type <b>cd 4</b> to view deployment log and verified certificate." }
           ]);
         } else if (target.includes('cv') || target.includes('resume')) {
@@ -580,12 +580,12 @@ class MagicTerminalEngine {
           window.open('assets/media/Sannidhi_Sriram_CV.pdf', '_blank');
         } else if (target.includes('contact')) {
           this.printLines([
-            { type: 'header', html: '── TRANSMISSION CHANNELS ──' },
+            { type: 'header', html: '── CONTACT ──' },
             { type: 'line', html: 'Email:    <a href="mailto:sannidhisriram8@gmail.com" class="term-out-link">sannidhisriram8@gmail.com</a>' },
-            { type: 'line', html: 'LinkedIn: <a href="https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a" target="_blank" rel="noopener" class="term-out-link">linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a ↗</a>' },
+            { type: 'line', html: 'LinkedIn: <a href="https://www.linkedin.com/in/sannidhi-sriram" target="_blank" rel="noopener" class="term-out-link">linkedin.com/in/sannidhi-sriram ↗</a>' },
             { type: 'line', html: 'GitHub:   <a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener" class="term-out-link">github.com/SannidhiSriram-06 ↗</a>' },
             { type: 'line', html: 'Location: Hyderabad, Telangana, India (IST / UTC+5:30)' },
-            { type: 'hint', html: "💡 Type <b>cd 7</b> to dispatch an encrypted transmission." }
+            { type: 'hint', html: "💡 Type <b>cd 7</b> to open the contact page." }
           ]);
         } else if (target.includes('edu')) {
           this.printLines([
@@ -1025,55 +1025,13 @@ document.addEventListener('DOMContentLoaded', () => {
     heroTerminal = new MagicTerminalEngine(heroTerminalEl);
   }
 
-  /* ── 2. GSAP & LENIS RUNTIME DETECTION ── */
+  /* ── 2. GSAP RUNTIME DETECTION ── */
   const hasGSAP = typeof gsap !== 'undefined';
   const hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
-  const hasLenis = typeof Lenis !== 'undefined';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (hasGSAP && hasScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
-  }
-
-  let lenis = null;
-
-  /* ── 3. LENIS SMOOTH SCROLL ENGINE (Scroll Mode) ── */
-  function initLenisScroll() {
-    if (prefersReducedMotion || !hasLenis) return;
-    if (lenis) return;
-
-    lenis = new Lenis({
-      duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-    });
-
-    if (hasGSAP && hasScrollTrigger) {
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        if (lenis) lenis.raf(time * 1000);
-      });
-      gsap.ticker.lagSmoothing(0);
-    } else {
-      function raf(time) {
-        if (lenis) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-      }
-      requestAnimationFrame(raf);
-    }
-  }
-
-  function destroyLenisScroll() {
-    if (lenis) {
-      lenis.destroy();
-      lenis = null;
-    }
   }
 
   /* ── 4. MACOS SLIDING SEGMENTED DOCK PILL ── */
@@ -1111,21 +1069,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mode === 'deck') {
-      destroyLenisScroll();
       if (hasScrollTrigger) {
         ScrollTrigger.getAll().forEach(st => st.kill());
       }
       goToSlide(currentSlide, false);
     } else {
-      initLenisScroll();
       initScrollTriggers();
       const targetEl = document.getElementById(`slide-${currentSlide}`);
       if (targetEl) {
-        if (lenis) {
-          setTimeout(() => lenis.scrollTo(targetEl, { offset: -60, immediate: false }), 80);
-        } else {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
-        }
+        targetEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
       }
     }
   }
@@ -1140,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const slideTitles = {
     1: "CH.01 // boot.sh · Identity — Sannidhi Durga Pavan Sriram",
     2: "CH.02 // cluster-spec.yaml · Stack — Sannidhi Durga Pavan Sriram",
-    3: "CH.03 // projects.docker · Shipped Projects — Sannidhi Durga Pavan Sriram",
+    3: "CH.03 // projects.docker · Projects — Sannidhi Durga Pavan Sriram",
     4: "CH.04 // deploy.log · Experience — Sannidhi Durga Pavan Sriram",
     5: "CH.05 // certs.pem · Certifications — Sannidhi Durga Pavan Sriram",
     6: "CH.06 // build-history · Education — Sannidhi Durga Pavan Sriram",
@@ -1184,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (slideIndex === 2) {
       const cards = slide.querySelectorAll('.stack-card');
       if (cards.length) {
-        tl.fromTo(cards, { opacity: 0, y: 14, scale: 0.99 }, { opacity: 1, y: 0, scale: 1, duration: 0.38, stagger: 0.06 }, 0.08);
+        tl.fromTo(cards, { opacity: 0, y: 14, scale: 0.99 }, { opacity: 1, y: 0, scale: 1, duration: 0.25, stagger: 0.03 }, 0.08);
       }
     } else if (slideIndex === 3) {
       const rows = slide.querySelectorAll('.docker-row');
@@ -1322,11 +1274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentMode === 'scroll') {
       const target = document.getElementById(`slide-${index}`);
       if (target) {
-        if (lenis) {
-          lenis.scrollTo(target, { offset: -60, duration: 1.15 });
-        } else {
-          target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
-        }
+        target.scrollIntoView({ behavior: smooth && !prefersReducedMotion ? 'smooth' : 'auto', block: 'start' });
       }
     }
   }
@@ -1370,6 +1318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
       return;
     }
+    if (document.querySelector('dialog[open]')) return;
 
     switch (e.key) {
       case 'ArrowRight':
@@ -1701,7 +1650,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (formSubmitBtn) {
         formSubmitBtn.disabled = true;
-        formSubmitBtn.innerHTML = `<span>DISPATCHING TRANSMISSION...</span>`;
+        formSubmitBtn.innerHTML = `<span>Sending…</span>`;
       }
 
       try {
@@ -1717,14 +1666,14 @@ document.addEventListener('DOMContentLoaded', () => {
           contactForm.reset();
           if (formFeedback) {
             formFeedback.className = 'form-feedback success';
-            formFeedback.innerHTML = `✔ Transmission dispatched successfully! Sriram will respond shortly.`;
+            formFeedback.innerHTML = `✔ Message sent. I will get back to you soon.`;
           }
         } else {
           const data = await response.json();
-          const err = data.errors ? data.errors.map(err => err.message).join(', ') : 'Transmission failed.';
+          const err = data.errors ? data.errors.map(err => err.message).join(', ') : 'Something went wrong.';
           if (formFeedback) {
             formFeedback.className = 'form-feedback error';
-            formFeedback.innerHTML = `✖ Transmission error: ${err}`;
+            formFeedback.innerHTML = `✖ Could not send: ${err}`;
           }
         }
       } catch (err) {
@@ -1735,7 +1684,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         if (formSubmitBtn) {
           formSubmitBtn.disabled = false;
-          formSubmitBtn.innerHTML = `<span>TRANSMIT MESSAGE &gt;</span>`;
+          formSubmitBtn.innerHTML = `<span>Send message</span>`;
         }
       }
     });
@@ -1789,9 +1738,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { category: 'Chapters', title: 'CH.04 // deploy.log', subtitle: 'Infosys Springboard Internship Experience', icon: '04', badge: 'Jump ↵', keywords: 'experience infosys work internship 4 deploy', action: () => goToSlide(4) },
         { category: 'Chapters', title: 'CH.05 // registry.auth', subtitle: '6x Cloud Certs & Oracle Global Top 500', icon: '05', badge: 'Jump ↵', keywords: 'certs certifications oracle credentials 5 auth', action: () => goToSlide(5) },
         { category: 'Chapters', title: 'CH.06 // build-history', subtitle: 'Education & Core Academic Rigor', icon: '06', badge: 'Jump ↵', keywords: 'education college university btech degree 6 build', action: () => goToSlide(6) },
-        { category: 'Chapters', title: 'CH.07 // ssh-session', subtitle: 'Contact, Direct Channels & Transmission', icon: '07', badge: 'Jump ↵', keywords: 'contact email linkedin message ssh 7 connect', action: () => goToSlide(7) },
+        { category: 'Chapters', title: 'CH.07 // ssh-session', subtitle: 'Contact details and message form', icon: '07', badge: 'Jump ↵', keywords: 'contact email linkedin message ssh 7 connect', action: () => goToSlide(7) },
 
-        // Shipped Projects (Direct Workbench Jumps)
+        // Projects (Direct Workbench Jumps)
         { category: 'Projects', title: 'secops/vault-wazuh-threat-lab', subtitle: 'Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)', icon: 'SOC', badge: 'Inspect ↵', keywords: 'identity threat detection response vault wazuh siem mitre attack soc jit iam project 1', action: () => selectProjectTab('case-1') },
         { category: 'Projects', title: 'aws/compliance-vendor-risk', subtitle: 'Cloud Compliance & Vendor Risk Management Lab (CIS 1.4)', icon: 'GRC', badge: 'Inspect ↵', keywords: 'cloud compliance vendor risk tprm security hub aws config cis benchmark project 2', action: () => selectProjectTab('case-2') },
         { category: 'Projects', title: 'aws/support-eng-simulation', subtitle: 'Cloud Support Engineering Simulator', icon: 'AWS', badge: 'Inspect ↵', keywords: 'aws ec2 simulation support ticket project 3', action: () => selectProjectTab('case-3') },
@@ -1810,8 +1759,8 @@ document.addEventListener('DOMContentLoaded', () => {
           navigator.clipboard.writeText('sannidhisriram8@gmail.com');
           showToast('✔ Email copied to clipboard: sannidhisriram8@gmail.com');
         }},
-        { category: 'Actions', title: 'Copy LinkedIn Profile Link', subtitle: 'linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a', icon: '🔗', badge: 'Copy ↵', keywords: 'linkedin profile social', action: () => {
-          navigator.clipboard.writeText('https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a');
+        { category: 'Actions', title: 'Copy LinkedIn Profile Link', subtitle: 'linkedin.com/in/sannidhi-sriram', icon: '🔗', badge: 'Copy ↵', keywords: 'linkedin profile social', action: () => {
+          navigator.clipboard.writeText('https://www.linkedin.com/in/sannidhi-sriram');
           showToast('✔ LinkedIn profile link copied!');
         }},
         { category: 'Actions', title: 'Copy GitHub Profile Link', subtitle: 'github.com/SannidhiSriram-06', icon: '🐙', badge: 'Copy ↵', keywords: 'github repo code', action: () => {
@@ -1842,3 +1791,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroTerminal) heroTerminal.start(true);
   }, 220);
 });
+
+/* ── PROJECT EXPLAINER (full-screen breakdown + architecture diagram) ── */
+(() => {
+  const dlg = document.getElementById('project-explainer');
+  if (!dlg) return;
+  const titleEl = dlg.querySelector('.explainer-title');
+  const reposEl = dlg.querySelector('.explainer-repos');
+  const textEl = dlg.querySelector('.explainer-text');
+  const frame = dlg.querySelector('iframe');
+  let trigger = null;
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-explainer');
+    if (!btn) return;
+    const card = btn.closest('.case-detail-panel');
+    trigger = btn;
+    titleEl.textContent = card.querySelector('.case-title').textContent;
+    reposEl.replaceChildren(...[...card.querySelectorAll('.btn-github')].map(a => a.cloneNode(true)));
+    textEl.replaceChildren(...['.case-tag', '.case-summary', '.case-results', '.case-tags-row']
+      .map(q => card.querySelector(q)).filter(Boolean).map(n => n.cloneNode(true)));
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    // archify diagrams read their theme from this key (same origin), so they match the site
+    try { localStorage.setItem('archify-theme', theme); } catch (_) {}
+    frame.src = `assets/diagrams/${btn.dataset.diagram}.html`;
+    dlg.showModal();
+  });
+
+  dlg.querySelector('.explainer-close').addEventListener('click', () => dlg.close());
+  // click on the backdrop closes
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { frame.src = 'about:blank'; trigger?.focus(); });
+})();
