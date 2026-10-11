@@ -317,14 +317,14 @@
                   <div class="stack-ico-box"><img src="assets/icons/logos/aws.svg" alt="" class="tech-icon" /></div>
                   <div class="stack-item-info">
                     <span class="tech-name">AWS</span>
-                    <span class="tech-detail">ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, Client VPN</span>
+                    <span class="tech-detail">ECS Fargate, EC2, ALB, ASG, Lambda, API Gateway, Config, Security Hub, IAM, CloudWatch, S3, ECR, VPC, Client VPN</span>
                   </div>
                 </div>
                 <div class="stack-item">
                   <div class="stack-ico-box"><img src="assets/icons/logos/azure.svg" alt="" class="tech-icon" /></div>
                   <div class="stack-item-info">
                     <span class="tech-name">Azure</span>
-                    <span class="tech-detail">App Service, Azure OpenAI, Azure Monitor, Table Storage</span>
+                    <span class="tech-detail">App Service, Azure OpenAI, Table Storage</span>
                   </div>
                 </div>
               </div>
@@ -333,9 +333,9 @@
             <div class="stack-card">
               <h3 class="stack-group-title">IaC &amp; Containers</h3>
               <div class="stack-items-grid">
-                <div class="tech-chip"><img src="assets/icons/logos/terraform.svg" alt="" class="chip-icon" /><span>Terraform</span><small class="chip-used">Identity Lab, Compliance Lab, Observability, Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/docker.svg" alt="" class="chip-icon" /><span>Docker &amp; Compose</span><small class="chip-used">Identity Lab, Compliance Lab, AI Test Gen, Self-Healing</small></div>
-                <div class="tech-chip"><img src="assets/icons/logos/kubernetes.svg" alt="" class="chip-icon" /><span>Kubernetes</span><small class="chip-used">Observability, AI Test Gen</small></div>
+                <div class="tech-chip"><img src="assets/icons/logos/terraform.svg" alt="" class="chip-icon" /><span>Terraform</span><small class="chip-used">Identity Lab, Compliance Lab, Support Sim, Observability, AI Test Gen, Self-Healing</small></div>
+                <div class="tech-chip"><img src="assets/icons/logos/docker.svg" alt="" class="chip-icon" /><span>Docker &amp; Compose</span><small class="chip-used">Identity Lab, Compliance Lab, Observability, AI Test Gen, Self-Healing</small></div>
+                <div class="tech-chip"><img src="assets/icons/logos/kubernetes.svg" alt="" class="chip-icon" /><span>Kubernetes</span><small class="chip-used">AI Test Gen (Minikube)</small></div>
                 <div class="tech-chip"><img src="assets/icons/logos/helm.svg" alt="" class="chip-icon" /><span>Helm</span><small class="chip-used">AI Test Gen</small></div>
                 <div class="tech-chip"><img src="assets/icons/logos/argocd.svg" alt="" class="chip-icon" /><span>ArgoCD</span><small class="chip-used">AI Test Gen</small></div>
               </div>
@@ -354,7 +354,7 @@
             <div class="stack-card">
               <h3 class="stack-group-title">Languages &amp; AI</h3>
               <div class="stack-items-grid">
-                <div class="tech-chip"><img src="assets/icons/logos/python.svg" alt="" class="chip-icon" /><span>Python (Boto3)</span><small class="chip-used">Compliance Lab, Patient Triage, Infosys</small></div>
+                <div class="tech-chip"><img src="assets/icons/logos/python.svg" alt="" class="chip-icon" /><span>Python (Boto3)</span><small class="chip-used">Compliance Lab, AI Test Gen, Patient Triage, Infosys</small></div>
                 <div class="tech-chip"><img src="assets/icons/logos/bash.svg" alt="" class="chip-icon" /><span>Bash</span></div>
                 <div class="tech-chip"><img src="assets/icons/logos/groq.svg" alt="" class="chip-icon" /><span>Groq LLaMA 3.1</span><small class="chip-used">AI Test Gen</small></div>
                 <div class="tech-chip"><img src="assets/icons/logos/openai.svg" alt="" class="chip-icon" /><span>Azure OpenAI</span><small class="chip-used">Patient Triage</small></div>
@@ -426,7 +426,7 @@
                 <button class="docker-row" role="tab" aria-selected="false" data-target="case-4" title="Inspect aws/ecs-fargate-prometheus">
                   <span class="ps-col ps-name">aws/ecs-fargate-prometheus</span>
                   <span class="ps-col ps-tech badge-aws">AWS Fargate</span>
-                  <span class="ps-col ps-status status-up">PromQL alerts</span>
+                  <span class="ps-col ps-status status-up">Grafana alert</span>
                 </button>
 
                 <!-- Project 5 Tab: k8s/gitops-ai-testgen (Mar 31, 2026 11:56 / 17:47) -->
@@ -475,9 +475,9 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  End-to-end identity security and detection engineering lab running HashiCorp Vault Community Edition and a single-node Wazuh SIEM stack on AWS (t3.large provisioned with Terraform). Implements dynamic Just-In-Time (JIT) AWS IAM credential brokering, captures host auth telemetry and AWS CloudTrail events, maps attack indicators against MITRE ATT&amp;CK, and validates SOC incident response runbooks across 33 live custom security alerts.
+                  End-to-end identity security and detection engineering lab running HashiCorp Vault Community Edition and a single-node Wazuh SIEM stack on AWS (t3.large provisioned with Terraform). Implements dynamic Just-In-Time (JIT) AWS IAM credential brokering, captures host auth telemetry and AWS CloudTrail events, maps attack indicators against MITRE ATT&amp;CK, and verifies 33 custom Wazuh alerts across 5 detection rules. The SOC response runbook is written but was not executed against the live alerts.
                 </p>
-                <p class="case-results">Simulated and detected real-world threats: SSH brute-force username spraying (T1110.001/003), sudo privilege escalation abuse (T1548.003), and CloudTrail IAM persistence manipulation (T1078.004/T1098). Verified dynamic JIT IAM user auto-deletion on 900s lease expiration and explicit revocation.</p>
+                <p class="case-results">Simulated from localhost on one lab host and detected: SSH username spraying (T1110.001/003), sudo abuse (T1548.003), and CloudTrail IAM user creation, including the users Vault mints (T1078.004/T1098). Verified that a JIT IAM user is deleted when its 900s lease expires and when it is explicitly revoked.</p>
                 <button type="button" class="btn-explainer" data-diagram="identity-threat-lab">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">HashiCorp Vault</span>
@@ -504,9 +504,9 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Infrastructure-as-Code (IaC) continuous compliance auditing and Third-Party Risk Management (TPRM) lab. Automates CIS AWS Foundations Benchmark v1.4.0 governance via AWS Config and Security Hub, ingests real-time violation telemetry through Amazon EventBridge and AWS Lambda into an auditable Risk Register, crosswalks findings to ISO 27001:2022 &amp; NIST CSF v1.1, and powers an automated TPRM scoring engine with a self-hosted GRC dashboard.
+                  Terraform-built sandbox for continuous compliance auditing and Third-Party Risk Management (TPRM). AWS Config and Security Hub check deliberately misconfigured resources against the CIS AWS Foundations Benchmark v1.4.0, EventBridge and Lambda write failed controls into a JSON/CSV Risk Register in S3 with indicative ISO 27001:2022 and NIST CSF v1.1 crosswalks, and a CLI scores a fictional vendor from a sample questionnaire. A small Flask dashboard shows both.
                 </p>
-                <p class="case-results">Evaluated sandbox vulnerabilities across S3, Security Groups, EBS gp3 encryption, and IAM MFA. Enriched 21 live scanner findings with ISO/NIST control crosswalks and governance SLAs while maintaining strict telemetry provenance and deduplication.</p>
+                <p class="case-results">Flagged the planted issues in S3, a security group, an unencrypted EBS volume and an IAM user without MFA. Recorded 21 live findings (17 mapped to CIS controls, 4 unmapped), each with an owner and SLA; AWS-sourced fields are kept apart from analyst-assigned ones, and duplicates from Config and Security Hub are merged.</p>
                 <button type="button" class="btn-explainer" data-diagram="compliance-vendor-risk">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">Terraform</span>
@@ -526,7 +526,7 @@
               <article class="case-detail-panel" id="case-3">
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
-                    <span class="case-tag">PROJECT 03 · CLOUD NETWORKING &amp; EDGE</span>
+                    <span class="case-tag">PROJECT 03 · CLOUD SUPPORT ENGINEERING</span>
                     <h3 class="case-title">Cloud Support &amp; Customer Engineering Simulation</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank" rel="noopener" class="btn-github">
@@ -534,9 +534,9 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Designed, deployed, and validated an enterprise hybrid cloud connectivity environment. Implemented mutual TLS (mTLS) certificate authentication for AWS Client VPN, eliminated public bastion hosts with SSM Session Manager, and executed point-in-time disaster recovery drills using AWS Backup.
+                  Two simulated support tickets against a Flask app on one EC2 instance in the default VPC. Access came through SSM Session Manager and an AWS Client VPN endpoint using mutual-TLS certificates. CloudWatch Logs Insights pointed to a missing security group rule, and deleted data was restored from an AWS Backup recovery point. The write-ups are incident reports, KB articles and customer updates; the instance is built with Terraform.
                 </p>
-                <p class="case-results">Eliminated public bastion hosts entirely. Secured remote infrastructure access through AWS SSM Session Manager with full audit logging in CloudWatch Logs, coupled with AWS Backup retention plans.</p>
+                <p class="case-results">No bastion host or SSH port was needed. The restore job reported COMPLETED, but checking the restored instance showed a file written seconds before the backup was missing, so recovery was verified directly before updating the customer. The scoped analyst user was denied when it tried to create an access key.</p>
                 <button type="button" class="btn-explainer" data-diagram="support-vpn-sim">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">AWS Client VPN</span>
@@ -544,7 +544,9 @@
                   <span class="term-tag">CloudWatch Logs</span>
                   <span class="term-tag">Mutual TLS</span>
                   <span class="term-tag">IAM Security</span>
-                  <span class="term-tag">EC2 Private VPC</span>
+                  <span class="term-tag">EC2 (default VPC)</span>
+                  <span class="term-tag">AWS Backup</span>
+                  <span class="term-tag">Terraform</span>
                 </div>
               </article>
 
@@ -553,16 +555,16 @@
                 <div class="case-panel-header">
                   <div class="case-title-wrap">
                     <span class="case-tag">PROJECT 04 · OBSERVABILITY &amp; SRE</span>
-                    <h3 class="case-title">Cloud Security Observability Stack on ECS Fargate</h3>
+                    <h3 class="case-title">Observability Stack on ECS Fargate</h3>
                   </div>
                   <a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener" class="btn-github">
                     <span>GitHub Repo ↗</span>
                   </a>
                 </div>
                 <p class="case-summary">
-                  End-to-end containerized monitoring pipeline deployed on AWS ECS Fargate via Terraform. Scrapes live metrics from a secured microservice, collects time-series data into Prometheus, and visualizes system health through Grafana dashboards with automated alert rules.
+                  Prometheus and Grafana running as two ECS Fargate services, all provisioned with Terraform (VPC, subnets, security group, IAM roles, CloudWatch log group). Prometheus is a custom image pushed to ECR and scrapes its own metrics; Grafana charts them and runs one alert rule.
                 </p>
-                <p class="case-results">Provisioned with zero-manual-click Terraform manifests. Custom PromQL queries alert on p99 latency, container CPU throttling, and HTTP 5xx error rates across multi-AZ subnets.</p>
+                <p class="case-results">Three dashboard panels (HTTP requests, 5m request rate, active time series) and a Grafana alert that fires when the request rate goes above 0.5. Deployed to ap-south-1 with terraform apply and torn down afterwards. No application workload was monitored.</p>
                 <button type="button" class="btn-explainer" data-diagram="observability-fargate">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">AWS ECS Fargate</span>
@@ -587,9 +589,9 @@
                   </div>
                 </div>
                 <p class="case-summary">
-                  Automated GitOps pipeline delivering an AI test-generation microservice (FastAPI + Groq LLaMA 3.1 70B). Jenkins compiles and tests code, triggers Docker builds, pushes immutable images to AWS ECR, and commits image tags to a GitOps repository where ArgoCD continuously reconciles state on Kubernetes.
+                  GitOps delivery pipeline for a FastAPI service that generates pytest files with Groq (llama-3.1-8b-instant). Jenkins runs pytest with a 70% coverage gate, builds a Docker image tagged with the build number and commit, pushes it to AWS ECR (created with Terraform), and commits the tag to a Helm chart repository that an Argo CD application can sync to Kubernetes (Minikube).
                 </p>
-                <p class="case-results">Zero-touch declarative continuous deployment. ArgoCD detects drift between Git and cluster state, executing self-healing rolling updates without exposing cluster API credentials to the CI server.</p>
+                <p class="case-results">Jenkins holds no cluster credentials: it only commits the new image tag to the GitOps repo. The Argo CD application and the Minikube cluster are set up outside the two repos, so the repos show the chart and the CI side, not Argo CD itself.</p>
                 <button type="button" class="btn-explainer" data-diagram="gitops-ai-testgen">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">FastAPI</span>
@@ -598,8 +600,9 @@
                   <span class="term-tag">Docker</span>
                   <span class="term-tag">AWS ECR</span>
                   <span class="term-tag">ArgoCD</span>
-                  <span class="term-tag">Kubernetes</span>
+                  <span class="term-tag">Kubernetes (Minikube)</span>
                   <span class="term-tag">Helm</span>
+                  <span class="term-tag">Terraform</span>
                 </div>
               </article>
 
@@ -610,14 +613,14 @@
                     <span class="case-tag">PROJECT 06 · HIGH AVAILABILITY &amp; SRE</span>
                     <h3 class="case-title">Self-Healing Java Microservice on AWS</h3>
                   </div>
-                  <a href="https://github.com/SannidhiSriram-06/java-self-healing-microservice" target="_blank" rel="noopener" class="btn-github">
+                  <a href="https://github.com/SannidhiSriram-06/self-healing-microservice" target="_blank" rel="noopener" class="btn-github">
                     <span>GitHub Repo ↗</span>
                   </a>
                 </div>
                 <p class="case-summary">
-                  Fault-tolerant containerized microservice with four layers of automated recovery: Actuator health endpoints, container auto-restarts, ALB traffic isolation, and EC2 instance replacement via Auto Scaling Groups, plus Snyk scanning in CI.
+                  Spring Boot service in Docker on an EC2 Auto Scaling Group (2-4 t3.micro across two AZs) behind an ALB, all in Terraform. Recovery comes in layers: the Actuator health endpoint, a Docker health check and restart policy, ALB health checks that drop bad targets, and an ASG that replaces failed instances and scales on CPU. GitHub Actions builds, tests, pushes to Docker Hub and runs Snyk dependency and image scans.
                 </p>
-                <p class="case-results">Enforces automated Snyk SAST/SCA security scans in GitHub Actions before promoting containers. If an instance experiences unrecoverable crashes, ALB stops routing traffic within 30s and ASG boots a fresh instance automatically.</p>
+                <p class="case-results">The ALB marks a target unhealthy after 3 failed 30s checks (about 90s) and the ASG then replaces the instance. Snyk scans run after the image is pushed, so a finding fails the workflow but does not stop publishing, and deploying a new image to EC2 is still manual. CI ran green in Feb 2026; recent runs fail at Docker Hub login because the secrets are no longer set.</p>
                 <button type="button" class="btn-explainer" data-diagram="self-healing-asg">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">Spring Boot</span>
@@ -625,7 +628,7 @@
                   <span class="term-tag">Application Load Balancer</span>
                   <span class="term-tag">Terraform</span>
                   <span class="term-tag">Docker</span>
-                  <span class="term-tag">Snyk Security</span>
+                  <span class="term-tag">Snyk (SCA + image scan)</span>
                   <span class="term-tag">GitHub Actions</span>
                 </div>
               </article>
@@ -642,14 +645,14 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Serverless rebuild migrating a monolithic Node.js REST API into an on-demand serverless system using AWS Lambda compute, API Gateway HTTP routing, and MongoDB Atlas cloud database.
+                  Case study mapping a Node.js bookstore REST API onto AWS Lambda (Node.js 20) behind an API Gateway REST API, with CloudWatch Logs. A MongoDB Atlas M0 cluster was set up as the intended database, but the committed handler serves GET and POST /books from an in-memory array.
                 </p>
-                <p class="case-results">Achieved $0/month idle operational expense under AWS Free Tier with Lambda scaling to zero, so there are no servers to maintain.</p>
+                <p class="case-results">$0/month idle on the AWS Free Tier, since Lambda and API Gateway bill per request and there are no servers to maintain. Data does not persist between invocations; connecting the MongoDB driver is the next step. The AWS resources were deleted after testing.</p>
                 <button type="button" class="btn-explainer" data-diagram="serverless-bookstore">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">AWS Lambda</span>
                   <span class="term-tag">API Gateway</span>
-                  <span class="term-tag">MongoDB Atlas</span>
+                  <span class="term-tag">MongoDB Atlas (planned)</span>
                   <span class="term-tag">Node.js 20</span>
                   <span class="term-tag">CloudWatch Logs</span>
                   <span class="term-tag">Cost Optimization</span>
@@ -668,9 +671,9 @@
                   </a>
                 </div>
                 <p class="case-summary">
-                  Symptom-triage demo app hosted on Azure App Service (Linux, Gunicorn) integrating Azure OpenAI GPT-4o for real-time symptom triage classification with every interaction logged to Azure Table Storage.
+                  Symptom-triage demo: a Flask app on Azure App Service (Linux, B1, Gunicorn) sends symptoms to an Azure OpenAI gpt-4o deployment, shows the classification (Urgent Care, Non-Urgent Visit or Self Care), and writes each symptoms-and-result pair to Azure Table Storage.
                 </p>
-                <p class="case-results">Completely decoupled managed services with zero credentials committed to source code. Every patient interaction is archived to Table Storage with millisecond timestamps and monitored via Azure Monitor telemetry.</p>
+                <p class="case-results">Compute, inference and logging are separate managed services, and all keys come from App Service settings, none from the repo. Resources were decommissioned after validation; the repo keeps a PDF of timestamped console screenshots. It has no authentication, input validation or rate limiting, so it is a proof of concept.</p>
                 <button type="button" class="btn-explainer" data-diagram="azure-patient-triage">Open full breakdown + architecture diagram</button>
                 <div class="case-tags-row">
                   <span class="term-tag">Python Flask</span>
@@ -678,7 +681,7 @@
                   <span class="term-tag">Azure App Service</span>
                   <span class="term-tag">Azure Table Storage</span>
                   <span class="term-tag">Gunicorn</span>
-                  <span class="term-tag">Azure Monitor</span>
+                  <span class="term-tag">Built-in monitoring</span>
                 </div>
               </article>
 

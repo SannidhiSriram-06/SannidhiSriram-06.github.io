@@ -12,7 +12,7 @@
 - **Portfolio:** https://sannidhisriram-06.github.io/
 
 ## Technical Core Stack
-- **Cloud Platforms:** AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, Client VPN, Lambda, API Gateway), Microsoft Azure (App Service, Azure OpenAI, Azure Monitor, Azure Table Storage)
+- **Cloud Platforms:** AWS (ECS Fargate, EC2, ALB, ASG, IAM, CloudWatch, S3, ECR, VPC, Client VPN, Lambda, API Gateway), Microsoft Azure (App Service, Azure OpenAI, Azure Table Storage)
 - **IaC & Containers:** Terraform, Docker, Docker Compose, Kubernetes (K8s), Helm Charts, ArgoCD (GitOps)
 - **CI/CD & Security:** GitHub Actions, Jenkins Pipelines, Git VCS, Snyk SAST/SCA vulnerability scanning
 - **Languages & Frameworks:** Python (Boto3, FastAPI, Flask), Bash/Shell scripting, Java (Spring Boot), Node.js, REST APIs
@@ -21,44 +21,44 @@
 
 ## Projects
 1. **Cloud Support & Customer Engineering Simulation**
-   - *Focus:* Cloud Networking, Mutual TLS (mTLS), Secure Remote Access, Disaster Recovery.
-   - *Architecture:* AWS Client VPN (mTLS) + SSM Session Manager for private VPC subnet access without public bastions, CloudWatch Logs Insights, and point-in-time recovery with AWS Backup.
-   - *GitHub:* https://github.com/SannidhiSriram-06/AWS-Client-VPN-End-to-End-Setup-and-Troubleshooting
+   - *Focus:* Cloud support engineering, mutual TLS (mTLS) VPN access, log analysis, backup and restore.
+   - *Architecture:* Two simulated support tickets on a Flask app running on one EC2 instance in the default VPC (built with Terraform). Access through AWS Client VPN (mTLS certificates) and SSM Session Manager with no bastion host, fault isolation with CloudWatch Logs Insights, and a data restore from an AWS Backup recovery point that was verified directly on the restored instance.
+   - *GitHub:* https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation
 
-2. **Cloud Security Observability Stack on ECS Fargate**
-   - *Focus:* Observability, Time-Series Telemetry, Serverless Containers.
-   - *Architecture:* Terraform-provisioned container monitoring pipeline on AWS ECS Fargate scraping secure Spring Boot actuator endpoints into Prometheus TSDB with Grafana dashboards and alert rules.
-   - *GitHub:* https://github.com/SannidhiSriram-06/Cloud-Security-Observability-Stack-on-ECS-Fargate
+2. **Observability Stack on ECS Fargate**
+   - *Focus:* Observability, time-series metrics, serverless containers.
+   - *Architecture:* Terraform-provisioned Prometheus (custom image in ECR) and Grafana as two ECS Fargate services in ap-south-1. Prometheus scrapes its own metrics; Grafana has a three-panel dashboard and one alert rule (request rate above 0.5). No application workload is monitored.
+   - *GitHub:* https://github.com/SannidhiSriram-06/observability-fargate
 
 3. **AI Test Generator & GitOps Delivery Pipeline**
    - *Focus:* Declarative GitOps, Continuous Delivery, Kubernetes Orchestration.
-   - *Architecture:* FastAPI + Groq LLaMA 3.1 microservice. Automated Jenkins pipeline compiles, runs tests, builds Docker images, pushes to AWS ECR, and commits image tags to a GitOps repository reconciled by ArgoCD on Kubernetes.
-   - *App Repo:* https://github.com/SannidhiSriram-06/FastAPI-Groq-AI-Test-Generator-CI-CD
-   - *GitOps Manifests Repo:* https://github.com/SannidhiSriram-06/gitops-infra-manifests
+   - *Architecture:* FastAPI + Groq (llama-3.1-8b-instant) microservice. A Jenkins pipeline runs pytest with a 70% coverage gate, builds a Docker image, pushes it to AWS ECR (Terraform-provisioned), and commits the image tag to a Helm chart repository that an Argo CD application can sync to Kubernetes (Minikube).
+   - *App Repo:* https://github.com/SannidhiSriram-06/ai-test-generator
+   - *GitOps Chart Repo:* https://github.com/SannidhiSriram-06/ai-pytest-generator-gitops
 
 4. **Self-Healing Java Microservice on AWS**
-   - *Focus:* High Availability, 4-Layer Auto-Recovery, DevSecOps.
-   - *Architecture:* Spring Boot service behind AWS ALB with target health tracking, EC2 Auto Scaling Groups (2-4 instances), automated instance replacement, and Snyk SAST/SCA security gates in GitHub Actions.
-   - *GitHub:* https://github.com/SannidhiSriram-06/java-self-healing-microservice
+   - *Focus:* High availability, layered auto-recovery, DevSecOps.
+   - *Architecture:* Spring Boot service in Docker on an EC2 Auto Scaling Group (2-4 t3.micro) behind an AWS ALB with health checks, all in Terraform. GitHub Actions builds, tests, pushes to Docker Hub and runs Snyk dependency and image scans after the push; deploying the image to EC2 is manual, and CI currently fails at Docker Hub login because the secrets are no longer set.
+   - *GitHub:* https://github.com/SannidhiSriram-06/self-healing-microservice
 
 5. **AI Patient Triage System on Azure**
    - *Focus:* Azure OpenAI triage demo, Telemetry.
-   - *Architecture:* Python Flask microservice hosted on Azure App Service (Linux, Gunicorn) integrated with Azure OpenAI GPT-4o for symptom triage classification with interaction logs stored in Azure Table Storage and monitored via Azure Monitor.
+   - *Architecture:* Python Flask app on Azure App Service (Linux, B1, Gunicorn) calling an Azure OpenAI gpt-4o deployment to classify symptoms, with every request and result stored in Azure Table Storage. Proof of concept: no authentication, validation or rate limiting; resources were decommissioned after validation.
    - *GitHub:* https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-
 
 6. **Bookstore Serverless Architecture on AWS**
    - *Focus:* Serverless Microservices, Cloud Cost Optimization.
-   - *Architecture:* AWS Lambda compute (Node.js 20.x), Amazon API Gateway HTTP routing, and MongoDB Atlas database. Operates at $0/month idle operational cost with automated on-demand scaling.
+   - *Architecture:* AWS Lambda (Node.js 20.x) behind an Amazon API Gateway REST API with CloudWatch Logs. A MongoDB Atlas cluster was set up but is not connected; the committed handler uses an in-memory array. $0/month idle on the AWS Free Tier; resources were deleted after testing.
    - *GitHub:* https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS
 
 7. **Cloud Compliance & Vendor Risk Management Lab**
    - *Focus:* IaC Security Governance, Continuous Compliance, Third-Party Risk Management (TPRM).
-   - *Architecture:* Terraform provisions continuous compliance auditing via AWS Config and AWS Security Hub (CIS AWS Foundations Benchmark v1.4.0). Captures non-compliant events via Amazon EventBridge, enriches failed controls with ISO 27001:2022 and NIST CSF v1.1 crosswalks using an AWS Lambda logger, builds a live consolidated S3 Risk Register (JSON/CSV), and features a CLI TPRM vendor scoring engine with a self-hosted GRC portal (Docker Compose).
+   - *Architecture:* Terraform provisions AWS Config and AWS Security Hub (CIS AWS Foundations Benchmark v1.4.0) against deliberately misconfigured sandbox resources. Amazon EventBridge sends failed controls to an AWS Lambda that adds indicative (analyst-assigned) ISO 27001:2022 and NIST CSF v1.1 crosswalks and builds a consolidated S3 Risk Register (JSON/CSV). A CLI scores a fictional vendor from a sample questionnaire, and a small Flask dashboard (Docker Compose) shows both.
    - *GitHub:* https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk
 
 8. **Identity Threat Detection & Response Lab (Vault + Wazuh on AWS)**
    - *Focus:* Identity Security, Detection Engineering, SOC Incident Response, MITRE ATT&CK.
-   - *Architecture:* HashiCorp Vault 1.15 Community dynamic JIT IAM user generation (900s TTL auto-deletion) paired with single-node Wazuh 4.7.5 SIEM on AWS (t3.large provisioned via Terraform). Ingests real-time host auth telemetry (/var/log/auth.log) and AWS CloudTrail management events via S3 wodle. Verified 33 custom detection alerts mapped to MITRE ATT&CK techniques (T1110 password guessing/spraying, T1548 sudo abuse escalation, T1078/T1098 IAM persistence) with actionable SOC containment runbooks.
+   - *Architecture:* HashiCorp Vault 1.15 Community dynamic JIT IAM user generation (900s TTL auto-deletion) paired with single-node Wazuh 4.7.5 SIEM on AWS (t3.large provisioned via Terraform). Ingests real-time host auth telemetry (/var/log/auth.log) and AWS CloudTrail management events via S3 wodle. Verified 33 alerts from 5 custom Wazuh rules, mapped to MITRE ATT&CK techniques (T1110 password guessing/spraying, T1548 sudo abuse escalation, T1078/T1098 IAM persistence). Attacks were simulated from localhost; the SOC runbook is written but was not executed against the live alerts.
    - *GitHub:* https://github.com/SannidhiSriram-06/identity-threat-detection-lab
 
 ## Experience
