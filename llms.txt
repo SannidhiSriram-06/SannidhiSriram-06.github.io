@@ -1,13 +1,13 @@
 # Sannidhi Durga Pavan Sriram — Cloud / DevOps / SRE Portfolio
 
-> Cloud, DevOps & Site Reliability Engineer specializing in resilient AWS/Azure architectures, GitOps CI/CD pipelines, container orchestration (Kubernetes, Docker), and full-stack observability. 6x Cloud Certified (Oracle OCI 4x, Microsoft Azure 2x) and Oracle Race Global Top 500 Finalist.
+> Cloud, DevOps & Site Reliability Engineer working on AWS/Azure infrastructure, GitOps CI/CD pipelines, container orchestration (Kubernetes, Docker), and full-stack observability. 6x Cloud Certified (Oracle OCI 4x, Microsoft Azure 2x) and Top 500 on the global Oracle Race to Certification 2025 leaderboard.
 
 ## Professional Summary
 - **Role:** Cloud Infrastructure, DevOps & Site Reliability Engineer
 - **Institution:** Lovely Professional University (B.Tech Computer Science and Engineering, 2023–2027, Minor in Cloud Computing)
 - **Location:** Hyderabad, Telangana, India
-- **Email:** sannidhisriram06@gmail.com
-- **LinkedIn:** https://www.linkedin.com/in/sannidhi-durga-pavan-sriram-07153a27a
+- **Email:** sannidhisriram8@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/sannidhi-sriram
 - **GitHub:** https://github.com/SannidhiSriram-06
 - **Portfolio:** https://sannidhisriram-06.github.io/
 
@@ -17,9 +17,9 @@
 - **CI/CD & Security:** GitHub Actions, Jenkins Pipelines, Git VCS, Snyk SAST/SCA vulnerability scanning
 - **Languages & Frameworks:** Python (Boto3, FastAPI, Flask), Bash/Shell scripting, Java (Spring Boot), Node.js, REST APIs
 - **AI & LLM Integrations:** Groq LLaMA 3.1, Azure OpenAI (GPT-4o), Hugging Face APIs
-- **Operating Systems & Workstations:** Red Hat Enterprise Linux (RHEL 9 / CentOS), Ubuntu Server, macOS (Darwin / Unix), Windows Server & WSL2
+- **Linux:** RHEL 9 / CentOS, Ubuntu / Debian
 
-## 6 Shipped Production Projects
+## Projects
 1. **Cloud Support & Customer Engineering Simulation**
    - *Focus:* Cloud Networking, Mutual TLS (mTLS), Secure Remote Access, Disaster Recovery.
    - *Architecture:* AWS Client VPN (mTLS) + SSM Session Manager for private VPC subnet access without public bastions, CloudWatch Logs Insights, and point-in-time recovery with AWS Backup.
@@ -37,13 +37,13 @@
    - *GitOps Manifests Repo:* https://github.com/SannidhiSriram-06/gitops-infra-manifests
 
 4. **Self-Healing Java Microservice on AWS**
-   - *Focus:* High Availability, 5-Layer Auto-Recovery, DevSecOps.
+   - *Focus:* High Availability, 4-Layer Auto-Recovery, DevSecOps.
    - *Architecture:* Spring Boot service behind AWS ALB with target health tracking, EC2 Auto Scaling Groups (2-4 instances), automated instance replacement, and Snyk SAST/SCA security gates in GitHub Actions.
    - *GitHub:* https://github.com/SannidhiSriram-06/java-self-healing-microservice
 
 5. **AI Patient Triage System on Azure**
-   - *Focus:* Cloud-Native Healthcare Decision Support, Telemetry.
-   - *Architecture:* Python Flask microservice hosted on Azure App Service (Linux, Gunicorn) integrated with Azure OpenAI GPT-4o for real-time clinical triage classification with immutable audit logs stored in Azure Table Storage and monitored via Azure Monitor.
+   - *Focus:* Azure OpenAI triage demo, Telemetry.
+   - *Architecture:* Python Flask microservice hosted on Azure App Service (Linux, Gunicorn) integrated with Azure OpenAI GPT-4o for symptom triage classification with interaction logs stored in Azure Table Storage and monitored via Azure Monitor.
    - *GitHub:* https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-
 
 6. **Bookstore Serverless Architecture on AWS**
@@ -52,7 +52,7 @@
    - *GitHub:* https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS
 
 7. **Cloud Compliance & Vendor Risk Management Lab**
-   - *Focus:* Enterprise IaC Security Governance, Continuous Compliance, Third-Party Risk Management (TPRM).
+   - *Focus:* IaC Security Governance, Continuous Compliance, Third-Party Risk Management (TPRM).
    - *Architecture:* Terraform provisions continuous compliance auditing via AWS Config and AWS Security Hub (CIS AWS Foundations Benchmark v1.4.0). Captures non-compliant events via Amazon EventBridge, enriches failed controls with ISO 27001:2022 and NIST CSF v1.1 crosswalks using an AWS Lambda logger, builds a live consolidated S3 Risk Register (JSON/CSV), and features a CLI TPRM vendor scoring engine with a self-hosted GRC portal (Docker Compose).
    - *GitHub:* https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk
 
@@ -60,6 +60,9 @@
    - *Focus:* Identity Security, Detection Engineering, SOC Incident Response, MITRE ATT&CK.
    - *Architecture:* HashiCorp Vault 1.15 Community dynamic JIT IAM user generation (900s TTL auto-deletion) paired with single-node Wazuh 4.7.5 SIEM on AWS (t3.large provisioned via Terraform). Ingests real-time host auth telemetry (/var/log/auth.log) and AWS CloudTrail management events via S3 wodle. Verified 33 custom detection alerts mapped to MITRE ATT&CK techniques (T1110 password guessing/spraying, T1548 sudo abuse escalation, T1078/T1098 IAM persistence) with actionable SOC containment runbooks.
    - *GitHub:* https://github.com/SannidhiSriram-06/identity-threat-detection-lab
+
+## Experience
+- **AI Intern, Cloud Deployment Lead — Infosys Springboard** (Feb–Apr 2026). 25-member team split into ML, web and cloud sub-teams; led the cloud sub-team and co-led the overall team with the ML lead. Deployed an AI KYC verification system to AWS (React on S3, Node.js API and Flask ML service on EC2 under PM2) and fixed 5 deployment defects (frontend bypassing backend, localhost-only bind, S3 CORS origin, PM2 using system Python instead of the venv, non-KYC upload handling).
 
 ## Certifications (6x Certified)
 1. **Oracle Cloud Infrastructure 2025 Certified DevOps Professional** (Aug 2025)
