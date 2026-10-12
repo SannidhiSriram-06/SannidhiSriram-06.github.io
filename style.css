@@ -21,15 +21,15 @@
 }
 
 :root[data-theme="dark"] {
-  /* Black and acid khaki, after the palettes from the Microsoft Command Line site. */
-  --bg: #111109;
-  --surface: #1a1a11;
-  --ink: #f2f2e4;
-  --muted: #a9ab96;
-  --line: #34352a;
-  --field-line: #8b8d76;
+  /* Neutral black with an acid-khaki accent (cooler than the first attempt, no brown). */
+  --bg: #0b0c0e;
+  --surface: #131518;
+  --ink: #eef0f2;
+  --muted: #9aa1ab;
+  --line: #262a30;
+  --field-line: #7d8590;
   --accent: #def273;
-  --on-accent: #111109;
+  --on-accent: #0b0c0e;
   --focus: #def273;
   color-scheme: dark;
 }
