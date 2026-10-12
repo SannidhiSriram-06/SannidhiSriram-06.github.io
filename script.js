@@ -146,4 +146,25 @@
       statusEl.textContent = 'Could not load the contribution calendar. The profile link below has it.';
     });
   }
+
+  /* ── Highlight the project at the middle of the screen ─────────────── */
+  const projects = document.querySelectorAll('.project');
+  if (projects.length && 'IntersectionObserver' in window) {
+    // A thin band across the vertical centre: whichever card crosses it is active.
+    const band = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          projects.forEach((p) => p.classList.toggle('is-active', p === entry.target));
+        }
+      });
+    }, { rootMargin: '-49% 0px -49% 0px', threshold: 0 });
+    projects.forEach((p) => band.observe(p));
+    // Nothing is highlighted once the middle of the screen leaves the projects section.
+    const work = document.getElementById('work');
+    if (work) {
+      new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) projects.forEach((p) => p.classList.remove('is-active'));
+      }, { rootMargin: '-49% 0px -49% 0px', threshold: 0 }).observe(work);
+    }
+  }
 })();

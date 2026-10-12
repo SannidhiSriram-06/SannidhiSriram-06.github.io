@@ -331,7 +331,9 @@ code {
 
 .portrait img {
   width: 100%;
-  border-radius: 4px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
   border: 1px solid var(--line);
 }
 
@@ -405,11 +407,7 @@ code {
 }
 
 .project-featured {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1.5rem 1.25rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .project-featured h3 {
@@ -421,9 +419,29 @@ code {
   gap: 0 3rem;
 }
 
+/* Every project is a card. The one crossing the middle of the screen is
+   highlighted by script.js (class is-active), so the highlight follows you. */
+.project {
+  padding: 1.5rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.project.is-active {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project {
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+}
+
 @media (min-width: 52rem) {
-  .project-featured {
-    padding: 2.5rem;
+  .project {
+    padding: 2rem 2.25rem;
   }
 
   .project-cols {
@@ -438,13 +456,7 @@ code {
 }
 
 .project-list .project {
-  padding-block: 2rem;
-  border-top: 1px solid var(--line);
-}
-
-.project-list .project:first-child {
-  border-top: 0;
-  padding-top: 0;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 52rem) {
@@ -787,10 +799,6 @@ code {
   border-radius: 2px;
 }
 
-:root[data-theme="dark"] .project-featured {
-  border-color: var(--accent);
-}
-
 :root[data-theme="dark"] .button-primary:hover {
   background: var(--ink);
   border-color: var(--ink);
@@ -894,4 +902,23 @@ code {
 .activity-scroll:focus-visible {
   outline: 3px solid var(--a-text);
   outline-offset: 2px;
+}
+
+/* ── Internship certificate ─────────────────────────────────────────── */
+.cert-figure {
+  margin: 1.5rem 0 0;
+  max-width: 44rem;
+}
+
+.cert-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.cert-figure figcaption {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
 }
