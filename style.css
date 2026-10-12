@@ -56,6 +56,10 @@ body {
   overflow-wrap: break-word;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -753,8 +757,6 @@ code {
 .project-stack,
 .cert-meta,
 .contact-label,
-.legend,
-.matrix thead th,
 .theme-toggle {
   font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.82rem;
@@ -795,79 +797,101 @@ code {
   color: var(--bg);
 }
 
-/* ── Tools matrix: numbered dots, like the node diagrams on the MS site ── */
-.matrix {
-  width: 100%;
-  max-width: 54rem;
-  border-collapse: collapse;
-  table-layout: fixed;
-  margin-bottom: 1rem;
+/* ── GitHub activity: same palette in both themes (dark panel) ─────── */
+.activity {
+  --a-bg: #0c0d0f;
+  --a-line: #26292c;
+  --a-text: #cdbf8f;
+  --l0: #17191b;
+  --l1: #2c4a3c;
+  --l2: #4e7d62;
+  --l3: #8dba76;
+  --l4: #b0bf6b;
+  background: var(--a-bg);
+  color: var(--a-text);
+  border: 1px solid var(--a-line);
+  border-radius: 4px;
+  padding: 1.25rem 1.25rem 1rem;
+  font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
 }
 
-.matrix thead td {
-  width: 7.5rem;
+.activity-status {
+  margin: 0;
+  max-width: none;
 }
 
-.matrix thead th {
-  font-weight: 400;
-  color: var(--muted);
-  padding: 0 0 0.5rem;
-  text-align: center;
+.activity-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
 }
 
-.matrix tbody th {
-  text-align: left;
-  font-weight: 500;
-  font-size: 0.92rem;
-  line-height: 1.3;
-  padding: 0.5rem 0.5rem 0.5rem 0;
+.activity-months {
+  position: relative;
+  height: 1.4rem;
+  min-width: max-content;
 }
 
-.matrix tbody td {
-  text-align: center;
-  padding: 0.5rem 0;
+.activity-months span {
+  position: absolute;
+  top: 0;
 }
 
-.matrix tbody tr {
-  border-top: 1px solid var(--line);
+.activity-grid {
+  display: grid;
+  grid-template-rows: repeat(7, 0.8rem);
+  grid-auto-flow: column;
+  grid-auto-columns: 0.8rem;
+  gap: 0.2rem;
+  width: max-content;
 }
 
-.matrix .dot {
+.cell {
   display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
-  border-radius: 50%;
-  background: var(--accent);
-  vertical-align: middle;
+  border-radius: 2px;
+  background: var(--l0);
 }
 
-.legend {
-  list-style: none;
-  margin: 0 0 1.5rem;
-  padding: 0;
+.l1 { background: var(--l1); }
+.l2 { background: var(--l2); }
+.l3 { background: var(--l3); }
+.l4 { background: var(--l4); }
+
+.activity-foot {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
-  color: var(--muted);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 0.75rem;
 }
 
-.legend-num {
-  color: var(--ink);
-  font-weight: 600;
-  margin-right: 0.25rem;
+.activity-foot p {
+  margin: 0;
+  max-width: none;
 }
 
-.tools-note {
-  color: var(--muted);
-  font-size: 0.95rem;
+.activity-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
 }
 
-@media (min-width: 40rem) {
-  .matrix thead td {
-    width: 14rem;
-  }
+.activity-legend .cell:first-of-type {
+  margin-left: 0.4rem;
+}
 
-  .matrix tbody th {
-    font-size: 1rem;
-  }
+.activity-legend .cell:last-of-type {
+  margin-right: 0.4rem;
+}
+
+.activity-link {
+  margin-top: 1rem;
+}
+
+.activity-scroll:focus-visible {
+  outline: 3px solid var(--a-text);
+  outline-offset: 2px;
 }
