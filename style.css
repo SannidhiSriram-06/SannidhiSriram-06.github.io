@@ -69,10 +69,10 @@ img {
 h1,
 h2,
 h3 {
-  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-family: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
   margin: 0;
   text-wrap: balance;
 }
@@ -161,8 +161,8 @@ code {
 }
 
 .brand {
-  font-family: "Newsreader", Georgia, serif;
   font-weight: 600;
+  letter-spacing: -0.02em;
   font-size: 1.2rem;
   color: var(--ink);
   text-decoration: none;
@@ -370,10 +370,13 @@ code {
 }
 
 .project-num {
-  font-family: "Newsreader", Georgia, serif;
+  font-family: "Cascadia Code", ui-monospace, monospace;
+  font-size: 0.82rem;
   font-weight: 600;
-  font-size: 1.05rem;
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
   margin-right: 0.5rem;
 }
 
@@ -414,10 +417,70 @@ code {
   font-size: clamp(1.75rem, 4.5vw, 2.4rem);
 }
 
-.project-cols {
+.project-body {
   display: grid;
-  gap: 0 3rem;
+  gap: 1.25rem 3rem;
 }
+
+.project-text p:last-child {
+  margin-bottom: 0.5rem;
+}
+
+/* Small flow graphic: each step is a chip, arrows join them, dashed = not wired up. */
+.project-graphic {
+  margin: 0;
+}
+
+.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem 0;
+}
+
+.flow li {
+  position: relative;
+  font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--field-line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.flow li::before {
+  content: "";
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.flow li:not(:last-child)::after {
+  content: "\2193";
+  position: absolute;
+  left: 0.9rem;
+  bottom: -1.35rem;
+  color: var(--muted);
+}
+
+.flow li.planned {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.flow li.planned::before {
+  background: transparent;
+  border: 1px dashed var(--muted);
+}
+
 
 /* Every project is a card. The one crossing the middle of the screen is
    highlighted by script.js (class is-active), so the highlight follows you. */
@@ -444,9 +507,6 @@ code {
     padding: 2rem 2.25rem;
   }
 
-  .project-cols {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .project-list {
@@ -460,21 +520,11 @@ code {
 }
 
 @media (min-width: 52rem) {
-  .project-list .project {
-    display: grid;
-    grid-template-columns: 15rem minmax(0, 1fr);
-    column-gap: 3rem;
+  .project-body {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    align-items: start;
   }
 
-  .project-list .project>.project-meta {
-    grid-column: 1;
-    grid-row: 1 / span 6;
-    margin-top: 0.5rem;
-  }
-
-  .project-list .project>*:not(.project-meta) {
-    grid-column: 2;
-  }
 }
 
 /* ── Tools ──────────────────────────────────────────────────────────── */
@@ -779,26 +829,7 @@ code {
   font-size: 0.85rem;
 }
 
-/* ── Dark theme: grotesque headings, acid-khaki accents ─────────────── */
-:root[data-theme="dark"] h1,
-:root[data-theme="dark"] h2,
-:root[data-theme="dark"] h3,
-:root[data-theme="dark"] .brand {
-  font-family: "Hanken Grotesk", system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.035em;
-}
-
-:root[data-theme="dark"] .project-num {
-  font-family: "Cascadia Code", ui-monospace, monospace;
-  font-size: 0.82rem;
-  font-weight: 600;
-  background: var(--accent);
-  color: var(--on-accent);
-  padding: 0.15rem 0.5rem;
-  border-radius: 2px;
-}
-
+/* ── Dark theme extras ─────────────────────────────────────────────── */
 :root[data-theme="dark"] .button-primary:hover {
   background: var(--ink);
   border-color: var(--ink);

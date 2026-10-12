@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-preset="classic">
+<html lang="en" data-theme="dark" data-preset="editorial">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -4866,6 +4866,81 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       .relationship-pulse-overlay { display: none !important; }
       .source-evidence-beacon,
       svg [data-node-id], svg [data-edge-from], svg [data-detail], svg [data-detail-anchor], svg [data-legend-hit], svg { transition: none !important; }
+    }
+  </style>
+  <style id="portfolio-palette">
+    /* Portfolio colours for every preset (beats the presets' own tokens by specificity).
+       Dark: neutral black and acid khaki. Light: warm paper and rust. */
+    html[data-theme="dark"][data-preset] {
+      --bg: #0b0c0e;
+      --grid: #1c1f24;
+      --canvas-dot: rgba(154, 161, 171, 0.14);
+      --panel: rgba(19, 21, 24, 0.96);
+      --panel-border: #3a3f47;
+      --lane-fill: rgba(255, 255, 255, 0.03);
+      --lane-stroke: #3a3f47;
+      --text: #eef0f2;
+      --text-muted: #9aa1ab;
+      --text-dim: #5f6670;
+      --text-faint: #848c97;
+      --mask: #131518;
+      --frontend-fill: rgba(222, 242, 115, 0.12);
+      --frontend-stroke: #def273;
+      --backend-fill: rgba(141, 186, 118, 0.14);
+      --backend-stroke: #8dba76;
+      --database-fill: rgba(205, 191, 143, 0.13);
+      --database-stroke: #cdbf8f;
+      --cloud-fill: rgba(127, 180, 201, 0.13);
+      --cloud-stroke: #7fb4c9;
+      --security-fill: rgba(239, 125, 110, 0.14);
+      --security-stroke: #ef7d6e;
+      --messagebus-fill: rgba(240, 150, 88, 0.14);
+      --messagebus-stroke: #f09658;
+      --external-fill: rgba(154, 161, 171, 0.12);
+      --external-stroke: #9aa1ab;
+      --arrow: #7d8590;
+      --arrow-emphasis: #def273;
+      --toolbar-bg: rgba(19, 21, 24, 0.92);
+      --toolbar-border: #3a3f47;
+      --toolbar-text: #eef0f2;
+      --toolbar-hover: #1d2025;
+      --toolbar-menu-bg: #131518;
+    }
+
+    html[data-theme="light"][data-preset] {
+      --bg: #faf7f2;
+      --grid: #e4ddd0;
+      --canvas-dot: #d9d1c2;
+      --panel: rgba(255, 253, 249, 0.97);
+      --panel-border: #cfc6b6;
+      --lane-fill: rgba(242, 237, 228, 0.6);
+      --lane-stroke: #cfc6b6;
+      --text: #1c1b18;
+      --text-muted: #5b564d;
+      --text-dim: #9a9386;
+      --text-faint: #6f695f;
+      --mask: #fffdf9;
+      --frontend-fill: rgba(166, 61, 22, 0.09);
+      --frontend-stroke: #a63d16;
+      --backend-fill: rgba(61, 122, 82, 0.1);
+      --backend-stroke: #3d7a52;
+      --database-fill: rgba(138, 109, 31, 0.1);
+      --database-stroke: #8a6d1f;
+      --cloud-fill: rgba(47, 111, 143, 0.1);
+      --cloud-stroke: #2f6f8f;
+      --security-fill: rgba(179, 54, 44, 0.09);
+      --security-stroke: #b3362c;
+      --messagebus-fill: rgba(194, 98, 30, 0.1);
+      --messagebus-stroke: #c2621e;
+      --external-fill: rgba(107, 102, 92, 0.09);
+      --external-stroke: #6b665c;
+      --arrow: #8a8478;
+      --arrow-emphasis: #a63d16;
+      --toolbar-bg: rgba(250, 247, 242, 0.92);
+      --toolbar-border: #cfc6b6;
+      --toolbar-text: #1c1b18;
+      --toolbar-hover: #efe9de;
+      --toolbar-menu-bg: #fffdf9;
     }
   </style>
 </head>
