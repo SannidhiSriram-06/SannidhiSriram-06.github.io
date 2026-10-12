@@ -953,3 +953,31 @@ code {
   font-size: 0.95rem;
   margin-top: 0.5rem;
 }
+
+/* ── Cloud coursework list ──────────────────────────────────────────── */
+.courses-label {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.courses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem 2rem;
+  color: var(--muted);
+}
+
+.course-code {
+  font-family: "Cascadia Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--ink);
+  margin-right: 0.4rem;
+}
+
+@media (min-width: 52rem) {
+  .courses {
+    grid-template-columns: 1fr 1fr;
+  }
+}
