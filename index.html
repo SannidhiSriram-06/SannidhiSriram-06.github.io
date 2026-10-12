@@ -9,7 +9,7 @@
     content="Cloud, DevOps and SRE student engineer. Eight AWS and Azure projects with Terraform, ECS, Kubernetes GitOps and detection engineering, each written up with what works and what doesn't. Six cloud certifications." />
   <meta name="author" content="Sannidhi Durga Pavan Sriram" />
   <meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#15140F" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#111109" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://sannidhisriram-06.github.io/" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
 
@@ -61,6 +61,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@5.2.3/400.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@5.2.3/600.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -111,7 +113,7 @@
         is in each repo: screenshots, Terraform and write-ups.</p>
 
       <!-- Featured -->
-      <article class="project project-featured">
+      <article class="project project-featured" id="p1">
         <p class="project-meta"><span class="project-num">01</span> AWS, us-east-1 · Terraform</p>
         <h3>Identity Threat Detection and Response Lab</h3>
         <div class="project-cols">
@@ -139,7 +141,7 @@
       </article>
 
       <ol class="project-list">
-        <li class="project">
+        <li class="project" id="p2">
           <p class="project-meta"><span class="project-num">02</span> AWS · Terraform</p>
           <h3>Cloud Compliance and Vendor Risk Lab</h3>
           <p>Terraform deploys deliberately misconfigured resources: a public S3 bucket, an open SSH security group, an
@@ -160,7 +162,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p3">
           <p class="project-meta"><span class="project-num">03</span> AWS, us-east-1 · Terraform</p>
           <h3>Cloud Support Simulation</h3>
           <p>Two support tickets against a Flask app on one EC2 instance, worked the way a support engineer would:
@@ -179,7 +181,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p4">
           <p class="project-meta"><span class="project-num">04</span> AWS, ap-south-1 · Terraform</p>
           <h3>Observability Stack on ECS Fargate</h3>
           <p>Prometheus and Grafana as two Fargate services, provisioned with Terraform: VPC, security group, IAM
@@ -197,7 +199,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p5">
           <p class="project-meta"><span class="project-num">05</span> Kubernetes (Minikube) · GitOps</p>
           <h3>AI Test Generator and GitOps Pipeline</h3>
           <p>A FastAPI service that asks Groq (llama-3.1-8b-instant) to write pytest files, and the pipeline that ships
@@ -218,7 +220,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p6">
           <p class="project-meta"><span class="project-num">06</span> AWS, us-east-1 · Terraform</p>
           <h3>Self-Healing Java Microservice</h3>
           <p>A Spring Boot service in Docker on an Auto Scaling Group (2 to 4 t3.micro across two Availability Zones)
@@ -239,7 +241,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p7">
           <p class="project-meta"><span class="project-num">07</span> AWS, us-east-1 · Serverless</p>
           <h3>Bookstore Serverless API</h3>
           <p>A Node.js 20 Lambda behind an API Gateway REST API serving <code>GET</code> and <code>POST /books</code>,
@@ -255,7 +257,7 @@
           </p>
         </li>
 
-        <li class="project">
+        <li class="project" id="p8">
           <p class="project-meta"><span class="project-num">08</span> Azure · Python</p>
           <h3>Patient Triage on Azure</h3>
           <p>A Flask app on Azure App Service (Linux, B1, Gunicorn) sends symptoms to an Azure OpenAI gpt-4o
@@ -277,38 +279,32 @@
     <!-- ───────────── Tools ───────────── -->
     <section class="section wrap" id="tools" aria-labelledby="tools-title">
       <h2 id="tools-title">Tools, and where I used them</h2>
-      <dl class="tools">
-        <div><dt>AWS</dt>
-          <dd>ECS Fargate, EC2, ALB, Auto Scaling, Lambda, API Gateway, Config, Security Hub, CloudTrail, CloudWatch,
-            S3, ECR, IAM, Client VPN, SSM, Backup</dd>
-        </div>
-        <div><dt>Azure</dt>
-          <dd>App Service, Azure OpenAI, Table Storage</dd>
-        </div>
-        <div><dt>Terraform</dt>
-          <dd>Identity lab, compliance lab, support simulation, observability, ECR for the test generator,
-            self-healing service</dd>
-        </div>
-        <div><dt>Docker</dt>
-          <dd>Identity lab, compliance dashboard, observability, test generator, self-healing service</dd>
-        </div>
-        <div><dt>Kubernetes, Helm, Argo CD</dt>
-          <dd>Test generator, on Minikube</dd>
-        </div>
-        <div><dt>CI and security</dt>
-          <dd>GitHub Actions and Snyk in the self-healing service; Jenkins in the test generator</dd>
-        </div>
-        <div><dt>Languages</dt>
-          <dd>Python (compliance lab, test generator, triage app, Infosys), Java (self-healing service), Node.js
-            (bookstore, Infosys), Bash (lab scripts and EC2 user data)</dd>
-        </div>
-        <div><dt>AI services</dt>
-          <dd>Groq in the test generator; Azure OpenAI in the triage app</dd>
-        </div>
-        <div><dt>Linux</dt>
-          <dd>Ubuntu and Amazon Linux on the lab hosts</dd>
-        </div>
-      </dl>
+      <p class="section-note">Each dot is a tool used in that project. The numbers match the project list above.</p>
+      <table class="matrix">
+        <caption class="sr-only">Tools used in each of the eight projects</caption>
+        <thead><tr><td></td><th scope="col"><span class="sr-only">Identity lab</span><span aria-hidden="true">01</span></th><th scope="col"><span class="sr-only">Compliance lab</span><span aria-hidden="true">02</span></th><th scope="col"><span class="sr-only">Support simulation</span><span aria-hidden="true">03</span></th><th scope="col"><span class="sr-only">Observability</span><span aria-hidden="true">04</span></th><th scope="col"><span class="sr-only">Test generator</span><span aria-hidden="true">05</span></th><th scope="col"><span class="sr-only">Self-healing service</span><span aria-hidden="true">06</span></th><th scope="col"><span class="sr-only">Bookstore API</span><span aria-hidden="true">07</span></th><th scope="col"><span class="sr-only">Patient triage</span><span aria-hidden="true">08</span></th></tr></thead>
+        <tbody>
+<tr><th scope="row">AWS</th><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Identity lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Compliance lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Support simulation</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Azure</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Patient triage</span></td></tr>
+<tr><th scope="row">Terraform</th><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Identity lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Compliance lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Support simulation</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Docker</th><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Identity lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Kubernetes, Helm, Argo CD</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Jenkins</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">GitHub Actions</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Snyk</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Python</th><td><span class="sr-only">Not used in Identity lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Compliance lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Patient triage</span></td></tr>
+<tr><th scope="row">Java</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Node.js</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Bash</th><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Groq</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td><span class="sr-only">Not used in Patient triage</span></td></tr>
+<tr><th scope="row">Azure OpenAI</th><td><span class="sr-only">Not used in Identity lab</span></td><td><span class="sr-only">Not used in Compliance lab</span></td><td><span class="sr-only">Not used in Support simulation</span></td><td><span class="sr-only">Not used in Observability</span></td><td><span class="sr-only">Not used in Test generator</span></td><td><span class="sr-only">Not used in Self-healing service</span></td><td><span class="sr-only">Not used in Bookstore API</span></td><td class="on"><span class="dot" aria-hidden="true"></span><span class="sr-only">Used in Patient triage</span></td></tr>
+        </tbody>
+      </table>
+      <ol class="legend" aria-label="Project numbers"><li><span class="legend-num">01</span> Identity lab</li><li><span class="legend-num">02</span> Compliance lab</li><li><span class="legend-num">03</span> Support simulation</li><li><span class="legend-num">04</span> Observability</li><li><span class="legend-num">05</span> Test generator</li><li><span class="legend-num">06</span> Self-healing service</li><li><span class="legend-num">07</span> Bookstore API</li><li><span class="legend-num">08</span> Patient triage</li></ol>
+      <p class="tools-note">AWS services used across the projects: ECS Fargate, EC2, ALB, Auto Scaling, Lambda, API Gateway,
+        Config, Security Hub, CloudTrail, CloudWatch, S3, ECR, IAM, Client VPN, SSM and Backup. Azure services: App
+        Service, Azure OpenAI and Table Storage. The Infosys internship used Python, Node.js, and AWS S3 and EC2. Lab
+        hosts ran Ubuntu and Amazon Linux.</p>
     </section>
 
     <!-- ───────────── Experience ───────────── -->
@@ -472,7 +468,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>© 2026 Sannidhi Durga Pavan Sriram. Built by hand with plain HTML, CSS and a little JavaScript.</p>
+      <p>© 2026 Sannidhi Durga Pavan Sriram</p>
     </div>
   </footer>
 
