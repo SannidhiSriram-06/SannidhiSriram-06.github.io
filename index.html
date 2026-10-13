@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'sha256-nKo76zcTgJ7cS6COEog0be5NjAlF+VynFE1kHt5L5Oo='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io https://github-contributions-api.jogruber.de; form-action https://formspree.io; frame-src 'self'; base-uri 'self'; object-src 'none'" />
   <title>Sannidhi Durga Pavan Sriram | Cloud, DevOps and SRE</title>
   <meta name="description"
     content="Cloud, DevOps and SRE student engineer. Eight AWS and Azure projects with Terraform, ECS, Kubernetes GitOps and detection engineering, each written up with what works and what doesn't. Six cloud certifications." />
   <meta name="author" content="Sannidhi Durga Pavan Sriram" />
-  <meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://sannidhisriram-06.github.io/" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
 
@@ -56,18 +58,13 @@
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@5.2.3/400.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@5.2.3/600.css" />
+  <link rel="preload" href="assets/fonts/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-tight-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-  <a class="skip-link" href="#work">Skip to projects</a>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="site-header">
     <div class="wrap header-inner">
@@ -81,13 +78,13 @@
         <a href="#education">Education</a>
         <a href="#contact">Contact</a>
       </nav>
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+      <button type="button" class="theme-toggle" id="theme-toggle">
         <span class="theme-toggle-label">Dark mode</span>
       </button>
     </div>
   </header>
 
-  <main id="top">
+  <main id="main">
     <!-- ───────────── Intro ───────────── -->
     <section class="intro wrap" id="about" aria-labelledby="intro-title">
       <div class="intro-text">
@@ -98,6 +95,7 @@
         <p class="lede">My projects run on AWS and Azure: Terraform infrastructure, a Vault and Wazuh detection lab, a Kubernetes
           GitOps pipeline and an auto-scaling service that replaces failed servers.</p>
         <p class="intro-status">Open to cloud, DevOps and SRE internships and entry-level roles.</p>
+        <p class="intro-tools">Terraform, AWS, Azure, Kubernetes, Argo CD, Jenkins, Docker, Prometheus, Grafana, Wazuh, Python</p>
         <p class="intro-actions">
           <a class="button button-primary" href="assets/media/Sannidhi_Sriram_CV.pdf" download>Download CV (PDF)</a>
           <a class="button" href="#contact">Get in touch</a>
@@ -113,19 +111,17 @@
     <section class="section wrap" id="work" aria-labelledby="work-title">
       <h2 id="work-title">Projects</h2>
       <p class="section-note">Every AWS and Azure resource was torn down after testing to avoid bills, so the evidence
-        is in each repo: screenshots, Terraform and write-ups. Where a project falls short, the text says so.</p>
+        is in each repo: screenshots, Terraform and write-ups. Where a project falls short, the text says so. Five projects have an architecture diagram.</p>
 
       <article class="project project-featured" id="p1">
           <p class="project-meta"><span class="project-num">01</span> AWS, us-east-1 · Terraform</p>
           <h3>Identity Threat Detection and Response Lab</h3>
+          <p class="project-hook">Vault and Wazuh on one AWS host: five custom detection rules, 33 alerts mapped to MITRE ATT&amp;CK.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>A single t3.large on AWS, built with Terraform, runs HashiCorp Vault 1.15 and a single-node Wazuh 4.7.5 SIEM in Docker Compose. Vault's AWS secrets engine issues short-lived IAM users on request. Wazuh reads the host's auth log and, through an S3 bucket, AWS CloudTrail.</p><p>I wrote five custom Wazuh rules and ran three simulations on the host: an SSH username spray, a run of unauthorised sudo commands and Vault credential requests. They produced 33 alerts, mapped to MITRE ATT&amp;CK: T1110 for password guessing and spraying, T1548.003 for sudo abuse, and T1078.004 and T1098 for IAM user creation. Separately I checked that a Vault-issued IAM user was deleted when its 900 second lease expired and when I revoked it.</p><p>It stops short of a real attack. Everything ran from localhost on one host, and CloudTrail takes 5 to 15 minutes to arrive, so those alerts are not instant. The incident-response runbook is written, but I did not run it against the live alerts. Wazuh uses its default credentials and Vault's unseal key sits on the host, so this is a lab and not a pattern to copy.</p>
+              <p>A single t3.large on AWS, built with Terraform, runs HashiCorp Vault 1.15 and a single-node Wazuh 4.7.5 SIEM in Docker Compose. Vault's AWS secrets engine issues short-lived IAM users on request. Wazuh reads the host's auth log and, through an S3 bucket, AWS CloudTrail.</p><p>I wrote five custom Wazuh rules and ran three simulations on the host: an SSH username spray, a run of unauthorised sudo commands and Vault credential requests. They produced 33 alerts, mapped to MITRE ATT&amp;CK: T1110 for password guessing and spraying, T1548.003 for sudo abuse, and T1078.004 and T1098 for IAM user creation. Separately I checked that a Vault-issued IAM user was deleted when its 900 second lease expired and when I revoked it.</p><p class="limits">It stops short of a real attack. Everything ran from localhost on one host, and CloudTrail takes 5 to 15 minutes to arrive, so those alerts are not instant. The incident-response runbook is written, but I did not run it against the live alerts. Wazuh uses its default credentials and Vault's unseal key sits on the host, so this is a lab and not a pattern to copy.</p>
               <p class="project-stack">Terraform, HashiCorp Vault, Wazuh, AWS CloudTrail, Docker Compose</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: simulated attack, logs, Wazuh rules, alerts, ATT&amp;CK mapping"><li>Attack from localhost</li><li>auth.log and CloudTrail</li><li>Wazuh, 5 custom rules</li><li>33 alerts</li><li>MITRE ATT&amp;CK mapping</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/identity-threat-detection-lab" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a><button type="button" class="link-button" data-diagram="identity-threat-lab" data-title="Identity Threat Detection and Response Lab">Architecture diagram</button></p>
         </article>
@@ -134,98 +130,88 @@
         <li class="project" id="p2">
           <p class="project-meta"><span class="project-num">02</span> AWS · Terraform</p>
           <h3>Cloud Compliance and Vendor Risk Lab</h3>
+          <p class="project-hook">Terraform plants four misconfigurations; Config and Security Hub findings become a risk register.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>Terraform deploys four deliberately bad resources: a public S3 bucket, a security group open to SSH from anywhere, an unencrypted EBS volume and an IAM user without MFA. AWS Config and Security Hub, set to the CIS AWS Foundations Benchmark v1.4.0, evaluate them, and two EventBridge rules send failures to a Python Lambda.</p><p>The Lambda writes each finding to S3, merges the duplicates that Config and Security Hub both report, and rebuilds a risk register as JSON and CSV. In the live run it recorded 21 findings, 17 mapped to CIS controls and 4 unmapped, each with an owner and an SLA based on severity. Alongside it, a command-line script scores a fictional vendor from a sample questionnaire and writes a report, and a small Flask dashboard shows the register and the vendor score.</p><p>The ISO 27001 and NIST CSF mappings are my own indicative crosswalk, not an official one, and the vendor and its answers are invented. The dashboard reads a saved copy of the register, not the live S3 file.</p>
+              <p>Terraform deploys four deliberately bad resources: a public S3 bucket, a security group open to SSH from anywhere, an unencrypted EBS volume and an IAM user without MFA. AWS Config and Security Hub, set to the CIS AWS Foundations Benchmark v1.4.0, evaluate them, and two EventBridge rules send failures to a Python Lambda.</p><p>The Lambda writes each finding to S3, merges the duplicates that Config and Security Hub both report, and rebuilds a risk register as JSON and CSV. In the live run it recorded 21 findings, 17 mapped to CIS controls and 4 unmapped, each with an owner and an SLA based on severity. Alongside it, a command-line script scores a fictional vendor from a sample questionnaire and writes a report, and a small Flask dashboard shows the register and the vendor score.</p><p class="limits">The ISO 27001 and NIST CSF mappings are my own indicative crosswalk, not an official one, and the vendor and its answers are invented. The dashboard reads a saved copy of the register, not the live S3 file.</p>
               <p class="project-stack">Terraform, AWS Config, Security Hub, EventBridge, Lambda (Python), Flask</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: misconfigured resources, Config and Security Hub, EventBridge and Lambda, risk register, dashboard"><li>Planted misconfigurations</li><li>Config and Security Hub</li><li>EventBridge, then Lambda</li><li>S3 risk register</li><li>Flask dashboard</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/cloud-compliance-vendor-risk" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a><button type="button" class="link-button" data-diagram="compliance-vendor-risk" data-title="Cloud Compliance and Vendor Risk Lab">Architecture diagram</button></p>
         </li>
         <li class="project" id="p3">
           <p class="project-meta"><span class="project-num">03</span> AWS, us-east-1 · Terraform</p>
           <h3>Cloud Support Simulation</h3>
+          <p class="project-hook">Two support tickets worked end to end on one EC2 instance: a fix and a restore.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>One t3.micro in the default VPC runs a small Flask app. Terraform creates the instance, its security group, IAM roles, a CloudWatch log group and a daily AWS Backup plan. I played two roles: an owner who builds it, and a support analyst with scoped, non-admin permissions (an attempt to create an access key as that user was denied).</p><p>Ticket one, the app is down: the analyst connected through SSM Session Manager, saw the app healthy on the host while CloudWatch Logs Insights showed no requests arriving, traced it to a missing security group rule and added it back. Ticket two, my data is gone: I restored a deleted file from an AWS Backup recovery point onto a new instance. The job reported COMPLETED, but a file written seconds before the backup was missing, so I checked the restored instance directly before writing to the customer. I also set up an AWS Client VPN endpoint with mutual-TLS certificates made with Easy-RSA and reached the instance's private IP over it.</p><p>The write-ups are two incident reports, two knowledge-base articles and a customer update. It is a simulation: one instance with a public IP in the default VPC, and SSM session logging was not turned on.</p>
+              <p>One t3.micro in the default VPC runs a small Flask app. Terraform creates the instance, its security group, IAM roles, a CloudWatch log group and a daily AWS Backup plan. I played two roles: an owner who builds it, and a support analyst with scoped, non-admin permissions (an attempt to create an access key as that user was denied).</p><p>Ticket one, the app is down: the analyst connected through SSM Session Manager, saw the app healthy on the host while CloudWatch Logs Insights showed no requests arriving, traced it to a missing security group rule and added it back. Ticket two, my data is gone: I restored a deleted file from an AWS Backup recovery point onto a new instance. The job reported COMPLETED, but a file written seconds before the backup was missing, so I checked the restored instance directly before writing to the customer. I also set up an AWS Client VPN endpoint with mutual-TLS certificates made with Easy-RSA and reached the instance's private IP over it.</p><p class="limits">The write-ups are two incident reports, two knowledge-base articles and a customer update. It is a simulation: one instance with a public IP in the default VPC, and SSM session logging was not turned on.</p>
               <p class="project-stack">Terraform, AWS Client VPN, SSM Session Manager, CloudWatch Logs Insights, AWS Backup</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: ticket, remote access, log analysis, fix or restore, verification"><li>Customer ticket</li><li>Client VPN or SSM</li><li>Logs Insights</li><li>Fix or restore</li><li>Verify, then reply</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/cloud-support-ticket-simulation" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
         </li>
         <li class="project" id="p4">
           <p class="project-meta"><span class="project-num">04</span> AWS, ap-south-1 · Terraform</p>
           <h3>Observability Stack on ECS Fargate</h3>
+          <p class="project-hook">Prometheus and Grafana on ECS Fargate, with a dashboard and an alert.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>Terraform builds a VPC with two public subnets, a security group, IAM roles, an ECS cluster and a CloudWatch log group, then runs two Fargate services. Prometheus uses a custom image I built for linux/amd64 and pushed to ECR. Grafana runs the stock image.</p><p>In Grafana I made a three-panel dashboard (total HTTP requests, request rate over 5 minutes and active time series) and an alert rule that fires when the request rate passes 0.5, evaluated every minute. Screenshots of the cluster, the Prometheus targets, the dashboard and the alert are in the repository.</p><p>Prometheus only scrapes itself, so the dashboard shows Prometheus's own metrics and no application was monitored. Both services have public IPs, with ports 3000 and 9090 open to the internet. That is fine for a short lab and wrong for anything else.</p>
+              <p>Terraform builds a VPC with two public subnets, a security group, IAM roles, an ECS cluster and a CloudWatch log group, then runs two Fargate services. Prometheus uses a custom image I built for linux/amd64 and pushed to ECR. Grafana runs the stock image.</p><p>In Grafana I made a three-panel dashboard (total HTTP requests, request rate over 5 minutes and active time series) and an alert rule that fires when the request rate passes 0.5, evaluated every minute. Screenshots of the cluster, the Prometheus targets, the dashboard and the alert are in the repository.</p><p class="limits">Prometheus only scrapes itself, so the dashboard shows Prometheus's own metrics and no application was monitored. Both services have public IPs, with ports 3000 and 9090 open to the internet. That is fine for a short lab and wrong for anything else.</p>
               <p class="project-stack">Terraform, ECS Fargate, Prometheus, Grafana, ECR</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: Terraform, ECS Fargate, Prometheus, Grafana, alert"><li>Terraform</li><li>ECS Fargate</li><li>Prometheus</li><li>Grafana</li><li>Alert above 0.5</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/observability-fargate" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a><button type="button" class="link-button" data-diagram="observability-fargate" data-title="Observability Stack on ECS Fargate">Architecture diagram</button></p>
         </li>
         <li class="project" id="p5">
           <p class="project-meta"><span class="project-num">05</span> Kubernetes (Minikube) · GitOps</p>
           <h3>AI Test Generator and GitOps Pipeline</h3>
+          <p class="project-hook">Jenkins to ECR to Argo CD: a GitOps pipeline around a FastAPI test generator.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>The service is a FastAPI app with one real endpoint. POST /generate takes up to 2,000 characters of Python, validates it, limits callers to 5 requests a minute and asks Groq's llama-3.1-8b-instant for a pytest file. The project is mostly the pipeline around it: a Jenkins job runs pytest with a 70% coverage gate, builds a multi-stage Docker image, pushes it to ECR (created with Terraform) tagged with the build number and commit, and commits that tag to a second repository that holds the Helm chart.</p><p>Splitting the repositories is the GitOps part. Jenkins never holds cluster credentials; it only writes an image tag to Git. An Argo CD application watching the chart repository syncs it to a Minikube cluster, where the Deployment pulls from ECR with a pull secret and reads the Groq key from a Kubernetes Secret.</p><p>The Argo CD application and the cluster were set up by hand outside the two repositories, so the repos show the chart and the CI side but not Argo CD itself.</p>
+              <p>The service is a FastAPI app with one real endpoint. POST /generate takes up to 2,000 characters of Python, validates it, limits callers to 5 requests a minute and asks Groq's llama-3.1-8b-instant for a pytest file. The project is mostly the pipeline around it: a Jenkins job runs pytest with a 70% coverage gate, builds a multi-stage Docker image, pushes it to ECR (created with Terraform) tagged with the build number and commit, and commits that tag to a second repository that holds the Helm chart.</p><p>Splitting the repositories is the GitOps part. Jenkins never holds cluster credentials; it only writes an image tag to Git. An Argo CD application watching the chart repository syncs it to a Minikube cluster, where the Deployment pulls from ECR with a pull secret and reads the Groq key from a Kubernetes Secret.</p><p class="limits">The Argo CD application and the cluster were set up by hand outside the two repositories, so the repos show the chart and the CI side but not Argo CD itself.</p>
               <p class="project-stack">FastAPI, Jenkins, Docker, ECR (Terraform), Helm, Argo CD</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: push, Jenkins tests, image in ECR, tag commit, Argo CD sync"><li>git push</li><li>Jenkins, pytest at 70%</li><li>Image in ECR</li><li>Tag commit in chart repo</li><li>Argo CD sync to Minikube</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/ai-test-generator" target="_blank" rel="noopener">App repository<span class="sr-only"> (opens in a new tab)</span></a><a href="https://github.com/SannidhiSriram-06/ai-pytest-generator-gitops" target="_blank" rel="noopener">GitOps chart repository<span class="sr-only"> (opens in a new tab)</span></a><button type="button" class="link-button" data-diagram="gitops-ai-testgen" data-title="AI Test Generator and GitOps Pipeline">Architecture diagram</button></p>
         </li>
         <li class="project" id="p6">
           <p class="project-meta"><span class="project-num">06</span> AWS, us-east-1 · Terraform</p>
           <h3>Self-Healing Java Microservice</h3>
+          <p class="project-hook">A Spring Boot service on an Auto Scaling Group that replaces failed servers.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>Terraform builds a VPC across two Availability Zones, an Application Load Balancer with a target group, and an Auto Scaling Group of 2 to 4 t3.micro instances whose user data installs Docker and runs the Spring Boot image. Recovery happens in layers: the Actuator health endpoint, a Docker health check every 30 seconds, ALB health checks that drop a target after 3 failed 30 second checks (about 90 seconds), an ASG that uses those ELB checks to replace the instance, and a target-tracking policy that adds instances at 80% CPU.</p><p>A GitHub Actions workflow builds with Maven, runs the tests, pushes the image to Docker Hub and runs Snyk dependency and image scans. It ran green in February 2026.</p><p>Two gaps. Snyk runs after the push, so a finding fails the run but does not stop the image being published, and deploying a new image to EC2 is manual. Runs since February fail at the Docker Hub login because the secrets are no longer set.</p>
+              <p>Terraform builds a VPC across two Availability Zones, an Application Load Balancer with a target group, and an Auto Scaling Group of 2 to 4 t3.micro instances whose user data installs Docker and runs the Spring Boot image. Recovery happens in layers: the Actuator health endpoint, a Docker health check every 30 seconds, ALB health checks that drop a target after 3 failed 30 second checks (about 90 seconds), an ASG that uses those ELB checks to replace the instance, and a target-tracking policy that adds instances at 80% CPU.</p><p>A GitHub Actions workflow builds with Maven, runs the tests, pushes the image to Docker Hub and runs Snyk dependency and image scans. It ran green in February 2026.</p><p class="limits">Two gaps. Snyk runs after the push, so a finding fails the run but does not stop the image being published, and deploying a new image to EC2 is manual. Runs since February fail at the Docker Hub login because the secrets are no longer set.</p>
               <p class="project-stack">Terraform, ALB and Auto Scaling, Spring Boot, GitHub Actions, Snyk</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: request, health check, target dropped after three failures, instance replaced"><li>Request to ALB</li><li>Health check every 30 s</li><li>3 failures, target dropped</li><li>ASG replaces the instance</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/self-healing-microservice" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a><button type="button" class="link-button" data-diagram="self-healing-asg" data-title="Self-Healing Java Microservice">Architecture diagram</button></p>
         </li>
+      </ol>
+
+      <h3 class="list-subhead">Smaller experiments</h3>
+      <ol class="project-list">
         <li class="project" id="p7">
           <p class="project-meta"><span class="project-num">07</span> AWS, us-east-1 · Serverless</p>
           <h3>Bookstore Serverless API</h3>
+          <p class="project-hook">A Node.js Lambda behind API Gateway; the database is not connected yet.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>A Node.js 20 Lambda handles GET and POST /books behind an API Gateway REST API on a prod stage, with CORS enabled and logs going to CloudWatch. I built it to practise mapping the parts of a bookstore API (compute, routing, storage, logging) onto serverless services. The repository keeps the deployment screenshots and an architecture write-up.</p><p>On the Free Tier it costs nothing while idle, because Lambda and API Gateway charge per request. I deleted the AWS resources after testing.</p><p>It is not a working bookstore yet. The handler keeps three books in an array inside the function, so a POSTed book disappears on the next cold start. I set up a MongoDB Atlas cluster and the mongodb driver is in package.json, but the code never connects to it. Wiring that in is the obvious next step.</p>
+              <p>A Node.js 20 Lambda handles GET and POST /books behind an API Gateway REST API on a prod stage, with CORS enabled and logs going to CloudWatch. I built it to practise mapping the parts of a bookstore API (compute, routing, storage, logging) onto serverless services. The repository keeps the deployment screenshots and an architecture write-up.</p><p>On the Free Tier it costs nothing while idle, because Lambda and API Gateway charge per request. I deleted the AWS resources after testing.</p><p class="limits">It is not a working bookstore yet. The handler keeps three books in an array inside the function, so a POSTed book disappears on the next cold start. I set up a MongoDB Atlas cluster and the mongodb driver is in package.json, but the code never connects to it. Wiring that in is the obvious next step.</p>
               <p class="project-stack">AWS Lambda, API Gateway, CloudWatch Logs</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: client, API Gateway, Lambda, in-memory array; MongoDB Atlas is planned but not connected"><li>Client</li><li>API Gateway</li><li>Lambda, Node.js 20</li><li>In-memory array</li><li class="planned">MongoDB Atlas, not connected</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/Bookstore-Microservice-Architecture-on-AWS" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
         </li>
         <li class="project" id="p8">
           <p class="project-meta"><span class="project-num">08</span> Azure · Python</p>
           <h3>Patient Triage on Azure</h3>
+          <p class="project-hook">Flask on Azure App Service sends symptoms to Azure OpenAI and logs to Table Storage.</p>
           <div class="project-body">
             <div class="project-text">
-              <p>A Flask app on Azure App Service (Linux, B1 tier, Gunicorn) takes a free-text symptom description and sends it to an Azure OpenAI gpt-4o deployment. The prompt asks for Urgent Care, Non-Urgent Visit or Self Care plus a short reason, and the app shows the answer. Each symptom and result pair is written to an Azure Table Storage table called triagelogs.</p><p>The point was the cloud wiring, not the medicine. Compute, model and storage are three managed services, and all keys come from App Service configuration, so none are in the repository. A PDF of timestamped console screenshots shows the resources and the app running before I decommissioned them.</p><p>It is a proof of concept with no authentication, input validation, rate limiting or retries around the model call, and its answers should not be used for real medical decisions.</p>
+              <p>A Flask app on Azure App Service (Linux, B1 tier, Gunicorn) takes a free-text symptom description and sends it to an Azure OpenAI gpt-4o deployment. The prompt asks for Urgent Care, Non-Urgent Visit or Self Care plus a short reason, and the app shows the answer. Each symptom and result pair is written to an Azure Table Storage table called triagelogs.</p><p>The point was the cloud wiring, not the medicine. Compute, model and storage are three managed services, and all keys come from App Service configuration, so none are in the repository. A PDF of timestamped console screenshots shows the resources and the app running before I decommissioned them.</p><p class="limits">It is a proof of concept with no authentication, input validation, rate limiting or retries around the model call, and its answers should not be used for real medical decisions.</p>
               <p class="project-stack">Azure App Service, Azure OpenAI, Azure Table Storage, Flask</p>
             </div>
-            <figure class="project-graphic">
-              <ol class="flow" role="img" aria-label="Flow: symptoms form, Flask app, Azure OpenAI, Table Storage log"><li>Symptoms form</li><li>Flask on App Service</li><li>Azure OpenAI, gpt-4o</li><li>Table Storage log</li></ol>
-            </figure>
           </div>
           <p class="project-links"><a href="https://github.com/SannidhiSriram-06/AI-Patient-Triage-System-on-Azure-CSA-Case-Study-" target="_blank" rel="noopener">Repository on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
         </li>
@@ -285,12 +271,12 @@
           </div>
         </dl>
         <figure class="cert-figure">
-          <a href="assets/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">
-            <img src="assets/Infosys_Internship_Certification_page-0001.jpg" width="1400" height="989" loading="lazy"
+          <a href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">
+            <img src="assets/media/Infosys_Internship_Certification_page-0001.jpg" width="1400" height="989" loading="lazy"
               alt="Infosys Springboard internship certificate for Sannidhi Durga Pavan Sriram" />
           </a>
           <figcaption>Internship certificate from Infosys Springboard. <a
-              href="assets/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">Open full
+              href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">Open full
               size<span class="sr-only"> (opens in a new tab)</span></a></figcaption>
         </figure>
       </article>
@@ -359,15 +345,6 @@
         <li>
           <h3>B.Tech in Computer Science and Engineering, minor in Cloud Computing</h3>
           <p>Lovely Professional University, Phagwara, Punjab · August 2023 to May 2027 · CGPA 7.33</p>
-          <p class="muted courses-label">Cloud coursework</p>
-          <ul class="courses">
-            <li><span class="course-code">INT327</span> Cloud Infrastructure and Resource Management</li>
-            <li><span class="course-code">INT328</span> Network Virtualization and Cloud Security</li>
-            <li><span class="course-code">INT330</span> Managing Cloud Solutions</li>
-            <li><span class="course-code">INT362</span> Cloud Architecture and Implementation-I</li>
-            <li><span class="course-code">INT363</span> Cloud Microservices</li>
-            <li><span class="course-code">INT364</span> Cloud Architecture and Implementation-II</li>
-          </ul>
         </li>
         <li>
           <h3>Intermediate (MPC), Keshav Smarak Junior College</h3>
@@ -388,8 +365,6 @@
         <ul class="contact-list">
           <li><span class="contact-label">Email</span>
             <a href="mailto:sannidhisriram8@gmail.com">sannidhisriram8@gmail.com</a></li>
-          <li><span class="contact-label">Phone</span>
-            <a href="tel:+919182137828">+91 91821 37828</a></li>
           <li><span class="contact-label">LinkedIn</span>
             <a href="https://www.linkedin.com/in/sannidhi-sriram" target="_blank" rel="noopener">linkedin.com/in/sannidhi-sriram<span
                 class="sr-only"> (opens in a new tab)</span></a></li>
@@ -403,11 +378,13 @@
         <form action="https://formspree.io/f/maqpenyw" method="POST" id="contact-form" novalidate>
           <div class="field">
             <label for="cf-name">Name</label>
-            <input id="cf-name" name="name" type="text" autocomplete="name" required />
+            <input id="cf-name" name="name" type="text" autocomplete="name" required aria-describedby="cf-name-err" />
+            <p class="field-error" id="cf-name-err" hidden></p>
           </div>
           <div class="field">
             <label for="cf-email">Email</label>
-            <input id="cf-email" name="email" type="email" autocomplete="email" required />
+            <input id="cf-email" name="email" type="email" autocomplete="email" required aria-describedby="cf-email-err" />
+            <p class="field-error" id="cf-email-err" hidden></p>
           </div>
           <div class="field">
             <label for="cf-subject">Subject <span class="optional">(optional)</span></label>
@@ -415,12 +392,13 @@
           </div>
           <div class="field">
             <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" rows="5" required></textarea>
+            <textarea id="cf-message" name="message" rows="5" required aria-describedby="cf-message-err"></textarea>
+            <p class="field-error" id="cf-message-err" hidden></p>
           </div>
           <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <p class="form-row">
             <button type="submit" class="button button-primary" id="form-submit">Send message</button>
-            <span class="form-status" id="form-status" role="status" aria-live="polite"></span>
+            <span class="form-status" id="form-status" role="status"></span>
           </p>
         </form>
       </div>

@@ -21,8 +21,9 @@ npx serve .
 | Path | Purpose |
 | --- | --- |
 | `index.html` | the page |
-| `style.css` | light and dark themes, layout |
-| `script.js` | theme toggle, diagram dialog, contact form |
+| `style.css` | light and dark themes, layout, self-hosted font faces |
+| `script.js` | theme toggle, projects accordion, section nav, diagram dialog, GitHub calendar, contact form |
+| `assets/fonts/` | self-hosted Inter Tight and Cascadia Code (latin subsets) |
 | `assets/diagrams/` | Archify architecture diagrams |
 | `llms.txt` | plain-text summary for language-model crawlers |
 

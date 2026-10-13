@@ -13,7 +13,6 @@
     root.setAttribute('data-theme', theme);
     if (toggle) {
       const dark = theme === 'dark';
-      toggle.setAttribute('aria-pressed', String(dark));
       toggle.querySelector('.theme-toggle-label').textContent = dark ? 'Light mode' : 'Dark mode';
     }
     if (save) {
@@ -64,11 +63,17 @@
     e.preventDefault();
     status.textContent = '';
 
+    const MSG = { 'cf-name': 'Enter your name.', 'cf-email': 'Enter a valid email address.', 'cf-message': 'Write a message.' };
     const bad = [...form.querySelectorAll('[required]')].filter((el) => !el.checkValidity());
-    form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    form.querySelectorAll('[required]').forEach((el) => {
+      const err = document.getElementById(el.id + '-err');
+      const isBad = bad.includes(el);
+      el.toggleAttribute('aria-invalid', isBad);
+      if (isBad) el.setAttribute('aria-invalid', 'true');
+      if (err) { err.hidden = !isBad; err.textContent = isBad ? MSG[el.id] : ''; }
+    });
     if (bad.length) {
-      bad.forEach((el) => el.setAttribute('aria-invalid', 'true'));
-      status.textContent = 'Please fill in your name, a valid email and a message.';
+      status.textContent = 'Please fix the ' + (bad.length === 1 ? 'field' : 'fields') + ' marked above.';
       bad[0].focus();
       return;
     }
@@ -103,7 +108,7 @@
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const CELL = 0.8 + 0.2; // rem: cell width plus gap, matches the CSS
 
-    function render(data) {
+    function render(data, saved) {
       const days = data.contributions;
       const first = new Date(days[0].date + 'T00:00:00Z');
       const pad = first.getUTCDay(); // Sunday-first rows, like GitHub
@@ -130,7 +135,8 @@
       });
       monthsEl.style.width = Math.ceil((days.length + pad) / 7) * CELL + 'rem';
       const count = (data.total && data.total.lastYear) || total;
-      totalEl.textContent = count.toLocaleString('en-US') + ' contributions in the last year';
+      totalEl.textContent = count.toLocaleString('en-US') + ' contributions in the last year' +
+        (saved ? ' (saved copy up to ' + days[days.length - 1].date + ')' : '');
       gridEl.setAttribute('aria-label', 'Contribution calendar: ' + totalEl.textContent);
       statusEl.hidden = true;
       scrollEl.hidden = false;
@@ -142,7 +148,7 @@
     const SNAPSHOT = 'assets/contributions.json';
     const load = (url) => fetch(url).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
 
-    load(LIVE).catch(() => load(SNAPSHOT)).then(render).catch(() => {
+    load(LIVE).then((d) => render(d, false), () => load(SNAPSHOT).then((d) => render(d, true))).catch(() => {
       statusEl.textContent = 'Could not load the contribution calendar. The profile link below has it.';
     });
   }
@@ -218,17 +224,15 @@
     let lockUntil = 0;
     links.forEach((l) => l.addEventListener('click', () => { lockUntil = Date.now() + 900; setActive(l); }));
     const targets = links.map((l) => document.querySelector(l.getAttribute('href'))).filter(Boolean);
-    const onScroll = () => {
+    const io = new IntersectionObserver((entries) => {
       if (Date.now() < lockUntil) return;
-      const line = window.innerHeight * 0.35;
-      let hit = null;
-      targets.forEach((t) => { if (t.getBoundingClientRect().top <= line) hit = links.find((l) => l.hash === '#' + t.id); });
-      if (hit) setActive(hit);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
+      entries.forEach((en) => {
+        if (en.isIntersecting) setActive(links.find((l) => l.hash === '#' + en.target.id));
+      });
+    }, { rootMargin: '-35% 0px -65% 0px' }); // a thin band 35% down the viewport
+    targets.forEach((t) => io.observe(t));
     window.addEventListener('resize', () => current && place(current));
     document.fonts?.ready.then(() => { current && place(current); });
-    onScroll();
     if (!current) setActive(links[0]);
     requestAnimationFrame(() => pill.classList.add('is-ready'));
   }
