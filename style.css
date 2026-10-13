@@ -1064,7 +1064,7 @@ code {
   z-index: 1;
   flex: none;
   min-height: 2.5rem;
-  padding: 0 1rem;
+  padding: 0 0.8rem;
   border-radius: 999px;
   white-space: nowrap;
   transition: color 0.3s ease;
