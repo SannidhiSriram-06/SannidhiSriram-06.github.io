@@ -101,17 +101,6 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
-code {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.92em;
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.muted {
-  color: var(--muted);
-}
-
 .wrap {
   width: min(100% - 2rem, 68rem);
   margin-inline: auto;
@@ -265,7 +254,6 @@ code {
   border-color: var(--accent);
 }
 
-
 .button[disabled] {
   opacity: 0.6;
   cursor: progress;
@@ -384,10 +372,6 @@ code {
   margin-bottom: 0.9rem;
 }
 
-.project strong {
-  font-weight: 600;
-}
-
 .project-stack {
   font-size: 0.95rem;
   color: var(--muted);
@@ -423,7 +407,6 @@ code {
 .project-text p:last-child {
   margin-bottom: 0.5rem;
 }
-
 
 /* Every project is a card; the open one is highlighted. */
 .project {
@@ -461,17 +444,12 @@ code {
   margin-bottom: 1rem;
 }
 
-@media (min-width: 52rem) {
-}
-
 /* ── Tools ──────────────────────────────────────────────────────────── */
-.tools,
 .defects {
   margin: 0;
   max-width: 54rem;
 }
 
-.tools>div,
 .defects>div {
   display: grid;
   gap: 0.15rem 2rem;
@@ -479,12 +457,10 @@ code {
   border-top: 1px solid var(--line);
 }
 
-.tools dt,
 .defects dt {
   font-weight: 600;
 }
 
-.tools dd,
 .defects dd {
   margin: 0;
   color: var(--muted);
@@ -492,7 +468,6 @@ code {
 
 @media (min-width: 40rem) {
 
-  .tools>div,
   .defects>div {
     grid-template-columns: 12rem minmax(0, 1fr);
   }
@@ -791,7 +766,6 @@ code {
   border-color: #000;
 }
 
-
 .brand {
   font-family: var(--font-sans);
   font-weight: 500;
@@ -1082,7 +1056,6 @@ code {
   }
 }
 
-
 /* ── Projects accordion (from the Framer Flexible Accordion idea) ─────── */
 .project-toggle {
   display: flex;
@@ -1147,10 +1120,6 @@ code {
   padding-top: 1rem;
 }
 
-.project-featured {
-  margin-bottom: 1rem;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .project-panel {
     transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -1191,9 +1160,4 @@ code {
   margin: 0.3rem 0 0;
   font-size: 0.9rem;
   font-weight: 500;
-}
-
-.activity-note {
-  font-size: 0.85rem;
-  color: var(--muted);
 }
