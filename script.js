@@ -147,24 +147,99 @@
     });
   }
 
-  /* ── Highlight the project at the middle of the screen ─────────────── */
+  /* ── Projects accordion: one open at a time, nothing removed ───────── */
   const projects = document.querySelectorAll('.project');
-  if (projects.length && 'IntersectionObserver' in window) {
-    // A thin band across the vertical centre: whichever card crosses it is active.
-    const band = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          projects.forEach((p) => p.classList.toggle('is-active', p === entry.target));
-        }
-      });
-    }, { rootMargin: '-49% 0px -49% 0px', threshold: 0 });
-    projects.forEach((p) => band.observe(p));
-    // Nothing is highlighted once the middle of the screen leaves the projects section.
-    const work = document.getElementById('work');
-    if (work) {
-      new IntersectionObserver((entries) => {
-        if (!entries[0].isIntersecting) projects.forEach((p) => p.classList.remove('is-active'));
-      }, { rootMargin: '-49% 0px -49% 0px', threshold: 0 }).observe(work);
-    }
+  projects.forEach((p, i) => {
+    const h3 = p.querySelector('h3');
+    const body = p.querySelector('.project-body');
+    const links = p.querySelector('.project-links');
+    if (!h3 || !body) return;
+    const panel = document.createElement('div');
+    const inner = document.createElement('div');
+    panel.className = 'project-panel';
+    panel.id = p.id + '-panel';
+    inner.className = 'project-panel-inner';
+    inner.append(body);
+    if (links) inner.append(links);
+    panel.append(inner);
+    p.append(panel);
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'project-toggle';
+    btn.setAttribute('aria-controls', panel.id);
+    btn.append(...h3.childNodes);
+    h3.append(btn);
+
+    const set = (open) => {
+      p.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      inner.inert = !open;
+    };
+    p.projectSet = set;
+    set(i === 0);
+    btn.addEventListener('click', () => {
+      const open = !p.classList.contains('is-open');
+      projects.forEach((o) => o !== p && o.projectSet?.(false));
+      set(open);
+    });
+  });
+  // Deep links such as #p3 open that project.
+  const openFromHash = () => {
+    const t = document.getElementById(location.hash.slice(1));
+    if (t?.projectSet) { projects.forEach((o) => o.projectSet?.(o === t)); }
+  };
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+
+  /* ── Pill nav: sliding indicator follows the section in view ──────── */
+  const nav = document.querySelector('.site-nav');
+  if (nav) {
+    const links = [...nav.querySelectorAll('a[href^="#"]')];
+    const pill = document.createElement('span');
+    pill.className = 'nav-pill';
+    pill.setAttribute('aria-hidden', 'true');
+    nav.prepend(pill);
+
+    const place = (link) => {
+      pill.style.width = link.offsetWidth + 'px';
+      pill.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+    };
+    let current = null;
+    const setActive = (link) => {
+      if (!link || link === current) return;
+      current = link;
+      links.forEach((l) => (l === link ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current')));
+      place(link);
+      // Move only the nav strip; scrollIntoView would also cancel the page's own smooth scroll.
+      nav.scrollLeft = Math.max(0, link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2);
+    };
+
+    let lockUntil = 0;
+    links.forEach((l) => l.addEventListener('click', () => { lockUntil = Date.now() + 900; setActive(l); }));
+    const targets = links.map((l) => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    const onScroll = () => {
+      if (Date.now() < lockUntil) return;
+      const line = window.innerHeight * 0.35;
+      let hit = null;
+      targets.forEach((t) => { if (t.getBoundingClientRect().top <= line) hit = links.find((l) => l.hash === '#' + t.id); });
+      if (hit) setActive(hit);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => current && place(current));
+    document.fonts?.ready.then(() => { current && place(current); });
+    onScroll();
+    if (!current) setActive(links[0]);
+    requestAnimationFrame(() => pill.classList.add('is-ready'));
   }
+
+  /* ── Glass buttons: highlight follows the pointer ─────────────────── */
+  document.querySelectorAll('.button, .theme-toggle').forEach((b) => {
+    b.addEventListener('pointermove', (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty('--mx', e.clientX - r.left + 'px');
+      b.style.setProperty('--my', e.clientY - r.top + 'px');
+    });
+  });
+
 })();
