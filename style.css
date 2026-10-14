@@ -777,8 +777,27 @@ a:hover {
 
 /* ── Dark theme extras ─────────────────────────────────────────────── */
 
-/* ── GitHub activity: same palette in both themes (dark panel) ─────── */
+/* ── GitHub activity: light panel by default, dark panel in dark mode ─── */
 .activity {
+  --a-bg: var(--surface);
+  --a-line: var(--line);
+  --a-text: #333333;
+  --l0: #e0e0e0;
+  --l1: #bfe3b0;
+  --l2: #78c382;
+  --l3: #2f9e5a;
+  --l4: #146c3b;
+  background: var(--a-bg);
+  color: var(--a-text);
+  border: 1px solid var(--a-line);
+  border-radius: 4px;
+  padding: 1.25rem 1.25rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+
+:root[data-theme="dark"] .activity {
   --a-bg: #0c0d0f;
   --a-line: #26292c;
   --a-text: #cdbf8f;
@@ -787,13 +806,6 @@ a:hover {
   --l2: #4e7d62;
   --l3: #8dba76;
   --l4: #b0bf6b;
-  background: var(--a-bg);
-  color: var(--a-text);
-  border: 1px solid var(--a-line);
-  border-radius: 4px;
-  padding: 1.25rem 1.25rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
 }
 
 .activity-status {
@@ -1143,12 +1155,6 @@ a:hover {
   color: var(--muted);
 }
 
-.list-subhead {
-  font-size: 1.15rem;
-  color: var(--muted);
-  margin: 2.5rem 0 1rem;
-}
-
 .intro-tools {
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -1160,4 +1166,155 @@ a:hover {
   margin: 0.3rem 0 0;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+/* ── Business card (contact section) and contact card page ───────────── */
+.bizcard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: min(100%, 24rem);
+  aspect-ratio: 1.75;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  border-left: 0.5rem solid var(--lime);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.bizcard:hover {
+  border-color: var(--accent);
+  border-left-color: var(--lime);
+}
+
+.bizcard-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.bizcard-name {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.bizcard-role,
+.bizcard-place,
+.bizcard-cta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.bizcard-cta {
+  margin-top: 0.6rem;
+  color: var(--ink);
+}
+
+.bizcard-qr {
+  flex: none;
+  width: 6.5rem;
+  height: 6.5rem;
+  padding: 0.4rem;
+  background: #fff; /* a QR code needs a light quiet zone in both themes */
+  border-radius: 4px;
+}
+
+.card-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.card-wrap {
+  width: min(100% - 2rem, 28rem);
+  padding-block: 2rem;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-top: 0.6rem solid var(--lime);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-head img {
+  flex: none;
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+
+.card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-role,
+.card-place {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin: 0;
+  color: var(--muted);
+}
+
+.card-role {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.card-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.card-list li {
+  display: grid;
+  padding-block: 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+.card-list span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.card-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  overflow-wrap: anywhere;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  max-width: none;
+}
+
+.card-back {
+  text-align: center;
+  margin: 1.25rem 0 0;
+  max-width: none;
 }

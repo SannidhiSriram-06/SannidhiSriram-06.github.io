@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'sha256-nKo76zcTgJ7cS6COEog0be5NjAlF+VynFE1kHt5L5Oo='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; frame-src 'none'; base-uri 'self'; object-src 'none'" />
+  <title>Contact card | Sannidhi Durga Pavan Sriram</title>
+  <meta name="description" content="Contact card for Sannidhi Durga Pavan Sriram, Cloud, DevOps and SRE." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <script>
+    /* Set the theme before first paint so there is no flash. */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) { }
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" href="assets/fonts/inter-tight-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="card-page">
+  <main class="card-wrap">
+    <article class="card" aria-labelledby="card-name">
+      <header class="card-head">
+        <img src="assets/media/portrait.jpg" width="96" height="96" alt="Portrait of Sannidhi Sriram" />
+        <div>
+          <h1 id="card-name">Sannidhi Durga Pavan Sriram</h1>
+          <p class="card-role">Cloud, DevOps and SRE</p>
+          <p class="card-place">Hyderabad, India · B.Tech CSE, class of 2027</p>
+        </div>
+      </header>
+      <ul class="card-list">
+        <li><span>Email</span><a href="mailto:sannidhisriram8@gmail.com">sannidhisriram8@gmail.com</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/sannidhi-sriram" rel="noopener">linkedin.com/in/sannidhi-sriram</a></li>
+        <li><span>GitHub</span><a href="https://github.com/SannidhiSriram-06" rel="noopener">github.com/SannidhiSriram-06</a></li>
+        <li><span>Portfolio</span><a href="/">sannidhisriram-06.github.io</a></li>
+      </ul>
+      <p class="card-actions">
+        <a class="button button-primary" href="assets/sannidhi-sriram.vcf" download>Save to contacts</a>
+        <a class="button" href="assets/media/Sannidhi_Sriram_CV.pdf" download>Download CV</a>
+      </p>
+    </article>
+    <p class="card-back"><a href="/">Back to the portfolio</a></p>
+  </main>
+</body>
+
+</html>
