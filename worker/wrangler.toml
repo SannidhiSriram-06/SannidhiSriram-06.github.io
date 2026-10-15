@@ -1,0 +1,7 @@
+name = "portfolio-ask"
+main = "index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+ALLOWED_ORIGIN = "https://sannidhisriram-06.github.io"
+MODEL = "openai/gpt-oss-20b"

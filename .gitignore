@@ -10,3 +10,14 @@ context.md
 
 # archify diagram sources and receipts
 .archify/
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md
+
+# Secrets and local tooling
+.env
+.dev.vars
+.wrangler/
+test-results/
+playwright-report/

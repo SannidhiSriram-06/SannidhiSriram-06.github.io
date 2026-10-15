@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'sha256-nKo76zcTgJ7cS6COEog0be5NjAlF+VynFE1kHt5L5Oo='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io https://github-contributions-api.jogruber.de; form-action https://formspree.io; frame-src 'self'; base-uri 'self'; object-src 'none'" />
+    content="default-src 'self'; script-src 'self' 'sha256-nKo76zcTgJ7cS6COEog0be5NjAlF+VynFE1kHt5L5Oo='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io https://*.workers.dev; form-action https://formspree.io; frame-src 'none'; base-uri 'self'; object-src 'none'" />
   <title>Sannidhi Durga Pavan Sriram | Cloud, DevOps and SRE</title>
   <meta name="description"
     content="Cloud, DevOps and SRE student engineer. Eight AWS and Azure projects with Terraform, ECS, Kubernetes GitOps and detection engineering, each written up with what works and what doesn't. Six cloud certifications." />
@@ -72,12 +72,15 @@
       <nav class="site-nav" aria-label="Sections">
         <a href="#about">About</a>
         <a href="#work">Projects</a>
-        <a href="#activity">GitHub</a>
+        <a href="#terminal">Terminal</a>
         <a href="#experience">Experience</a>
         <a href="#certifications">Certifications</a>
         <a href="#education">Education</a>
         <a href="#contact">Contact</a>
       </nav>
+      <button type="button" class="theme-toggle" id="sound-toggle" aria-pressed="true">
+        <span class="theme-toggle-label">Sound on</span>
+      </button>
       <button type="button" class="theme-toggle" id="theme-toggle">
         <span class="theme-toggle-label">Dark mode</span>
       </button>
@@ -87,6 +90,8 @@
   <main id="main">
     <!-- ───────────── Intro ───────────── -->
     <section class="intro wrap" id="about" aria-labelledby="intro-title">
+      <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+      <p class="hero-legend" aria-hidden="true">Hyderabad · us-east-1 · ap-south-1</p>
       <div class="intro-text">
         <h1 id="intro-title">Sannidhi Durga Pavan Sriram</h1>
         <p class="intro-role">Cloud, DevOps and SRE</p>
@@ -214,38 +219,48 @@
       </ol>
     </section>
 
-    <!-- ───────────── Tools ───────────── -->
-    <section class="section wrap" id="activity" aria-labelledby="activity-title">
-      <h2 id="activity-title">GitHub activity</h2>
-      <p class="section-note">Public contributions over the last year, loaded from GitHub when you open the page.</p>
-      <div class="activity" id="activity-panel">
-        <p class="activity-status" id="activity-status" role="status">Loading contributions...</p>
-        <div class="activity-scroll" id="activity-scroll" tabindex="0" role="region"
-          aria-label="Contribution calendar, scrolls sideways on small screens" hidden>
-          <div class="activity-months" id="activity-months" aria-hidden="true"></div>
-          <div class="activity-grid" id="activity-grid" role="img" aria-label="Contribution calendar"></div>
+    <!-- ───────────── Terminal ───────────── -->
+    <section class="section wrap" id="terminal" aria-labelledby="terminal-title">
+      <h2 id="terminal-title">Terminal</h2>
+      <p class="section-note">Poke around. Type <code>help</code>. <code>cat &lt;project name&gt;</code> prints a short write-up instantly; <code>ask &lt;question&gt;</code> sends a detailed question to a small AI that only knows my project write-ups. The suggestions below change on every visit.</p>
+      <div class="term" id="term" data-ask-url="https://portfolio-ask.sannidhi-sriram.workers.dev">
+        <div class="term-bar" aria-hidden="true">
+          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+          <span class="term-title">recruiter@portfolio: zsh</span>
         </div>
-        <div class="activity-foot" id="activity-foot" hidden>
-          <p class="activity-total" id="activity-total"></p>
-          <p class="activity-legend" aria-hidden="true">Less
-            <span class="cell l0"></span><span class="cell l1"></span><span class="cell l2"></span><span
-              class="cell l3"></span><span class="cell l4"></span> More</p>
-        </div>
+        <div class="term-screen" id="term-screen" role="log" aria-label="Terminal output" aria-live="polite" tabindex="-1"></div>
+        <form class="term-form" id="term-form" autocomplete="off">
+          <label class="term-prompt" for="term-input">recruiter@portfolio ~ %</label>
+          <input id="term-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" />
+        </form>
       </div>
-      <p class="activity-link"><a href="https://github.com/SannidhiSriram-06" target="_blank" rel="noopener">See the
-          profile on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
+      <div class="term-chips" id="term-chips" role="group" aria-label="Suggested commands, different on every visit"></div>
+      <p class="sr-only" id="term-live" role="status"></p>
     </section>
 
     <!-- ───────────── Experience ───────────── -->
     <section class="section wrap" id="experience" aria-labelledby="experience-title">
       <h2 id="experience-title">Experience</h2>
       <article class="experience">
+        <div class="experience-top">
+          <div class="experience-intro">
         <h3>AI Intern and Cloud Deployment Lead, Infosys Springboard</h3>
         <p class="project-meta">Remote · February to April 2026 · AI KYC verification system</p>
         <p>A 25-member team split into ML, web and cloud sub-teams. I led the cloud sub-team and was one of two
           co-leads, alongside the ML lead, coordinating all three.</p>
         <p>In sprint 14 I took the system to AWS: the React frontend on S3 static hosting, and the Node.js API and the
           Flask ML service (three GNN document models) on EC2, both run under PM2. Five deployment defects came up:</p>
+          </div>
+        <figure class="cert-figure">
+          <a href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">
+            <img src="assets/media/Infosys_Internship_Certification_page-0001.jpg" width="1400" height="989" loading="lazy"
+              alt="Infosys Springboard internship certificate for Sannidhi Durga Pavan Sriram" />
+          </a>
+          <figcaption>Internship certificate from Infosys Springboard. <a
+              href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">Open full
+              size<span class="sr-only"> (opens in a new tab)</span></a></figcaption>
+        </figure>
+        </div>
         <dl class="defects">
           <div><dt>Request path</dt>
             <dd>The frontend called the ML service directly, bypassing the backend and breaking auth and CORS. I routed
@@ -266,15 +281,6 @@
             <dd>A random non-KYC image could crash the flow. I added a "Non-KYC Document" result path end to end.</dd>
           </div>
         </dl>
-        <figure class="cert-figure">
-          <a href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">
-            <img src="assets/media/Infosys_Internship_Certification_page-0001.jpg" width="1400" height="989" loading="lazy"
-              alt="Infosys Springboard internship certificate for Sannidhi Durga Pavan Sriram" />
-          </a>
-          <figcaption>Internship certificate from Infosys Springboard. <a
-              href="assets/media/Infosys_Internship_Certification_page-0001.jpg" target="_blank" rel="noopener">Open full
-              size<span class="sr-only"> (opens in a new tab)</span></a></figcaption>
-        </figure>
       </article>
     </section>
 
@@ -414,7 +420,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>© 2026 Sannidhi Durga Pavan Sriram</p>
+      <p>© 2026 Sannidhi Durga Pavan Sriram · hosting cost this month: $0.00</p>
     </div>
   </footer>
 
@@ -423,10 +429,17 @@
       <h2 id="diagram-title">Architecture diagram</h2>
       <button type="button" class="button" id="diagram-close">Close</button>
     </div>
-    <iframe id="diagram-frame" title="Architecture diagram" src="about:blank"></iframe>
+    <div class="diagram-body">
+      <div class="diagram-main">
+        <div class="diagram-stage" id="diagram-stage" tabindex="0" role="region" aria-label="Architecture diagram, scrolls sideways on small screens"></div>
+        <div class="diagram-actions" id="diagram-actions"></div>
+      </div>
+      <aside class="diagram-panel" id="diagram-panel" aria-label="Details"></aside>
+    </div>
   </dialog>
 
   <script src="script.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

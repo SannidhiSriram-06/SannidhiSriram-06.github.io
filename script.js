@@ -1,4 +1,5 @@
-/* Theme toggle, architecture-diagram dialog and the contact form.
+/* Theme toggle, contact form, projects accordion and nav pill.
+   (Diagrams, terminal and the visual extras live in js/.)
    No global keyboard shortcuts: every control is a normal link or button. */
 
 (() => {
@@ -24,35 +25,6 @@
   toggle?.addEventListener('click', () => {
     applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
   });
-
-  /* ── Diagram dialog ────────────────────────────────────────────────── */
-  const dialog = document.getElementById('diagram-dialog');
-  const frame = document.getElementById('diagram-frame');
-  const dialogTitle = document.getElementById('diagram-title');
-
-  if (dialog && frame && typeof dialog.showModal === 'function') {
-    document.querySelectorAll('[data-diagram]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        dialogTitle.textContent = btn.dataset.title + ': architecture';
-        frame.title = btn.dataset.title + ' architecture diagram';
-        // The diagram pages read their theme from this key (same origin).
-        try { localStorage.setItem('archify-theme', root.getAttribute('data-theme')); } catch (e) { }
-        frame.src = 'assets/diagrams/' + btn.dataset.diagram + '.html';
-        dialog.showModal();
-      });
-    });
-    const close = () => dialog.close();
-    document.getElementById('diagram-close').addEventListener('click', close);
-    dialog.addEventListener('click', (e) => { if (e.target === dialog) close(); });
-    dialog.addEventListener('close', () => { frame.src = 'about:blank'; });
-  } else {
-    // No <dialog> support: open the diagram on its own page instead.
-    document.querySelectorAll('[data-diagram]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        window.open('assets/diagrams/' + btn.dataset.diagram + '.html', '_blank', 'noopener');
-      });
-    });
-  }
 
   /* ── Contact form ──────────────────────────────────────────────────── */
   const form = document.getElementById('contact-form');
@@ -95,63 +67,6 @@
       submit.disabled = false;
     }
   });
-
-  /* ── GitHub contribution calendar ──────────────────────────────────── */
-  const panel = document.getElementById('activity-panel');
-  if (panel) {
-    const statusEl = document.getElementById('activity-status');
-    const scrollEl = document.getElementById('activity-scroll');
-    const monthsEl = document.getElementById('activity-months');
-    const gridEl = document.getElementById('activity-grid');
-    const footEl = document.getElementById('activity-foot');
-    const totalEl = document.getElementById('activity-total');
-    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const CELL = 0.8 + 0.2; // rem: cell width plus gap, matches the CSS
-
-    function render(data, saved) {
-      const days = data.contributions;
-      const first = new Date(days[0].date + 'T00:00:00Z');
-      const pad = first.getUTCDay(); // Sunday-first rows, like GitHub
-      gridEl.replaceChildren();
-      monthsEl.replaceChildren();
-      for (let i = 0; i < pad; i++) gridEl.appendChild(document.createElement('span'));
-      let total = 0, lastMonth = -1;
-      days.forEach((d, i) => {
-        total += d.count;
-        const cell = document.createElement('span');
-        cell.className = 'cell l' + d.level;
-        const label = d.count + (d.count === 1 ? ' contribution on ' : ' contributions on ') + d.date;
-        cell.title = label;
-        gridEl.appendChild(cell);
-        const m = new Date(d.date + 'T00:00:00Z').getUTCMonth();
-        const col = Math.floor((i + pad) / 7);
-        if (m !== lastMonth && (i === 0 || new Date(d.date + 'T00:00:00Z').getUTCDate() <= 7)) {
-          lastMonth = m;
-          const tag = document.createElement('span');
-          tag.textContent = MONTHS[m];
-          tag.style.left = col * CELL + 'rem';
-          monthsEl.appendChild(tag);
-        }
-      });
-      monthsEl.style.width = Math.ceil((days.length + pad) / 7) * CELL + 'rem';
-      const count = (data.total && data.total.lastYear) || total;
-      totalEl.textContent = count.toLocaleString('en-US') + ' contributions in the last year' +
-        (saved ? ' (saved copy up to ' + days[days.length - 1].date + ')' : '');
-      gridEl.setAttribute('aria-label', 'Contribution calendar: ' + totalEl.textContent);
-      statusEl.hidden = true;
-      scrollEl.hidden = false;
-      footEl.hidden = false;
-      scrollEl.scrollLeft = scrollEl.scrollWidth; // show the most recent weeks first
-    }
-
-    const LIVE = 'https://github-contributions-api.jogruber.de/v4/SannidhiSriram-06?y=last';
-    const SNAPSHOT = 'assets/contributions.json';
-    const load = (url) => fetch(url).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
-
-    load(LIVE).then((d) => render(d, false), () => load(SNAPSHOT).then((d) => render(d, true))).catch(() => {
-      statusEl.textContent = 'Could not load the contribution calendar. The profile link below has it.';
-    });
-  }
 
   /* ── Projects accordion: one open at a time, nothing removed ───────── */
   const projects = document.querySelectorAll('.project');
