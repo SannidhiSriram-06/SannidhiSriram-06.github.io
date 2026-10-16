@@ -276,7 +276,7 @@ if (term) {
       if (/^hire sannidhi$/i.test(arg)) return hire();
       print('recruiter is not in the sudoers file.  This incident will be reported.', 'err');
     },
-    rm() { print('nice try. Everything here is in git anyway.', 'warn'); },
+    rm() { print('That command is not available here. Everything on this site is kept in git anyway.', 'dim'); },
     exit() { print('there is no exit, only #contact.', 'dim'); },
   };
 

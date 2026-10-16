@@ -1,9 +1,8 @@
-/* Hero: a dotted globe with the three places my work lives (Hyderabad, us-east-1, ap-south-1) and packets crossing between them.
-   Decorative only. Falls back to nothing without WebGL, and to a still frame with reduced motion. */
+/* A small spinning globe beside the Contact heading: dots, arcs between Hyderabad, us-east-1 and ap-south-1, and packets crossing them.
+   Decorative only. Does nothing without WebGL, and holds a still frame with reduced motion. */
 import * as THREE from '../assets/vendor/three.module.min.js';
 
-const intro = document.getElementById('about');
-const canvas = document.getElementById('hero-canvas');
+const canvas = document.getElementById('globe-canvas');
 const calm = matchMedia('(prefers-reduced-motion: reduce)');
 
 const ll = (lat, lon, r = 1) => {
@@ -12,24 +11,21 @@ const ll = (lat, lon, r = 1) => {
   return new THREE.Vector3(-r * Math.sin(phi) * Math.cos(th), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(th));
 };
 
-if (intro && canvas) {
-  let renderer;
+if (canvas) {
+  let renderer = null;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  } catch (err) {
-    renderer = null; // no WebGL: the page is fine without it
-  }
+  } catch (err) { /* no WebGL: the heading simply has no globe beside it */ }
 
   if (renderer) {
-    const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 20);
-    camera.position.set(0, 0.2, 5.4);
+    camera.position.set(0, 0, 4.6);
     const globe = new THREE.Group();
     scene.add(globe);
 
-    // Dots on a sphere (Fibonacci spiral).
-    const N = 2400;
+    // Dots on a sphere (Fibonacci spiral). Dot size is set in size(), so small globes get fatter dots.
+    const N = 1500;
     const pos = new Float32Array(N * 3);
     for (let i = 0; i < N; i++) {
       const y = 1 - (i / (N - 1)) * 2;
@@ -39,14 +35,13 @@ if (intro && canvas) {
     }
     const dotGeo = new THREE.BufferGeometry();
     dotGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    const dotMat = new THREE.PointsMaterial({ size: 0.014, transparent: true, opacity: 0.55 });
+    const dotMat = new THREE.PointsMaterial({ size: 0.065, transparent: true, opacity: 0.8 });
     globe.add(new THREE.Points(dotGeo, dotMat));
 
-    // Places and arcs.
     const places = { hyd: ll(17.39, 78.49, 1.02), iad: ll(38.9, -77.4, 1.02), bom: ll(19.08, 72.88, 1.02) };
     const markMat = new THREE.MeshBasicMaterial();
     Object.values(places).forEach((p) => {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.02, 16, 16), markMat);
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 12), markMat);
       m.position.copy(p);
       globe.add(m);
     });
@@ -54,12 +49,12 @@ if (intro && canvas) {
       const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(1.02 + lift);
       return new THREE.QuadraticBezierCurve3(a, mid, b);
     };
-    const arcs = [arcOf(places.hyd, places.iad, 0.55), arcOf(places.iad, places.bom, 0.55), arcOf(places.bom, places.hyd, 0.08)];
-    const lineMat = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.8 });
-    arcs.forEach((c) => globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(c.getPoints(60)), lineMat)));
+    const arcs = [arcOf(places.hyd, places.iad, 0.35), arcOf(places.iad, places.bom, 0.35), arcOf(places.bom, places.hyd, 0.06)];
+    const lineMat = new THREE.LineBasicMaterial({ transparent: true });
+    arcs.forEach((c) => globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(c.getPoints(50)), lineMat)));
     const packetMat = new THREE.MeshBasicMaterial();
     const packets = arcs.map((c, i) => {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.014, 12, 12), packetMat);
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10), packetMat);
       globe.add(m);
       return { m, c, off: i / arcs.length };
     });
@@ -67,42 +62,37 @@ if (intro && canvas) {
     const colour = () => {
       const dark = document.documentElement.dataset.theme === 'dark';
       dotMat.color.set(dark ? '#ffffff' : '#111111');
-      const a = css('--accent');
-      lineMat.color.set(a);
-      markMat.color.set(a);
+      const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      lineMat.color.set(accent);
+      markMat.color.set(accent);
       packetMat.color.set(dark ? '#ffffff' : '#000000');
     };
     colour();
     new MutationObserver(() => { colour(); frame(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     const size = () => {
-      const w = intro.clientWidth, h = intro.clientHeight;
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setPixelRatio(Math.min(Math.max(devicePixelRatio || 1, 2), 3));
       renderer.setSize(w, h, false);
+      dotMat.size = Math.max(0.03, (0.065 * 100) / w);
       camera.aspect = w / h;
-      // Wide screens: globe sits right of centre, behind the portrait. Narrow: centred, behind the text.
-      const wide = w > 820;
-      camera.setViewOffset(w, h, wide ? -w * 0.24 : 0, 0, w, h);
       camera.updateProjectionMatrix();
+      frame(performance.now());
     };
-    new ResizeObserver(size).observe(intro);
-    size();
+    new ResizeObserver(size).observe(canvas);
 
-    let tx = 0, ty = 0;
-    addEventListener('pointermove', (e) => {
-      tx = (e.clientX / innerWidth - 0.5) * 0.4;
-      ty = (e.clientY / innerHeight - 0.5) * 0.25;
-    }, { passive: true });
+    const tx = 0, ty = 0;
 
     let rot = 3.6; // starts with India facing the viewer
     let last = 0;
     function frame(t) {
       const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
       last = t;
-      if (!calm.matches) rot += dt * 0.12;
+      if (!calm.matches) rot += dt * 0.25;
       globe.rotation.y = rot + tx;
       globe.rotation.x = 0.35 + ty;
-      packets.forEach((p) => p.m.position.copy(p.c.getPoint(calm.matches ? 0.5 : ((t / 3500 + p.off) % 1))));
+      packets.forEach((p) => p.m.position.copy(p.c.getPoint(calm.matches ? 0.5 : (t / 2500 + p.off) % 1)));
       renderer.render(scene, camera);
     }
 
@@ -112,9 +102,9 @@ if (intro && canvas) {
     new IntersectionObserver(([en]) => {
       visible = en.isIntersecting;
       if (visible && !raf) raf = requestAnimationFrame(loop);
-    }).observe(intro);
+    }).observe(canvas);
     document.addEventListener('visibilitychange', () => { if (!document.hidden && visible && !raf) raf = requestAnimationFrame(loop); });
-    frame(performance.now());
+    size();
     if (!calm.matches) raf = requestAnimationFrame(loop);
   }
 }

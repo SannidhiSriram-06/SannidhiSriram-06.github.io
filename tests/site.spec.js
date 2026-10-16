@@ -30,3 +30,12 @@ test('terminal answers help and replays the lab', async ({ page }) => {
   await page.press('#term-input', 'Enter');
   await expect(page.locator('#term-screen')).toContainText('replay wazuh');
 });
+
+test('mobile: no sideways scroll and no axe violations', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations.map((v) => v.id)).toEqual([]);
+});

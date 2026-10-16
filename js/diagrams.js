@@ -260,7 +260,10 @@ if (dialog && stage && typeof dialog.showModal === 'function') {
       svg.append(g);
       nodes[nd.id] = g;
     });
-    stage.replaceChildren(svg);
+    const hint = document.createElement('p');
+    hint.className = 'diagram-hint';
+    hint.textContent = 'Swipe sideways to see the whole diagram.';
+    stage.replaceChildren(hint, svg);
 
     panel.replaceChildren();
     const cap = document.createElement('p');
