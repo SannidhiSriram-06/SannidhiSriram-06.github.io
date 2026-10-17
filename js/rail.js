@@ -10,7 +10,7 @@ const sections = [...document.querySelectorAll('.site-nav a[href^="#"]')]
   .map((a) => ({ name: a.textContent.trim().toUpperCase(), href: a.getAttribute('href'), el: document.querySelector(a.getAttribute('href')) }))
   .filter((s) => s.el);
 
-const TOP = 60;       // where the ruler starts, under the header
+let TOP = 57;         // where the ruler starts: the header's bottom edge (set from the real header height each frame)
 const BOTTOM = 10;
 const FS = 34;        // label font size
 const S_LIST = 16 / FS, S_COL = 20 / FS;
@@ -21,10 +21,12 @@ const make = (tag, cls, parent) => { const e = document.createElement(tag); if (
 
 let rail, tape, tickEls, thumb, marker, cols, guide, labelsRoot, labels, raf = 0, pointerY = null, dragging = false, lastH = 0;
 
-function measure(str) {
-  const c = document.createElement('canvas').getContext('2d');
-  c.font = '700 ' + FS + 'px "Inter Tight", system-ui, sans-serif';
-  return [...str].map((ch) => c.measureText(ch).width + 0.6);
+// Real widths of the rendered letters, so the label font (stretched Archivo) lays out exactly.
+function measureLabel(L) {
+  L.adv = L.letters.map((sp) => { sp.style.transform = 'none'; return sp.getBoundingClientRect().width; });
+  L.cum = []; L.W = 0;
+  L.adv.forEach((a) => { L.cum.push(L.W); L.W += a; });
+  L.last = []; // force the next frame to write every transform again
 }
 
 function build() {
@@ -71,14 +73,13 @@ function build() {
   labelsRoot.setAttribute('aria-hidden', 'true');
   labels = sections.map((s) => {
     const box = make('div', 'rail-label', labelsRoot);
-    const adv = measure(s.name);
     const letters = [...s.name].map((ch) => { const sp = make('span', 'rail-letter', box); sp.textContent = ch; return sp; });
-    const cum = []; let W = 0;
-    adv.forEach((a) => { cum.push(W); W += a; });
     const link = make('a', 'rail-link', labelsRoot);
     link.href = s.href;
     link.tabIndex = -1;
-    return { s, box, letters, adv, cum, W, link, last: [] };
+    const L = { s, box, letters, adv: [], cum: [], W: 0, link, last: [] };
+    measureLabel(L);
+    return L;
   });
 
   rail.addEventListener('pointerenter', () => rail.classList.add('is-hover'));
@@ -90,7 +91,9 @@ function build() {
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule);
   new ResizeObserver(schedule).observe(document.body);
-  document.fonts?.ready.then(() => { labels.forEach((l) => { l.adv = measure(l.s.name); l.cum = []; l.W = 0; l.adv.forEach((a) => { l.cum.push(l.W); l.W += a; }); }); schedule(); });
+  const remeasure = () => { labels?.forEach(measureLabel); schedule(); };
+  document.fonts?.load('620 34px Archivo').then(remeasure, remeasure);
+  document.fonts?.ready.then(remeasure);
   schedule();
 }
 
@@ -106,6 +109,7 @@ function teardown() {
 function maxScroll() { return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
 
 function scrubTo(y) {
+  TOP = (header ? header.offsetHeight : 57) - 1;
   const frac = clamp((y - TOP) / (innerHeight - TOP - BOTTOM));
   scrollTo({ top: frac * maxScroll(), behavior: 'instant' });
 }
@@ -125,6 +129,7 @@ function frame() {
   raf = 0;
   if (!rail) return;
   const Y = scrollY, vh = innerHeight, vw = innerWidth, H = document.documentElement.scrollHeight;
+  TOP = (header ? header.offsetHeight : 57) - 1; // the 2px marker then covers the header and bar borders exactly
   const track = vh - TOP - BOTTOM;
   const prog = clamp(Y / maxScroll());
 
@@ -165,13 +170,16 @@ function layoutLabels(Y, vw, vh) {
     const Yh = tops[i] - 0.215 * vh;
     const A = Yh + peelEnd + S_COL * (L.W - L.adv[L.adv.length - 1] / 2);
     const r = i < n - 1 ? clamp((Y - (tops[i + 1] - 0.185 * vh - 100)) / 200) : 0;
+    // Sticking to the section: the name turns vertical and rides up with its section's top edge as soon as that edge
+    // is 40px up the screen, finishing 160px later. Every letter shares this, so the word moves as one piece.
+    const entry = i === 0 ? 1 : clamp((vh - 40 - (tops[i] - Y)) / 160);
     let cur = 0;
     const rest = { list: true, cur: false, past: false };
 
     L.letters.forEach((sp, j) => {
       const ycol = A - Y - S_COL * (L.cum[j] + L.adv[j] / 2);
       let p = i === 0 ? 1 : clamp((peelStart - ycol) / (peelStart - peelEnd));
-      let e = i === 0 ? 1 : clamp((vh + 4 - ycol) / 120);
+      let e = i === 0 ? 1 : entry;
       let rr = r;
       if (calm.matches) { p = i === active ? 1 : 0; e = 0; rr = i < active ? 1 : 0; if (i < active) p = 1; }
       let x, y, rot, sc;

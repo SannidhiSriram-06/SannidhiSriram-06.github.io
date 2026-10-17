@@ -1759,6 +1759,8 @@ html.rail-on::-webkit-scrollbar { display: none; }
   .rail-thumb, .rail-guide { transition: opacity 0.2s ease; }
 }
 
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("assets/fonts/archivo-latin-wdth-normal.woff2") format("woff2"); }
+
 /* ── Section names riding the rail ────────────────────────────────────── */
 .rail-labels { position: fixed; inset: 0; z-index: 16; pointer-events: none; }
 .rail-label { position: absolute; left: 0; top: 0; }
@@ -1767,9 +1769,11 @@ html.rail-on::-webkit-scrollbar { display: none; }
   position: absolute;
   left: 0;
   top: 0;
-  font-family: var(--font-sans);
+  font-family: "Archivo", var(--font-sans); /* the same face and width PdfCraft uses for its section names */
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 620;
+  font-stretch: 118%;
+  letter-spacing: -0.03em;
   line-height: 1;
   white-space: pre;
   text-shadow: 0 0 4px var(--bg), 0 0 10px var(--bg);
