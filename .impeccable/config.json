@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-17T10:20:25.357Z",
+        "reason": "assistant: static detector cannot evaluate max() padding on .sec-bar; measured browser padding is 16px+ at 360/390/1280 wide. Not user confirmed"
+      }
+    ]
+  }
+}

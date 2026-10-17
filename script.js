@@ -161,4 +161,12 @@
     });
   });
 
+  /* ── Header height, so the sticky section bars sit right under it ──── */
+  const siteHeader = document.querySelector('.site-header');
+  if (siteHeader) {
+    const setHeaderH = () => root.style.setProperty('--header-h', siteHeader.offsetHeight + 'px');
+    new ResizeObserver(setHeaderH).observe(siteHeader);
+    setHeaderH();
+  }
+
 })();

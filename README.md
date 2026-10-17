@@ -10,6 +10,7 @@ It is plain HTML, one stylesheet and plain JavaScript modules. There is no build
 - Experience, certifications (with verification links), education and a contact form.
 - Interactive architecture diagrams for five projects (`js/diagrams.js`): click a box for what it does and where it falls short, trace a flow, or kill an instance in the self-healing diagram.
 - A macOS-style terminal (`js/terminal.js`): `help`, `ls`, `cat 6`, `replay wazuh` (the real alerts from the identity lab), and sentences that go to a small AI grounded in the project write-ups.
+- A page rail after PdfCraft's (`js/rail.js`, wide screens only): a ruler down the right edge with a percent marker you can click, drag or use with the keyboard, plus the section names climbing it and peeling off letter by letter. Every section also pins its own bar under the header.
 - A WebGL globe in the hero, a scroll-driven story of the Infosys deployment fixes, a 3D certification ring, and opt-in-by-default UI sounds (toggle in the header).
 
 ## Run it locally
